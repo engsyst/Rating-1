@@ -33,7 +33,7 @@ public class EmployeeController {
         return "employeeAll";
     }
 
-    @RequestMapping(value = "save", method = RequestMethod.GET)
+    @RequestMapping(value = "/save", method = RequestMethod.GET)
     public String employeeAddPage(Model model) {
         logger.info("save:GET:load save page");
         model.addAttribute("employee", new Employee());
@@ -66,16 +66,13 @@ public class EmployeeController {
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String updateEmployeePage(@RequestParam(value = "id", required = true) Integer id, Model model) {
         logger.info("update:GET:load update page");
-        if (!model.containsAttribute("employee")) {
-            Employee employee = employeeService.getById(id);
-            model.addAttribute("employee", employee);
-        }
-        return "employeeAll";
+        Employee employee = employeeService.getById(id);
+        model.addAttribute("employee", employee);
+        return "employeeEdit";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateEmployee(@ModelAttribute Employee employee, Model model,
-            @RequestParam(value = "action", required = true) String action) {
+    public String updateEmployee(@ModelAttribute Employee employee, Model model) {
         logger.info("update:POST: update employee");
         employeeService.updateEmployee(employee);
         return "redirect:/employee/getAll";

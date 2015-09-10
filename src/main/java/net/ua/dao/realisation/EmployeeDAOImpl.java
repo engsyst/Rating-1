@@ -43,7 +43,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public Employee getById(int id) {
         logger.info("dao: get by id");
-        return (Employee) getSession().load(Employee.class, id);
+        return (Employee) getSession().get(Employee.class, id);
     }
 
     @Override

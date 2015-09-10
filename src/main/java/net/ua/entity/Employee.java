@@ -3,9 +3,9 @@ package net.ua.entity;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "employee")
@@ -42,6 +42,9 @@ public class Employee implements Serializable{
     @Column(name = "AcademicTitle", length = 45)
     @Pattern(regexp = "[а-я-А-Я]{0,45}")
     private String academicTitle;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<User> users;
 
     public int getEmployeeId() {
         return employeeId;
@@ -97,6 +100,18 @@ public class Employee implements Serializable{
 
     public void setAcademicTitle(String academicTitle) {
         this.academicTitle = academicTitle;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public String getSNP() {
+        return surname + " " + name + " " + patronymic;
     }
 
     @Override

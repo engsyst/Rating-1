@@ -1,7 +1,9 @@
 package net.ua.controller;
 
 import net.ua.entity.Group;
+import net.ua.entity.Student;
 import net.ua.service.GroupService;
+import net.ua.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,14 +24,17 @@ public class StudentController {
     @Autowired
     GroupService groupService;
 
+    @Autowired
+    StudentService studentService;
+
     @RequestMapping(value = "/allGroups", method = RequestMethod.GET)
-    public String getAllgroups(Model model) {
+    public String getAllGroups(Model model) {
         List<Group> groups = groupService.getAllGroups();
         model.addAttribute("groups", groups);
         return "groupAll";
     }
 
-    @RequestMapping(value = "/saveGroup")
+    @RequestMapping(value = "/saveGroup", method = RequestMethod.GET)
     public String addGroupPage(Model model) {
         model.addAttribute("group", new Group());
         return "groupAdd";
@@ -71,5 +76,42 @@ public class StudentController {
     public String updateGroup(@ModelAttribute Group group) {
         groupService.updateGroup(group);
         return "redirect:/student/allGroups";
+    }
+
+    @RequestMapping(value = "/allStudents", method = RequestMethod.GET)
+    public String getAllStudents(Model model) {
+        List<Student> students = studentService.getAllStudents();
+        model.addAttribute("students", students);
+        return "studentAll";
+    }
+
+    @RequestMapping(value = "/saveStudent", method = RequestMethod.GET)
+    public String addStudentPage(Model model) {
+        model.addAttribute("student", new Student());
+        return "studentAdd";
+    }
+
+    @RequestMapping(value = "/saveStudent", method = RequestMethod.POST)
+    public String addStudent(@Valid @ModelAttribute Student student,
+            RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "studentAdd";
+        } else {
+            studentService.addStudent(student);
+            String message = "Студент успешно добавлен";
+            redirectAttributes.addFlashAttribute("message", message);
+            return "redirect:/student/saveStudent";
+        }
+    }
+
+    @RequestMapping(value = "/deleteStudent", method = RequestMethod.GET)
+    public String deleteStudent(
+            @RequestParam(value = "id", required = true) Integer id,
+            @RequestParam(value = "phase", required = true) String phase,
+            RedirectAttributes redirectAttributes) {
+        Student student = studentService.getById(id);
+        studentService.deleteStudent(student);
+        redirectAttributes.addFlashAttribute("message", "Запись успешно удалена");
+        return "redirect:/student/allStudents";
     }
 }

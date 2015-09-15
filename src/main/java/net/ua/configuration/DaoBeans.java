@@ -1,13 +1,7 @@
 package net.ua.configuration;
 
-import net.ua.dao.EmployeeDAO;
-import net.ua.dao.GroupDao;
-import net.ua.dao.RoleDao;
-import net.ua.dao.UserDao;
-import net.ua.dao.realisation.EmployeeDAOImpl;
-import net.ua.dao.realisation.GroupDaoImpl;
-import net.ua.dao.realisation.RoleDaoImpl;
-import net.ua.dao.realisation.UserDaoImpl;
+import net.ua.dao.*;
+import net.ua.dao.realisation.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,5 +26,10 @@ public class DaoBeans {
     @Bean
     public GroupDao groupDao() {
         return new GroupDaoImpl();
+    }
+
+    @Bean
+    public StudentDao studentDao() {
+        return new StudentDaoImpl();
     }
 }

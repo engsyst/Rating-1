@@ -32,4 +32,9 @@ public class ServicesBeans {
     public StudentService studentService() {
         return new StudentServiceImpl();
     }
+
+    @Bean
+    public ActivityService activityService() {
+        return new ActivityServiceImpl();
+    }
 }

@@ -1,5 +1,6 @@
 package net.ua.dao;
 
+import net.ua.entity.Group;
 import net.ua.entity.Student;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,6 @@ public interface StudentDao {
     public Student getById(int id);
 
     public void updateStudent(Student student);
+
+    public void addStudentGroup(Student student, Group group);
 }

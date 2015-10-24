@@ -32,4 +32,9 @@ public class DaoBeans {
     public StudentDao studentDao() {
         return new StudentDaoImpl();
     }
+
+    @Bean
+    public ActivityDao activityDao() {
+        return new ActivityDaoImpl();
+    }
 }

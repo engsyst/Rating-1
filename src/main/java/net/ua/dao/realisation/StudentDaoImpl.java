@@ -1,6 +1,7 @@
 package net.ua.dao.realisation;
 
 import net.ua.dao.StudentDao;
+import net.ua.entity.Group;
 import net.ua.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -39,6 +40,12 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void updateStudent(Student student) {
+        getSession().update(student);
+    }
+
+    @Override
+    public void addStudentGroup(Student student, Group group) {
+        student.getGroup().add(group);
         getSession().update(student);
     }
 }

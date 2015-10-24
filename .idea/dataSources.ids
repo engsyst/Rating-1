@@ -70,12 +70,6 @@
       <exported-key name="fk_work_employee1" table="work" schema="" catalog="tutorwork" columns="EmployeeId"/>
       <index name="idx_employee_FName" unique="false" columns="Patronymic"/>
     </table>
-    <table name="group" schema="" catalog="tutorwork" type="TABLE">
-      <column name="GroupId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="Title" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
-      <primary-key name="PRIMARY" columns="GroupId"/>
-      <exported-key name="fk_Student_has_Group_Group1" table="studentgroup" schema="" catalog="tutorwork" columns="GroupId"/>
-    </table>
     <table name="role" schema="" catalog="tutorwork" type="TABLE">
       <column name="RoleId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="Title" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>

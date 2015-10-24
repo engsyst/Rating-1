@@ -79,11 +79,10 @@
                         <tbody>
                         <tr data-th-each="user : ${users}">
                             <td data-th-text="${user.login}">Имя пользователя</td>
-                            <td data-th-text="${user.email}">Имя пользователя</td>
-                            <td data-th-text="${user.createTime}">Имя пользователя</td>
-                            <td data-th-text="${user.role.title}">Имя пользователя</td>
-                            <td data-th-text="${user.employee.getSNP()}">Имя пользователя</td>
-
+                            <td data-th-text="${user.email}">Email</td>
+                            <td data-th-text="${user.createTime}">Дата регистрации</td>
+                            <td data-th-text="${user.role.title}">Права доступа</td>
+                            <td data-th-text="${user.employee.getSNP()}">Сотрудник</td>
                             <td>
                                 <div class="btn-group">
                                     <button class="btn btn-warning btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
@@ -133,8 +132,8 @@
                         </tbody>
                     </table>
                 </div><!-- /.table responsive -->
-</div>
                     </div>
+                </div>
             </div>  <!-- /.col-lg-12 -->
         </div>      <!-- /.row -->
     </div>		    <!-- page wrapper -->

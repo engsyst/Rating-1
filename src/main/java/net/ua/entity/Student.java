@@ -2,6 +2,7 @@ package net.ua.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,20 +17,24 @@ public class Student implements Serializable {
     private int studentId;
 
     @Column(name = "Name", length = 32)
+    @Pattern(regexp = "[А-ЯЁ][а-яё]{1,32}")
     private String name;
 
     @Column(name = "Patronymic", length = 32)
+    @Pattern(regexp = "[А-ЯЁ][а-яё]{1,32}")
     private String patronymic;
 
     @Column(name = "Surname", length = 32)
+    @Pattern(regexp = "[А-ЯЁ][а-яё]{1,32}")
     private String surname;
 
     @Column(name = "Studentcol", length = 45)
+    @Pattern(regexp = "[а-я-А-Я]{0,45}")
     private String studentcol;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "studentgroup", joinColumns = {@JoinColumn(name = "StudentId")}, inverseJoinColumns = {@JoinColumn(name = "GroupId")})
-    private Set<Group> group;
+    private Set<Group> group = new HashSet<>(0);
 
     public int getStudentId() {
         return studentId;
@@ -76,6 +81,8 @@ public class Student implements Serializable {
     }
 
     public void setGroup(Set<Group> group) {
+        if (this.group.isEmpty())
+            this.group = new HashSet<>();
         this.group = group;
     }
 

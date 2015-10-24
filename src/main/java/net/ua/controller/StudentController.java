@@ -87,16 +87,20 @@ public class StudentController {
 
     @RequestMapping(value = "/saveStudent", method = RequestMethod.GET)
     public String addStudentPage(Model model) {
+        List<Group> groups = groupService.getAllGroups();
+        model.addAttribute("groups", groups);
+        model.addAttribute("selectedGroup", new Group());
         model.addAttribute("student", new Student());
         return "studentAdd";
     }
 
     @RequestMapping(value = "/saveStudent", method = RequestMethod.POST)
-    public String addStudent(@Valid @ModelAttribute Student student,
+    public String addStudent(@Valid @ModelAttribute Student student, @ModelAttribute Group selectedGroup,
             RedirectAttributes redirectAttributes, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "studentAdd";
         } else {
+            student.getGroup().add(selectedGroup);
             studentService.addStudent(student);
             String message = "Студент успешно добавлен";
             redirectAttributes.addFlashAttribute("message", message);
@@ -113,5 +117,15 @@ public class StudentController {
         studentService.deleteStudent(student);
         redirectAttributes.addFlashAttribute("message", "Запись успешно удалена");
         return "redirect:/student/allStudents";
+    }
+
+    @RequestMapping(value = "/updateStudent", method = RequestMethod.GET)
+    public String updateStudentPage(@RequestParam(value = "id", required = true) Integer id,
+            Model model) {
+        Student student = studentService.getById(id);
+        List<Group> groups = groupService.getAllGroups();
+        model.addAttribute("student", student);
+        model.addAttribute("groups", groups);
+        return "studentEdit";
     }
 }

@@ -1,17 +1,15 @@
 package net.ua.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "activity")
 public class Activity implements Serializable{
 
     @Id
+    @GeneratedValue
     @Column(name = "ActivityId")
     private int activityId;
 
@@ -21,12 +19,15 @@ public class Activity implements Serializable{
     @Column(name = "Place")
     private String place;
 
+  //  @Temporal(TemporalType.DATE)
     @Column(name = "Start")
     private Date start;
 
+  //  @Temporal(TemporalType.DATE)
     @Column(name = "End")
     private Date end;
 
+ //   @Temporal(TemporalType.DATE)
     @Column(name = "Deadline")
     private Date deadline;
 
@@ -62,6 +63,7 @@ public class Activity implements Serializable{
     }
 
     public void setStart(Date start) {
+        System.out.println(start.toString());
         this.start = start;
     }
 

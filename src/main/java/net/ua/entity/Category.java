@@ -54,7 +54,10 @@ public class Category implements Serializable{
     }
 
     public Category getParentCategory() {
-        return parentCategory;
+        if (parentCategory == null)
+            return new Category();
+        else
+            return parentCategory;
     }
 
     public void setParentCategory(Category parentCategory) {

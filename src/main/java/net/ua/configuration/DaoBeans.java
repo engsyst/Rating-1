@@ -37,4 +37,9 @@ public class DaoBeans {
     public ActivityDao activityDao() {
         return new ActivityDaoImpl();
     }
+
+    @Bean
+    public CategoryDao categoryDao() {
+        return new CategoryDaoImpl();
+    }
 }

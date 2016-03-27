@@ -37,4 +37,9 @@ public class ServicesBeans {
     public ActivityService activityService() {
         return new ActivityServiceImpl();
     }
+
+    @Bean
+    public CategoryService categoryService() {
+        return new CategoryServiceImpl();
+    }
 }

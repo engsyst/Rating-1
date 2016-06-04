@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Редактировать сотруника</title>
+
+    <!-- Core CSS - Include with every page -->
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap-3.1.1.min.css"
+          data-th-href="@{/css/bootstrap-3.1.1.min.css}" />
+
+    <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
+          data-th-href="@{/font-awesome/css/font-awesome.css}" />
+
+    <!-- SB Admin CSS - Include with every page -->
+    <link type="text/css" rel="stylesheet" href="/css/sb-admin.css"
+          data-th-href="@{/css/sb-admin.css}" />
+
+    <style>
+        .no-border-on-me>thead>tr>th,
+        .no-border-on-me>tbody>tr>th,
+        .no-border-on-me>tfoot>tr>th,
+        .no-border-on-me>thead>tr>td,
+        .no-border-on-me>tbody>tr>td,
+        .no-border-on-me>tfoot>tr>td
+        {
+            border-top-style: none;
+            border-bottom-style: none;
+        }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<div id="wrapper"><!-- /#wrapper -->
+
+    <!-- Load head and left menu -->
+    <div data-th-replace="fragments/sb-admin :: top-nav"></div>
+    <div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Редактировать сотрудника</h1>
+                <!-- Add employee form -->
+                <form class="form" action="#" data-th-action="@{/employee/update}" data-th-object="${employee}" method="post">
+                    <div class="table responsive">
+                        <table class="no-border-on-me table ">
+                            <thead>
+                            <tr>
+                                <th class="col-sm-2">Имя</th>
+                                <th class="col-sm-2">Фамилия</th>
+                                <th class="col-sm-2">Отчество</th>
+                                <th class="col-sm-2">Должность</th>
+                                <th class="col-sm-2">Ученая степень</th>
+                                <th class="col-sm-2">Ученое звание</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><input hidden="hidden" type="text" data-th-field="*{employeeId}"/>
+                                    <!-- Name field -->
+                                <input class="form-control" type="text" data-th-field="*{name}" name="name" required=""
+                                           pattern="[А-ЯЁ][а-яё]{1,32}" title="Имя должно содержать только русские символы"/></td>
+                                <!-- Surname field -->
+                                <td><input class="form-control" type="text" data-th-field="*{surname}" name="surname" required="Обязательное поле"
+                                           pattern="[А-ЯЁ][а-яё]{1,32}" title="Фамилия должна содержать только русские символы"/></td>
+                                <!-- Patronymic field -->
+                                <td><input class="form-control" type="text" data-th-field="*{patronymic}" name="patronymic" required="Обязательное поле"
+                                           pattern="[А-ЯЁ][а-яё]{1,32}" title="Отчество должно содержать только русские символы" /></td>
+                                <!-- Job title field -->
+                                <td><input class="form-control" type="text" data-th-field="*{jobTitle}" name="jobTitle"
+                                           pattern="[А-Яа-яЁё]{1,45}" title="Должность должна содержать только русские символы"/></td>
+                                <!-- Degree field -->
+                                <td><input class="form-control" type="text" data-th-field="*{degree}" name="degree"
+                                           pattern="[А-Яа-яЁё]{1,45}" title="Ученая степень должна содержать только русские символы"/></td>
+                                <!-- Academic title field -->
+                                <td><input class="form-control" type="text" data-th-field="*{academicTitle}" name="academicTitle"
+                                           pattern="[А-Яа-яЁё]{1,45}" title="Ученое звание должно содержать только русские символы"/></td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-sm-1"></td>
+                                <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('name')}" th-errors="*{name}">name error</td>
+                                <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('surname')}" th-errors="*{surname}">surname error</td>
+                                <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('patronymic')}" th-errors="*{patronymic}">patronymic error</td>
+                                <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('jobTitle')}" th-errors="*{jobTitle}">jobTitle error</td>
+                                <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('degree')}" th-errors="*{degree}">degree error</td>
+                                <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('academicTitle')}" th-errors="*{academicTitle}">academicTitle error</td>
+                                <td class="col-sm-2"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div><!-- /.col-lg-12 -->
+        </div><!-- /.row -->
+    </div><!-- page wrapper -->
+</div><!-- /#wrapper -->
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript" src="/js/jquery-1.11.0.min.js"
+        data-th-src="@{/js/jquery-1.11.0.min.js}"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script type="text/javascript" src="/resources/js/bootstrap-3.1.1.min.js"
+        data-th-src="@{/js/bootstrap-3.1.1.min.js}"></script>
+
+<!-- Core Scripts - Include with every page -->
+<script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"
+        data-th-src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+
+<!-- SB Admin Scripts - Include with every page -->
+<script type="text/javascript" src="resources/js/sb-admin.js"
+        data-th-src="@{/js/sb-admin.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Core CSS - Include with every page -->
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap-3.1.1.min.css"
+          data-th-href="@{/css/bootstrap-3.1.1.min.css}" />
+
+    <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
+          data-th-href="@{/font-awesome/css/font-awesome.css}" />
+
+    <!-- SB Admin CSS - Include with every page -->
+    <link type="text/css" rel="stylesheet" href="/css/sb-admin.css"
+          data-th-href="@{/css/sb-admin.css}" />
+
+    <style>
+        .no-border-on-me>thead>tr>th,
+        .no-border-on-me>tbody>tr>th,
+        .no-border-on-me>tfoot>tr>th,
+        .no-border-on-me>thead>tr>td,
+        .no-border-on-me>tbody>tr>td,
+        .no-border-on-me>tfoot>tr>td
+        {
+            border-top-style: none;
+            border-bottom-style: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div id="wrapper">
+    <nav data-th-fragment="top-nav" class="navbar navbar-default navbar-static-top" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Управление университетом</a>
+        </div>
+
+        <!-- /.navbar-header -->
+        <ul class="nav navbar-top-links navbar-right">
+            <li><a href="/"            >Главная страница</a></li>
+            <li><a href="#"><button type="button" class="btn btn-default btn-xs btn-primary">
+                <span class="glyphicon glyphicon-off"></span></button>
+            </a></li>
+        </ul><!-- /.navbar-top-links -->
+    </nav><!-- /.navbar-static-top -->
+
+    <!-- Main menu -->
+    <nav data-th-fragment="vert-nav-admin" class="navbar-default navbar-static-side" >
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li>
+                    <a href="#"><i class="fa fa-star fa-fw"></i>Сотрудники<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="/employee/getAll">Список сотрудников</a>
+                        </li>
+                        <li>
+                            <a href="/employee/save">Добавить сотрудника</a>
+                        </li>
+                    </ul><!-- /.nav-second-level -->
+                </li><!-- /.nav-second-level -->
+                <li>
+                    <a href="#"><i class="fa fa-users fa-fw"></i>Пользователи<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="/user/getAll">Список пользователей</a>
+                        </li>
+                        <li>
+                            <a href="/user/save">Добавить пользователя</a>
+                        </li>
+                    </ul><!-- /.nav-second-level -->
+                </li><!-- /.nav-second-level -->
+                <li>
+                    <a href="#"><i class="fa fa-users fa-fw"></i>Студенты<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="/student/allGroups">Список групп</a>
+                        </li>
+                        <li>
+                            <a href="/student/saveGroup">Добавить группу</a>
+                        </li>
+                        <li>
+                            <a href="/student/allStudents">Список студентов</a>
+                        </li>
+                        <li>
+                            <a href="/student/saveStudent">Добавить студента</a>
+                        </li>
+                    </ul><!-- /.nav-second-level -->
+                </li><!-- /.nav-second-level -->
+                <li>
+                    <a href="#"><i class="fa fa-users fa-fw"></i>Текущие мероприятия<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="/activity/getAll">Список мероприятий</a>
+                        </li>
+                        <li>
+                            <a href="/activity/save">Добавить мероприятие</a>
+                        </li>
+                    </ul><!-- /.nav-second-level -->
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-users fa-fw"></i>Категории<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="/category/getAll">Список категорий</a>
+                        </li>
+                        <li>
+                            <a href="/category/save">Добавить </a>
+                        </li>
+                    </ul><!-- /.nav-second-level -->
+                </li><!-- /.nav-second-level -->
+            </ul><!-- /#side-menu -->
+        </div><!-- /.sidebar-collapse -->
+    </nav><!-- /.navbar-static-side -->
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+
+            </div><!-- /.col-lg-12 -->
+        </div><!-- /.row -->
+    </div><!-- /#page-wrapper -->
+</div><!-- /#wrapper -->
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript" src="/js/jquery-1.11.0.min.js"
+        data-th-src="@{/js/jquery-1.11.0.min.js}"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script type="text/javascript" src="/js/bootstrap-3.1.1.min.js"
+        data-th-src="@{/js/bootstrap-3.1.1.min.js}"></script>
+
+<!-- Core Scripts - Include with every page -->
+<script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"
+        data-th-src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+
+<!-- SB Admin Scripts - Include with every page -->
+<script type="text/javascript" src="/js/sb-admin.js"
+        data-th-src="@{/js/sb-admin.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - tutorwork@localhost" uuid="23286583-1a1a-4646-b21e-d9c9d537e8c9">
+    <database-info product="MySQL" version="5.5.23" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="tutorwork"/>
+    <table name="activity" schema="" catalog="tutorwork" type="TABLE">
+      <column name="ActivityId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="Place" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="Start" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="End" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="Deadline" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="Type" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="ActivityId"/>
+      <exported-key name="fk_Work_Activity1" table="work" schema="" catalog="tutorwork" columns="ActivityId"/>
+      <index name="idx_activity_Title" unique="false" columns="Title"/>
+      <index name="idx_activity_Type" unique="false" columns="Type"/>
+    </table>
+    <table name="author" schema="" catalog="tutorwork" type="TABLE">
+      <column name="AuthorId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ShortName" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="isHead" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MQ=="/>
+      <column name="EmployeeId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="StudentId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="AuthorId"/>
+      <foreign-key name="fk_Author_Employee1" columns="EmployeeId" ref-table="employee" ref-schema="" ref-catalog="tutorwork" ref-columns="EmployeeId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_Author_Student1" columns="StudentId" ref-table="student" ref-schema="" ref-catalog="tutorwork" ref-columns="StudentId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_Work_has_Author_Author1" table="workauthor" schema="" catalog="tutorwork" columns="AuthorId"/>
+      <index name="fk_Author_Employee1_idx" unique="false" columns="EmployeeId"/>
+      <index name="fk_Author_Student1_idx" unique="false" columns="StudentId"/>
+      <index name="idx_author_ShortName" unique="false" columns="ShortName"/>
+    </table>
+    <table name="category" schema="" catalog="tutorwork" type="TABLE">
+      <column name="CategoryId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="Type" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ParentId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="CategoryId"/>
+      <foreign-key name="fk_Category_Category1" columns="ParentId" ref-table="category" ref-schema="" ref-catalog="tutorwork" ref-columns="CategoryId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_Category_Category1" table="category" schema="" catalog="tutorwork" columns="ParentId"/>
+      <exported-key name="fk_Work_Category1" table="work" schema="" catalog="tutorwork" columns="CategoryId"/>
+      <index name="Title_UNIQUE" unique="true" columns="Title"/>
+      <index name="fk_Category_Category1_idx" unique="false" columns="ParentId"/>
+    </table>
+    <table name="doc" schema="" catalog="tutorwork" type="TABLE">
+      <column name="DocId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Title" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="Type" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="Data" sqlType="BLOB" precision="65535" scale="0" nullable="true" jdbcType="-4"/>
+      <column name="work_WorkId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="DocId"/>
+      <foreign-key name="fk_doc_work1" columns="work_WorkId" ref-table="work" ref-schema="" ref-catalog="tutorwork" ref-columns="WorkId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_doc_work1_idx" unique="false" columns="work_WorkId"/>
+    </table>
+    <table name="employee" schema="" catalog="tutorwork" type="TABLE">
+      <column name="EmployeeId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Name" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <column name="Patronymic" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <column name="Surname" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <column name="JobTitle" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="Degree" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="AcademicTitle" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="EmployeeId"/>
+      <exported-key name="fk_Author_Employee1" table="author" schema="" catalog="tutorwork" columns="EmployeeId"/>
+      <exported-key name="fk_User_Employee1" table="user" schema="" catalog="tutorwork" columns="EmployeeId"/>
+      <exported-key name="fk_work_employee1" table="work" schema="" catalog="tutorwork" columns="EmployeeId"/>
+      <index name="idx_employee_FName" unique="false" columns="Patronymic"/>
+    </table>
+    <table name="role" schema="" catalog="tutorwork" type="TABLE">
+      <column name="RoleId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Title" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="RoleId"/>
+      <exported-key name="fk_User_Role" table="user" schema="" catalog="tutorwork" columns="RoleId"/>
+      <index name="Title_UNIQUE" unique="true" columns="Title"/>
+    </table>
+    <table name="student" schema="" catalog="tutorwork" type="TABLE">
+      <column name="StudentId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Name" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <column name="Patronymic" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <column name="Surname" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <column name="Studentcol" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="StudentId"/>
+      <exported-key name="fk_Author_Student1" table="author" schema="" catalog="tutorwork" columns="StudentId"/>
+      <exported-key name="fk_Student_has_Group_Student1" table="studentgroup" schema="" catalog="tutorwork" columns="StudentId"/>
+      <index name="idx_student_Name" unique="false" columns="Name"/>
+    </table>
+    <table name="studentgroup" schema="" catalog="tutorwork" type="TABLE">
+      <column name="StudentId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="GroupId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="StudentId,GroupId"/>
+      <foreign-key name="fk_Student_has_Group_Group1" columns="GroupId" ref-table="group" ref-schema="" ref-catalog="tutorwork" ref-columns="GroupId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_Student_has_Group_Student1" columns="StudentId" ref-table="student" ref-schema="" ref-catalog="tutorwork" ref-columns="StudentId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_Student_has_Group_Group1_idx" unique="false" columns="GroupId"/>
+      <index name="fk_Student_has_Group_Student1_idx" unique="false" columns="StudentId"/>
+    </table>
+    <table name="user" schema="" catalog="tutorwork" type="TABLE">
+      <column name="UserId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Login" sqlType="VARCHAR" precision="16" scale="0" nullable="false" jdbcType="12"/>
+      <column name="Email" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="Password" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <column name="CreateTtime" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="RoleId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="EmployeeId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="UserId"/>
+      <foreign-key name="fk_User_Employee1" columns="EmployeeId" ref-table="employee" ref-schema="" ref-catalog="tutorwork" ref-columns="EmployeeId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_User_Role" columns="RoleId" ref-table="role" ref-schema="" ref-catalog="tutorwork" ref-columns="RoleId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="Username_UNIQUE" unique="true" columns="Login"/>
+      <index name="fk_User_Employee1_idx" unique="false" columns="EmployeeId"/>
+      <index name="fk_User_Role_idx" unique="false" columns="RoleId"/>
+    </table>
+    <table name="work" schema="" catalog="tutorwork" type="TABLE">
+      <column name="WorkId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="Place" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="Course" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="Year" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="Month" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="CategoryId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ActivityId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="Winner" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="true" jdbcType="5"/>
+      <column name="EmployeeId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="TimeCount" sqlType="SMALLINT" precision="5" scale="0" nullable="true" jdbcType="5"/>
+      <primary-key name="PRIMARY" columns="WorkId"/>
+      <foreign-key name="fk_Work_Activity1" columns="ActivityId" ref-table="activity" ref-schema="" ref-catalog="tutorwork" ref-columns="ActivityId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_Work_Category1" columns="CategoryId" ref-table="category" ref-schema="" ref-catalog="tutorwork" ref-columns="CategoryId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_work_employee1" columns="EmployeeId" ref-table="employee" ref-schema="" ref-catalog="tutorwork" ref-columns="EmployeeId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_doc_work1" table="doc" schema="" catalog="tutorwork" columns="work_WorkId"/>
+      <exported-key name="fk_Work_has_Author_Work1" table="workauthor" schema="" catalog="tutorwork" columns="WorkId"/>
+      <index name="fk_Work_Activity1_idx" unique="false" columns="ActivityId"/>
+      <index name="fk_Work_Category1_idx" unique="false" columns="CategoryId"/>
+      <index name="fk_work_employee1_idx" unique="false" columns="EmployeeId"/>
+      <index name="idx_work_Course" unique="false" columns="Course"/>
+      <index name="idx_work_Month" unique="false" columns="Month"/>
+      <index name="idx_work_Title" unique="false" columns="Title"/>
+      <index name="idx_work_Winner" unique="false" columns="Winner"/>
+      <index name="idx_work_Year" unique="false" columns="Year"/>
+    </table>
+    <table name="workauthor" schema="" catalog="tutorwork" type="TABLE">
+      <column name="WorkId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="AuthorId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="WorkId,AuthorId"/>
+      <foreign-key name="fk_Work_has_Author_Author1" columns="AuthorId" ref-table="author" ref-schema="" ref-catalog="tutorwork" ref-columns="AuthorId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_Work_has_Author_Work1" columns="WorkId" ref-table="work" ref-schema="" ref-catalog="tutorwork" ref-columns="WorkId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_Work_has_Author_Author1_idx" unique="false" columns="AuthorId"/>
+      <index name="fk_Work_has_Author_Work1_idx" unique="false" columns="WorkId"/>
+    </table>
+  </data-source>
+</component>

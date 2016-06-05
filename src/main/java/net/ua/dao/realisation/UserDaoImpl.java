@@ -2,45 +2,63 @@ package net.ua.dao.realisation;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import net.ua.dao.UserDao;
 import net.ua.entity.User;
+import net.ua.exeptions.UserNotFoundException;
 
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
 
-    @Autowired
-    SessionFactory sessionFactory;
+	@Autowired
+	SessionFactory sessionFactory;
 
-    private Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+	private Session getSession() {
+		return sessionFactory.getCurrentSession();
+	}
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	@Override
-    public List<User> getAllUsers() {
-        return getSession().createQuery("from User").list();
-    }
+	public List<User> getAllUsers() {
+		return getSession().createQuery("from User").list();
+	}
 
-    @Override
-    public void addUser(User user) {
-        getSession().save(user);
-    }
+	@Override
+	public void addUser(User user) {
+		getSession().save(user);
+	}
 
-    @Override
-    public void deleteUser(User user) {
-        getSession().delete(user);
-    }
+	@Override
+	public void deleteUser(User user) {
+		getSession().delete(user);
+	}
 
-    @Override
-    public User getById(int id) {
-        return (User) getSession().get(User.class, id);
-    }
+	@Override
+	public User getById(int id) {
+		return (User) getSession().get(User.class, id);
+	}
 
-    @Override
-    public void updateUser(User user) {
-        getSession().update(user);
-    }
+	@Override
+	public void updateUser(User user) {
+		getSession().update(user);
+	}
+
+	@Override
+	public User getUser(String username) throws UserNotFoundException {
+		Query query = getSession().createQuery("from User where username = :usersName ");
+		query.setString("usersName", username);
+
+		if (query.list().size() == 0) {
+			throw new UserNotFoundException("User [" + username + "] not found");
+		} else {
+			@SuppressWarnings("unchecked")
+			List<User> list = (List<User>) query.list();
+			User userObject = (User) list.get(0);
+
+			return userObject;
+		}
+	}
 }

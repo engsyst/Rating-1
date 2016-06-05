@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Implementation-Title: Rating
+Implementation-Title: Rating_new
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: Roman Dashkivskyy
 Implementation-Vendor-Id: net.ua

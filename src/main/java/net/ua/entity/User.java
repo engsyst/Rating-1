@@ -1,15 +1,20 @@
 package net.ua.entity;
 
 import org.hibernate.validator.constraints.Email;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = 4356423098157750311L;
 
@@ -38,9 +43,11 @@ public class User implements Serializable {
 	@JoinColumn(name = "EmployeeId", nullable = false)
 	private Employee employee;
 
-	@ManyToOne
-	@JoinColumn(name = "RoleId", nullable = false)
-	private Role role;
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "user_roles", joinColumns = {
+			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "role_id", referencedColumnName = "id") })
+	private Set<Role> roles;
 
 	public String getLogin() {
 		return login;
@@ -66,6 +73,14 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -82,14 +97,6 @@ public class User implements Serializable {
 		this.employee = employee;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
 	public int getUserId() {
 		return userId;
 	}
@@ -101,6 +108,55 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User{" + "userId=" + userId + ", login='" + login + '\'' + ", email='" + email + '\'' + ", password='"
-				+ password + '\'' + ", createTime=" + createTime + ", employee=" + employee + ", role=" + role + '}';
+				+ password + '\'' + ", createTime=" + createTime + ", employee=" + employee + ", role=" + roles + '}';
 	}
+
+	@Transient
+	public Set<Permission> getPermissions() {
+		Set<Permission> perms = new HashSet<Permission>();
+		for (Role role : roles) {
+			perms.addAll(role.getPermissions());
+		}
+
+		return perms;
+	}
+
+	@Override
+	@Transient
+	public Collection<GrantedAuthority> getAuthorities() {
+		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+		authorities.addAll(getRoles());
+		authorities.addAll(getPermissions());
+
+		return authorities;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// return true = account is valid / not expired
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// return true = account is not locked
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// return true = password is valid / not expired
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
+	@Override
+	public String getUsername() {
+		return login;
+	}
+
 }

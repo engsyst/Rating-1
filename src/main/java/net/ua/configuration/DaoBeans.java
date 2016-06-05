@@ -1,9 +1,22 @@
 package net.ua.configuration;
 
-import net.ua.dao.*;
-import net.ua.dao.realisation.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import net.ua.dao.ActivityDao;
+import net.ua.dao.CategoryDao;
+import net.ua.dao.EmployeeDAO;
+import net.ua.dao.GroupDao;
+import net.ua.dao.RoleDao;
+import net.ua.dao.StudentDao;
+import net.ua.dao.UserDao;
+import net.ua.dao.realisation.ActivityDaoImpl;
+import net.ua.dao.realisation.CategoryDaoImpl;
+import net.ua.dao.realisation.EmployeeDAOImpl;
+import net.ua.dao.realisation.GroupDaoImpl;
+import net.ua.dao.realisation.RoleDaoImpl;
+import net.ua.dao.realisation.StudentDaoImpl;
+import net.ua.dao.realisation.UserDaoImpl;
 
 @Configuration
 public class DaoBeans {

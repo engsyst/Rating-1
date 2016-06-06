@@ -48,8 +48,8 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User getUser(String username) throws UserNotFoundException {
-		Query query = getSession().createQuery("from User where username = :usersName ");
-		query.setString("usersName", username);
+		Query query = getSession().createQuery("from User where Login = :login ");
+		query.setString("login", username);
 
 		if (query.list().size() == 0) {
 			throw new UserNotFoundException("User [" + username + "] not found");
@@ -57,7 +57,7 @@ public class UserDaoImpl implements UserDao {
 			@SuppressWarnings("unchecked")
 			List<User> list = (List<User>) query.list();
 			User userObject = (User) list.get(0);
-
+			System.err.println("UserDao: 60 - " + userObject);
 			return userObject;
 		}
 	}

@@ -25,7 +25,7 @@ public class User implements Serializable, UserDetails {
 
 	@Column(name = "Login", length = 16, nullable = false, unique = true)
 	@Size(min = 1, max = 16)
-	private String login;
+	private String username;
 
 	@Column(name = "Email")
 	@Email
@@ -49,12 +49,20 @@ public class User implements Serializable, UserDetails {
 					@JoinColumn(name = "role_id", referencedColumnName = "id") })
 	private Set<Role> roles;
 
-	public String getLogin() {
-		return login;
+	@Column(name = "enabled")
+	private boolean enabled = true;
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	@Override
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String login) {
+		this.username = login;
 	}
 
 	public String getEmail() {
@@ -105,19 +113,12 @@ public class User implements Serializable, UserDetails {
 		this.userId = userId;
 	}
 
-	@Override
-	public String toString() {
-		return "User{" + "userId=" + userId + ", login='" + login + '\'' + ", email='" + email + '\'' + ", password='"
-				+ password + '\'' + ", createTime=" + createTime + ", employee=" + employee + ", role=" + roles + '}';
-	}
-
 	@Transient
 	public Set<Permission> getPermissions() {
 		Set<Permission> perms = new HashSet<Permission>();
 		for (Role role : roles) {
 			perms.addAll(role.getPermissions());
 		}
-
 		return perms;
 	}
 
@@ -151,12 +152,72 @@ public class User implements Serializable, UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return enabled;
 	}
 
 	@Override
-	public String getUsername() {
-		return login;
+	public String toString() {
+		return "User [userId=" + userId + ", username=" + username + ", email=" + email + ", password=" + password
+				+ ", createTime=" + createTime + ", employee=" + employee + ", roles=" + roles + ", enabled=" + enabled
+				+ "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((employee == null) ? 0 : employee.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
+		result = prime * result + userId;
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (createTime == null) {
+			if (other.createTime != null)
+				return false;
+		} else if (!createTime.equals(other.createTime))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (employee == null) {
+			if (other.employee != null)
+				return false;
+		} else if (!employee.equals(other.employee))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (roles == null) {
+			if (other.roles != null)
+				return false;
+		} else if (!roles.equals(other.roles))
+			return false;
+		if (userId != other.userId)
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
 	}
 
 }

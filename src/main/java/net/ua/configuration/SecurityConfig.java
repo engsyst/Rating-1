@@ -1,23 +1,26 @@
 package net.ua.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
-@EnableWebSecurity
+@ComponentScan(basePackageClasses = net.ua.service.realization.UserServiceImpl.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Override
+   
+	@Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests()
-            	.antMatchers("/").permitAll()
+        		.csrf().disable()
+        		.authorizeRequests()
+//        		.antMatchers("/").permitAll()
+        		.antMatchers("/category/**").permitAll()
             	.antMatchers("/student/**").permitAll()
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/error/**").permitAll()
@@ -31,16 +34,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginPage("/login")
                 .permitAll()
+                .defaultSuccessUrl("/")
                 .and()
             .logout()
-                .permitAll();
+                .permitAll()
+                .and()
+                .httpBasic();
+        
+//        http.sessionManagement()
+//        	.sessionFixation()
+//        	.newSession();
     }
 
     @Autowired
     public void configureGlobal(UserDetailsService userDetailsService, AuthenticationManagerBuilder auth) throws Exception {
-        auth
-        .inMemoryAuthentication()
-        .withUser("gifton12").password("123456").roles("admin");
+        auth.userDetailsService(userDetailsService);
+//    	auth.inMemoryAuthentication().withUser("gifton12").password("123456").roles("ADMIN");
     }
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

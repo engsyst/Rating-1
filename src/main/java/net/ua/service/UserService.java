@@ -1,12 +1,12 @@
 package net.ua.service;
 
-import net.ua.entity.User;
-import net.ua.exeptions.UserNotFoundException;
+import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import net.ua.entity.User;
+import net.ua.exeptions.UserNotFoundException;
 
 @Service
 public interface UserService extends UserDetailsService {
@@ -21,5 +21,5 @@ public interface UserService extends UserDetailsService {
 
     public void updateUser(User user);
 
-	User getUser(String username) throws UserNotFoundException;
+    public User getUser(String username) throws UserNotFoundException;
 }

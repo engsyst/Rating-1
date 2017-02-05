@@ -5,17 +5,12 @@ import net.ua.entity.Category;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class CategoryDaoImpl implements CategoryDao {
-
-    @Autowired
-    SessionFactory sessionFactory;
-
-    private Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+@Repository
+public class CategoryDaoImpl extends AbstractSessionDAO  implements CategoryDao {
 
     @Override
     public List<Category> getAllCategories() {

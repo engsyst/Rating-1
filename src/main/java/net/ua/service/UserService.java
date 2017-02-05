@@ -5,16 +5,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface UserService {
 
-    public List<User> getAllUsers();
+    List<User> getAllUsers();
 
-    public void addUser(User user);
+    void addUser(User user);
 
-    public void deleteUser(User user);
+    void deleteUser(User user);
 
-    public User getById(int id);
+    User getById(int id);
 
-    public void updateUser(User user);
+    void updateUser(User user);
+
+    User getUserByEmail(String email);
+
+    User getUserByLogin(String login);
 }

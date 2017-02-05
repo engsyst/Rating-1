@@ -5,17 +5,12 @@ import net.ua.entity.Group;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class GroupDaoImpl implements GroupDao {
-
-    @Autowired
-    SessionFactory sessionFactory;
-
-    private Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+@Repository
+public class GroupDaoImpl extends AbstractSessionDAO  implements GroupDao {
 
     @Override
     public List<Group> getAllGroups() {

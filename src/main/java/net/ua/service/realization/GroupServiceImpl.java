@@ -5,9 +5,13 @@ import net.ua.dao.GroupDao;
 import net.ua.entity.Group;
 import net.ua.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
+@Transactional
 public class GroupServiceImpl implements GroupService{
 
     @Autowired

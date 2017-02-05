@@ -5,17 +5,12 @@ import net.ua.entity.Role;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class RoleDaoImpl implements RoleDao {
-
-    @Autowired
-    SessionFactory sessionFactory;
-
-    private Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+@Repository
+public class RoleDaoImpl extends AbstractSessionDAO  implements RoleDao {
 
     @Override
     public List<Role> getAllRoles() {

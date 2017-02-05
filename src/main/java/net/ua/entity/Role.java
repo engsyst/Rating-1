@@ -1,12 +1,14 @@
 package net.ua.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "role")
-public class Role implements Serializable{
+public class Role implements Serializable, GrantedAuthority {
 
     @Id
     @GeneratedValue
@@ -49,5 +51,10 @@ public class Role implements Serializable{
                 "roleId=" + roleId +
                 ", title='" + title + '\'' +
                 '}';
+    }
+
+    @Override
+    public String getAuthority() {
+        return title;
     }
 }

@@ -6,17 +6,12 @@ import net.ua.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class StudentDaoImpl implements StudentDao {
-
-    @Autowired
-    SessionFactory sessionFactory;
-
-    private Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+@Repository
+public class StudentDaoImpl extends AbstractSessionDAO  implements StudentDao {
 
     @Override
     public List<Student> getAllStudents() {

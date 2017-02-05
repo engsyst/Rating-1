@@ -6,18 +6,20 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Repository
-@Transactional
 public interface UserDao {
 
-    public List<User> getAllUsers();
+    List<User> getAllUsers();
 
-    public void addUser(User user);
+    void addUser(User user);
 
-    public void deleteUser(User user);
+    void deleteUser(User user);
 
-    public User getById(int id);
+    User getById(int id);
 
-    public void updateUser(User user);
+    void updateUser(User user);
+
+    User getUserByEmail(String email);
+
+    User getUserByLogin(String login);
 
 }

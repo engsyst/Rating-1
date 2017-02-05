@@ -5,20 +5,15 @@ import net.ua.entity.Activity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class ActivityDaoImpl implements ActivityDao {
-
-    @Autowired
-    SessionFactory sessionFactory;
-
-    private Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+@Repository
+public class ActivityDaoImpl extends AbstractSessionDAO implements ActivityDao {
 
     @Override
     public List<Activity> getAllActivities() {

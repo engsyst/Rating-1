@@ -2,20 +2,16 @@ package net.ua.dao.realisation;
 
 import net.ua.dao.UserDao;
 import net.ua.entity.User;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class UserDaoImpl implements UserDao{
-
-    @Autowired
-    SessionFactory sessionFactory;
-
-    private Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+@Repository
+public class UserDaoImpl extends AbstractSessionDAO implements UserDao{
 
     @Override
     public List<User> getAllUsers() {
@@ -39,6 +35,26 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public void updateUser(User user) {
-        getSession().update(user);
+        User user2update = getById(user.getUserId());
+        user2update.setCreateTime(user.getCreateTime());
+        user2update.setEmployee(user.getEmployee());
+        user2update.setRole(user.getRole());
+        user2update.setEmail(user.getEmail());
+        user2update.setPassword(user.getPassword());
+        getSession().update(user2update);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        Query query = getSession().createQuery("from User where email = :email");
+        query.setString("email", email);
+        return (User) query.uniqueResult();
+    }
+
+    @Override
+    public User getUserByLogin(String login) {
+        Query query = getSession().createQuery("from User where login = :login");
+        query.setString("login", login);
+        return (User) query.uniqueResult();
     }
 }

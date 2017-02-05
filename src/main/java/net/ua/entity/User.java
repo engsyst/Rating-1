@@ -1,18 +1,21 @@
 package net.ua.entity;
 
 import org.hibernate.validator.constraints.Email;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable{
+public class User implements Serializable, UserDetails {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserId", length = 11, nullable = false)
     private int userId;
 
@@ -20,12 +23,11 @@ public class User implements Serializable{
     @Size(min = 1, max = 16)
     private String login;
 
-    @Column(name = "Email")
+    @Column(name = "Email", unique = true)
     @Email
     private String email;
 
-    @Column(name = "Password", length = 32, nullable = false)
-    @Size(min = 1, max = 32)
+    @Column(name = "Password", nullable = false)
     private String password;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -54,10 +56,6 @@ public class User implements Serializable{
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -108,4 +106,41 @@ public class User implements Serializable{
                 ", role=" + role +
                 '}';
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+
 }

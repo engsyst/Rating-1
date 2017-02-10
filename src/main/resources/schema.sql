@@ -37,4 +37,5 @@ VALUES ('Stub', 'Stub', 'Stub', 'Roman', 'Boris', 'Dashkovskyy');
 SET @admin_employee = LAST_INSERT_ID();
 
 INSERT IGNORE INTO user (`CreateTime`, `Email`, `Login`, `Password`, `EmployeeId`, `RoleId`)
-VALUES ('2017-02-05 05:40:19', 'mineholst@gmail.com', 'admin', '$2a$12$0ywBYfgYOf3AjzgXlGiyZuD2mnSRfFF8YMt/NpDO5MqiJZyZEMHDy', @admin_employee, @admin_role);
+VALUES ('2017-02-05 05:40:19', 'mineholst@gmail.com', 'admin', '$2a$12$hi96jMqo8uEJlU2tVz/eXOQcx3KL2gxDewPZ5DZwadmTrTjX9hE6u', @admin_employee, @admin_role);
+# Password - 'admin'

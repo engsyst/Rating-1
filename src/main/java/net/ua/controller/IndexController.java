@@ -3,6 +3,8 @@ package net.ua.controller;
 import net.ua.entity.User;
 import net.ua.service.SessionService;
 import net.ua.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +23,8 @@ import java.security.Principal;
 
 @Controller
 public class IndexController {
+
+    private static Logger LOG = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -44,9 +48,9 @@ public class IndexController {
     public String getIndex() {
         User principal = sessionService.getCurrentUser();
         if (principal != null) {
-            System.out.println(principal.getLogin());
+            LOG.info(principal.getLogin());
         } else {
-            System.out.println("null");
+            LOG.info("Principal is null");
         }
         return "index";
     }

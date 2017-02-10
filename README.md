@@ -9,3 +9,6 @@
 1) Create database 'indplan' , username - 'root', password - 'root'
 2) Import dump 'mysql -u root -p -h localhost indplan < tutorwork.sql'
 3) mvn spring-boot:run
+
+## Additional
+- default application admin user (login: 'admin', password: 'admin')

@@ -191,7 +191,7 @@ CREATE TABLE `user` (
   `UserId` int(11) NOT NULL AUTO_INCREMENT,
   `Login` varchar(16) NOT NULL,
   `Email` varchar(255) DEFAULT NULL,
-  `Password` varchar(32) NOT NULL,
+  `Password` varchar(255) NOT NULL,
   `RoleId` int(11) NOT NULL,
   `EmployeeId` int(11) NOT NULL,
   `CreateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

@@ -1,5 +1,5 @@
 package net.ua.testModules.parseExel;
-
+/*
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,10 +9,10 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-
+*/
 public class ExelParser {
 
-	public static String parse(String fullPath) throws FileNotFoundException, IOException {
+/*	public static String parse(String fullPath) throws FileNotFoundException, IOException {
 		// Discipline discipline;
 		// Set<Discipline> disciplineSet = new HashSet<>();
 		// PlannedWork plannedWork;
@@ -61,5 +61,5 @@ public class ExelParser {
 			e.printStackTrace();
 		}
 	}
-
+*/
 }

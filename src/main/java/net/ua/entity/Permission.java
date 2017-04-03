@@ -11,7 +11,8 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "permissions")
+@Table(name = "permissions",
+	uniqueConstraints=@UniqueConstraint(columnNames={"permissionname"}))
 public class Permission extends BaseEntity implements Serializable, GrantedAuthority {
 
 	private static final long serialVersionUID = 2178238061564691997L;
@@ -22,10 +23,10 @@ public class Permission extends BaseEntity implements Serializable, GrantedAutho
     @Column(name = "permissionname", length = 50)
     private String permissionname;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany //(fetch = FetchType.EAGER)
     @JoinTable(name = "role_permissions",
-            joinColumns        = {@JoinColumn(name = "permission_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
+            joinColumns        = {@JoinColumn(name = "permission_id"/*, referencedColumnName = "id"*/)},
+            inverseJoinColumns = {@JoinColumn(name = "role_id"/*, referencedColumnName = "id"*/)}
     )
     private Set<Role> permRoles;
 

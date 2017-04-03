@@ -19,30 +19,30 @@ public class Employee implements Serializable{
     private int employeeId;
 
     @Column(name = "Name", length = 32, nullable = false)
-    @Pattern(regexp = "[А-ЯЁ][а-яё]{1,32}")
+    @Pattern(regexp = "(?U)\\w{1,32}")
     @NotEmpty
     private String name;
 
     @Column(name = "Patronymic", length = 32, nullable = false)
-    @Pattern(regexp = "[А-ЯЁ][а-яё]{1,32}")
+    @Pattern(regexp = "(?U)\\w{1,32}")
     @NotEmpty
     private String patronymic;
 
     @Column(name = "Surname", length = 32, nullable = false)
-    @Pattern(regexp = "[А-ЯЁ][а-яё]{1,32}")
+    @Pattern(regexp = "(?U)\\w{1,32}")
     @NotEmpty
     private String surname;
 
     @Column(name = "JobTitle", length = 45)
-    @Pattern(regexp = "[а-я-А-Я]{0,45}")
+    @Pattern(regexp = "(?U)\\w{0,45}")
     private String jobTitle;
 
     @Column(name = "Degree", length = 45)
-    @Pattern(regexp = "[а-я-А-Я]{0,45}")
+    @Pattern(regexp = "(?U)\\w{0,45}")
     private String degree;
 
     @Column(name = "AcademicTitle", length = 45)
-    @Pattern(regexp = "[а-я-А-Я]{0,45}")
+    @Pattern(regexp = "(?U)\\w{0,45}")
     private String academicTitle;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -11,7 +11,8 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "roles",
+	uniqueConstraints=@UniqueConstraint(columnNames={"rolename"}))
 public class Role extends BaseEntity implements Serializable, GrantedAuthority {
 
 	private static final long serialVersionUID = -9168239434232883836L;
@@ -23,16 +24,16 @@ public class Role extends BaseEntity implements Serializable, GrantedAuthority {
 	private String rolename;
 
 	// @OneToMany(cascade = CascadeType.ALL)
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany //(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_roles", joinColumns = {
 			@JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "user_id", referencedColumnName = "id") })
 	private Set<User> userRoles;
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "role_permissions", joinColumns = {
-			@JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "permission_id", referencedColumnName = "id") })
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "role_permissions", 
+		joinColumns = {@JoinColumn(name = "role_id"/*, referencedColumnName = "id"*/) }, 
+		inverseJoinColumns = {@JoinColumn(name = "permission_id"/*, referencedColumnName = "id"*/) })
 	private Set<Permission> permissions;
 
 	public String getRolename() {

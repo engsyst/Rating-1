@@ -44,12 +44,12 @@ public class User implements Serializable, UserDetails {
 	private Employee employee;
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_roles", joinColumns = {
-			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "role_id", referencedColumnName = "id") })
+	@JoinTable(name = "user_roles", 
+		joinColumns 		= {@JoinColumn(name = "user_id", referencedColumnName = "id") }, 
+		inverseJoinColumns 	= {@JoinColumn(name = "role_id", referencedColumnName = "id") })
 	private Set<Role> roles;
 
-	@Column(name = "enabled")
+	@Column(name = "enabled", nullable=false)
 	private boolean enabled = true;
 
 	public void setEnabled(boolean enabled) {

@@ -2,10 +2,11 @@ package ua.nure.indplan.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 
 @Entity
+@Table(name="category")
 @NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -18,8 +19,8 @@ public class Category implements Serializable {
 	private String timeunit;
 	private String title;
 	private Category category;
-	private List<Category> categories;
-	private List<Work> works;
+	private Set<Category> categories;
+	private Set<Work> works;
 
 	public Category() {
 	}
@@ -27,6 +28,7 @@ public class Category implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
 	public int getId() {
 		return this.id;
 	}
@@ -55,6 +57,7 @@ public class Category implements Serializable {
 	}
 
 
+	@Column(length=32)
 	public String getPerunit() {
 		return this.perunit;
 	}
@@ -64,6 +67,7 @@ public class Category implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getReport() {
 		return this.report;
 	}
@@ -82,6 +86,7 @@ public class Category implements Serializable {
 	}
 
 
+	@Column(length=32)
 	public String getTimeunit() {
 		return this.timeunit;
 	}
@@ -114,12 +119,12 @@ public class Category implements Serializable {
 
 
 	//bi-directional many-to-one association to Category
-	@OneToMany(mappedBy="category")
-	public List<Category> getCategories() {
+	@OneToMany(mappedBy="category", fetch=FetchType.EAGER)
+	public Set<Category> getCategories() {
 		return this.categories;
 	}
 
-	public void setCategories(List<Category> categories) {
+	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}
 
@@ -139,21 +144,21 @@ public class Category implements Serializable {
 
 
 	//bi-directional many-to-many association to Work
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="work_has_category"
 		, joinColumns={
-			@JoinColumn(name="category_id")
+			@JoinColumn(name="category_id", nullable=false)
 			}
 		, inverseJoinColumns={
-			@JoinColumn(name="work_id")
+			@JoinColumn(name="work_id", nullable=false)
 			}
 		)
-	public List<Work> getWorks() {
+	public Set<Work> getWorks() {
 		return this.works;
 	}
 
-	public void setWorks(List<Work> works) {
+	public void setWorks(Set<Work> works) {
 		this.works = works;
 	}
 

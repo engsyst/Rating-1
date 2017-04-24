@@ -9,8 +9,8 @@
     <title>Добавить сотрудника</title>
 
     <!-- Core CSS - Include with every page -->
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap-3.1.1.min.css"
-          data-th-href="@{/css/bootstrap-3.1.1.min.css}" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"
+          data-th-href="@{/css/bootstrap.css}" />
 
     <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
           data-th-href="@{/font-awesome/css/font-awesome.css}" />
@@ -47,7 +47,7 @@
 
     <!-- Load head and left menu -->
     <div data-th-replace="fragments/sb-admin :: top-nav"></div>
-    <div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+    <div data-th-replace="fragments/sb-admin :: vert-nav-admin (employee, employee.save)"></div>
 
     <div id="page-wrapper">
         <div class="row">
@@ -69,7 +69,7 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td><input type="text" hidden="hidden" data-th-field="*{employeeId}"/>
+                                <td><input type="text" hidden="hidden" data-th-field="*{id}"/>
                                     <!-- Name field -->
                                     <input class="form-control" type="text" data-th-field="*{name}" name="name" required=""
                                            pattern="[А-ЯЁ][а-яё]{1,32}" title="Имя должно содержать только русские символы"/></td>

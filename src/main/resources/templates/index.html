@@ -3,8 +3,8 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Core CSS - Include with every page -->
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap-3.1.1.min.css"
-          data-th-href="@{/css/bootstrap-3.1.1.min.css}" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"
+          data-th-href="@{/css/bootstrap.css}" />
 
     <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
           data-th-href="@{/font-awesome/css/font-awesome.css}" />
@@ -41,7 +41,7 @@
 
     <div data-th-replace="fragments/sb-admin :: top-nav"></div>
 
-    <div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+    <div data-th-replace="fragments/sb-admin :: vert-nav-admin ('', '')"></div>
 
     <div id="page-wrapper">
         <div class="row">

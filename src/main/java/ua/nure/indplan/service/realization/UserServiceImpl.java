@@ -11,11 +11,15 @@ import ua.nure.indplan.dao.UserDao;
 import ua.nure.indplan.entity.User;
 import ua.nure.indplan.exeptions.UserNotFoundException;
 import ua.nure.indplan.service.UserService;
+import ua.nure.indplan.validation.UserValidator;
 
 public class UserServiceImpl implements UserService{
 
     @Autowired
     UserDao userDao;
+    
+    @Autowired
+    UserValidator validator;
 
     @Override
     public List<User> getAllUsers() {

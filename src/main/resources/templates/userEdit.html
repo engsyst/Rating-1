@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -9,8 +8,8 @@
     <title>Редактировать пользователя</title>
 
     <!-- Core CSS - Include with every page -->
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap-3.1.1.min.css"
-          data-th-href="@{/css/bootstrap-3.1.1.min.css}" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"
+          data-th-href="@{/css/bootstrap.css}" />
 
     <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
           data-th-href="@{/font-awesome/css/font-awesome.css}" />
@@ -47,61 +46,25 @@
 
     <!-- Load head and left menu -->
     <div data-th-replace="fragments/sb-admin :: top-nav"></div>
-    <div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+    <div data-th-replace="fragments/sb-admin :: vert-nav-admin (user, user.save)"></div>
 
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Редактировать пользователя</h1>
+                <h1 class="page-header">Пользователь</h1>
                 <div class="col-sm-2"></div>
                 <div class="col-sm-6">
-                    <!-- Add user form -->
-                    <form class="form" action="#" data-th-action="@{/user/update}" method="post">
-                        <div class="form-group">
-                            <label for="login">Имя пользователя</label>
-                            <input class="form-control" type="text" data-th-field="*{user.login}" id="login" name="login" required="" />
-                        </div>
-
-                        <div class="form-group" >
-                            <label for="password">Пароль</label>
-                            <input class="form-control" type="password" data-th-field="*{user.password}" id="password" name="password" required="" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input class="form-control" type="email" data-th-field="*{user.email}" id="email" name="email" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="role">Уровень доступа</label>
-                            <select class="form-control" th:field="*{user.role.roleId}" id="role">
-                                <option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.title}">Dropdown</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="employee">Сотрудник</label>
-                            <select class="form-control" th:field="*{user.employee.employeeId}" id="employee">
-                                <option th:each="employee : ${employees}" th:value="${employee.employeeId}" th:text="${employee.getSNP()}">Dropdown</option>
-                            </select>
-                        </div>
-
+                    <!-- User form -->
+				    <form data-th-replace="fragments/user-form :: errorMessage"></form>
+				    <form data-th-replace="fragments/user-form :: userForm  (true, false, false, true, true)"></form>
+				    <form >
                         <div class="form-group">
                             <label for="saveButton"></label>
-                            <button type="submit" class="btn btn-primary" id="saveButton">Сохранить изменения</button>
+                            <button type="submit" class="btn btn-primary" id="saveButton" form="userForm" formmethod="post" formaction="#" data-th-formaction="@{/user/update}">Сохранить</button>
                         </div>
-
-                        <tr>
-                            <td class="col-sm-1"></td>
-                            <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('user.login')}" th-errors="*{user.login}">login error</td>
-                            <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('user.email')}" th-errors="*{user.email}">email error</td>
-                            <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('user.password')}" th-errors="*{user.password}">password error</td>
-                            <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('user.role')}" th-errors="*{user.role}">role error</td>
-                            <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('user.employee')}" th-errors="*{user.employee}">employee error</td>
-                            <td class="col-sm-2"></td>
-                        </tr>
-
-                    </form>
+				    </form>
+				    <form data-th-replace="fragments/user-form :: formMessage"></form>
+                    <!-- end User form -->
                 </div>
             </div><!-- /.col-lg-12 -->
         </div><!-- /.row -->

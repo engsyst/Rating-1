@@ -10,11 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ua.nure.indplan.dao.UserDao;
 import ua.nure.indplan.entity.User;
 import ua.nure.indplan.exeptions.UserNotFoundException;
+import ua.nure.indplan.service.EmployeeService;
 
 public class UserDaoImpl implements UserDao {
 
 	@Autowired
 	SessionFactory sessionFactory;
+	
+//	@Autowired
+//	EmployeeService employeeService;
 
 	private Session getSession() {
 		return sessionFactory.getCurrentSession();
@@ -43,7 +47,12 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void updateUser(User user) {
-		getSession().update(user);
+		Session session = getSession();
+//		User u = (User) session.get(User.class, user.getId());
+//		u.setEmail(user.getEmail());
+//		u.setPassword(user.getPassword());
+//		u.setEmployee(employeeService.getById(user.getEmployee().getId()));
+		session.update(user);
 	}
 
 	@Override

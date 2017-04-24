@@ -33,4 +33,24 @@ public class ServicesBeans {
     public CategoryService categoryService() {
         return new CategoryServiceImpl();
     }
+    
+    @Bean
+    public CategoryTypeService categoryTypeService() {
+    	return new CategoryTypeServiceImpl();
+    }
+    
+    @Bean
+    public CategoryTypeFormatter categoryTypeFormatter() {
+    	return new CategoryTypeFormatter();
+    }
+    
+    @Bean
+    public RoleFormatter roleFormatter() {
+    	return new RoleFormatter();
+    }
+    
+    @Bean
+    public EmployeeFormatter employeeFormatter() {
+    	return new EmployeeFormatter();
+    }
 }

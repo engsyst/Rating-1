@@ -26,12 +26,14 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 
 
 /**
  * The persistent class for the user database table.
  * 
  */
+@Validated
 @Entity
 @Table(name="user")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
@@ -49,6 +51,19 @@ public class User implements Serializable, UserDetails {
 	public User() {
 	}
 
+	public User(Employee employee, Set<Role> roles) {
+		super();
+		this.employee = employee;
+		this.roles = roles;
+	}
+
+	public User(Employee employee, Role role) {
+		super();
+		this.employee = employee;
+		this.roles = new HashSet<>();
+		roles.add(role);
+	}
+	
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -140,7 +155,18 @@ public class User implements Serializable, UserDetails {
 		this.roles = roles;
 	}
 
-
+	public Role addRole(Role role) {
+		getRoles().add(role);
+		role.getUsers().add(this);
+		return role;
+	}
+	
+	public Role removeRole(Role role) {
+		getRoles().remove(role);
+		role.getUsers().remove(this);
+		return role;
+	}
+	
 	@Transient
 	public Set<Permission> getPermissions() {
 		Set<Permission> perms = new HashSet<Permission>();
@@ -232,6 +258,13 @@ public class User implements Serializable, UserDetails {
 		} else if (!username.equals(other.username))
 			return false;
 		return true;
+	}
+
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", password=" + password + ", username=" + username
+				+ ", employee=" + employee.getId() + ", roles=" + roles + "]";
 	}
 
 }

@@ -5,11 +5,13 @@ import org.springframework.context.annotation.Configuration;
 
 import ua.nure.indplan.dao.ActivityDao;
 import ua.nure.indplan.dao.CategoryDao;
+import ua.nure.indplan.dao.CategoryTypeDao;
 import ua.nure.indplan.dao.EmployeeDAO;
 import ua.nure.indplan.dao.RoleDao;
 import ua.nure.indplan.dao.UserDao;
 import ua.nure.indplan.dao.realisation.ActivityDaoImpl;
 import ua.nure.indplan.dao.realisation.CategoryDaoImpl;
+import ua.nure.indplan.dao.realisation.CategoryTypeDaoImpl;
 import ua.nure.indplan.dao.realisation.EmployeeDAOImpl;
 import ua.nure.indplan.dao.realisation.RoleDaoImpl;
 import ua.nure.indplan.dao.realisation.UserDaoImpl;
@@ -40,5 +42,10 @@ public class DaoBeans {
     @Bean
     public CategoryDao categoryDao() {
         return new CategoryDaoImpl();
+    }
+    
+    @Bean
+    public CategoryTypeDao categoryTypeDao() {
+    	return new CategoryTypeDaoImpl();
     }
 }

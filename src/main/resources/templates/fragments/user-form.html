@@ -62,43 +62,43 @@
                             <h4 data-th-text="${errorMessage}"></h4>
                         </div>
                     </form>
-                    <form class="form" data-th-fragment="userForm (dname, dpass, demail, drole, dempl)" id="userForm" name="userForm" data-th-field="${user}">
-                        <input  type="hidden" name="id" data-th-field="*{user.id}"/>
-						<div class="form-group required" th:classappend="${#fields.hasErrors('user.username')}? 'has-error'">
+                    <form class="form" data-th-fragment="userForm (dname, dpass, demail, drole, dempl)" id="userForm" name="userForm" data-th-object="${user}">
+                        <input  type="hidden" name="id" data-th-field="*{id}"/>
+						<div class="form-group required" th:classappend="${#fields.hasErrors('username')}? 'has-error'">
                            <label for="username">Имя пользователя</label> 
                            <input class="form-control" type="text"
-								data-th-field="*{user.username}" id="username" name="username"
+								data-th-field="*{username}" id="username" name="username"
 								data-th-disabled="${dname}" />
 								<!-- required="required" --> 
 						<!-- <span class="help-block">Название книги</span> -->
-						<span class="has-error" data-th-if="${#fields.hasErrors('user.username')}" data-th-errors="*{user.username}">login error</span>
+						<span class="has-error" data-th-if="${#fields.hasErrors('username')}" data-th-errors="*{username}">login error</span>
 						</div>
 						<div class="form-group required">
 							<label for="password">Пароль</label> <input class="form-control"
-								type="password" data-th-field="*{user.password}" id="password"
+								type="password" data-th-field="*{password}" id="password"
 								name="password" data-th-disabled="${dpass}" />
 							<!-- required="required"  -->
 						</div>
 						<div class="form-group">
                             <label for="email">Email</label>
                             <input class="form-control" type="email" 
-		                            data-th-field="*{user.email}" id="email" name="email" 
+		                            data-th-field="*{email}" id="email" name="email" 
 		                            data-th-disabled="${demail}" />
                         </div>
 
                         <div class="form-group required">
                             <label for="roles">Уровень доступа</label>
-                            <select class="form-control" data-th-field="*{user.roles}" id="roles" 
+                            <select class="form-control" data-th-field="*{roles}" id="roles" 
                             		data-th-disabled="${drole}" >
-                                <option data-th-each="role : ${roles}" 
+                                <option data-th-each="role : ${allRoles}" 
                                 		data-th-value="${role.id}" 
                                 		data-th-text="${role.rolename}">Dropdown</option>
                             </select>
                         </div>
                         <div class="form-group required">
                             <label for="employee">Сотрудник</label>
-                            <select class="form-control" data-th-field="*{user.employee}" id="employee" data-th-disabled="${dempl}" >
-									<option data-th-each="employee : ${employees}"
+                            <select class="form-control" data-th-field="*{employee}" id="employee" data-th-disabled="${dempl}" >
+									<option data-th-each="employee : ${allEmployees}"
 										data-th-value="${employee.id}"
 										data-th-text="${employee.getSNP()}"
 										>Dropdown</option>

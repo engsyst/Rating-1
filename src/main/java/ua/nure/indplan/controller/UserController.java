@@ -77,8 +77,8 @@ public class UserController {
     	List<Role> roles = roleService.getAllRoles();
     	roles.add(0, new Role());
     	model.addAttribute("user", user);
-    	model.addAttribute("employees", employees);
-    	model.addAttribute("roles", roles);
+    	model.addAttribute("allEmployees", employees);
+    	model.addAttribute("allRoles", roles);
     }
     
     /**

@@ -19,10 +19,10 @@ public class UserValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		User u = (User) target;
 		if (u.getEmployee() == null || u.getEmployee().getId() == 0) {
-			errors.rejectValue("employee", "employee.required", "emplloyee is empty");
+			errors.rejectValue("employee", "user.employee.incorrect", "emplloyee is empty");
 		}
 		if (u.getRoles() == null || u.getRoles().size() == 0 || u.getRoles().toArray(new Role[0])[0].getId() == 0) {
-			errors.rejectValue("roles", "roles.required", "role is empty");
+			errors.rejectValue("roles", "user.roles.incorrect", "role is empty");
 		} 
 	}
 

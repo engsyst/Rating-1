@@ -117,16 +117,24 @@ public class UserController {
     	StringBuffer sb = new StringBuffer();
     	
     	if (br.hasFieldErrors("username")) {
-    		sb.append("Не корректное имя пользователя. ");
+    		for (String msg : br.resolveMessageCodes("user.username.incorrect")) {
+    			sb.append(msg);
+			}
     	}
     	if (br.hasFieldErrors("password")) {
-    		sb.append("Не корректный пароль. ");
+    		for (String msg : br.resolveMessageCodes("user.password.incorrect")) {
+    			sb.append(msg);
+    		}
     	}
     	if (br.hasFieldErrors("roles")) {
-    		sb.append("Не указана роль. ");
+    		for (String msg : br.resolveMessageCodes("user.roles.incorrect")) {
+    			sb.append(msg);
+    		}
     	}
     	if (br.hasFieldErrors("employee")) {
-    		sb.append("Не указан сотрудник. ");
+    		for (String msg : br.resolveMessageCodes("user.employee.incorrect")) {
+    			sb.append(msg);
+    		}
     	}
     	return sb.toString();
     }

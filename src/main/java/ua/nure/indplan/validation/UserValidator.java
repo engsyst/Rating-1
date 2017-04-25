@@ -1,6 +1,7 @@
 package ua.nure.indplan.validation;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -18,6 +19,12 @@ public class UserValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		User u = (User) target;
+		if (StringUtils.isEmpty(u.getUsername()) || StringUtils.containsWhitespace(u.getUsername())) {
+			errors.rejectValue("username", "user.username.incorrect", "login is empty");
+		}
+		if (StringUtils.isEmpty(u.getPassword())) {
+			errors.rejectValue("password", "user.password.incorrect", "password is empty");
+		}
 		if (u.getEmployee() == null || u.getEmployee().getId() == 0) {
 			errors.rejectValue("employee", "user.employee.incorrect", "emplloyee is empty");
 		}

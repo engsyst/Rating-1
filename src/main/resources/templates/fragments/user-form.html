@@ -56,58 +56,60 @@
                 <div class="col-sm-2"></div>
                 <div class="col-sm-6">
 					<!-- User form -->
-                    <form data-th-fragment="errorMessage" id="errorMessage" name="errorMessage">
-                        <div class="alert alert-warning alert-dismissable" th:if="${errorMessage != null}">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4 data-th-text="${errorMessage}"></h4>
-                        </div>
-                    </form>
-                    <form class="form" data-th-fragment="userForm (dname, dpass, demail, drole, dempl)" id="userForm" name="userForm" data-th-field="${user}">
-                        <input  type="hidden" name="id" data-th-field="*{user.id}"/>
-						<div class="form-group required" th:classappend="${#fields.hasErrors('user.username')}? 'has-error'">
+                    <form class="form" data-th-fragment="userForm (dname, dpass, demail, drole, dempl)" id="userForm" name="userForm" data-th-object="${user}">
+                        <input  type="hidden" name="id" data-th-field="*{id}"/>
+						<div class="form-group required" data-th-attrappend="class=${#fields.hasErrors('username')}? ' has-error'">
                            <label for="username">Имя пользователя</label> 
-                           <input class="form-control" type="text"
-								data-th-field="*{user.username}" id="username" name="username"
-								data-th-disabled="${dname}" />
-								<!-- required="required" --> 
-						<!-- <span class="help-block">Название книги</span> -->
-						<span class="has-error" data-th-if="${#fields.hasErrors('user.username')}" data-th-errors="*{user.username}">login error</span>
+                           <input class="form-control" type="text" id="username" name="username"
+								data-th-field="*{username}" 
+								data-th-disabled="${dname}" 
+								data-th-errorclass="username"/>
+								<!-- required="required" -->
+							<span class="help-block" data-th-if="${#fields.hasErrors('username')}" data-th-errors="*{username}">Incorrect username</span>
 						</div>
-						<div class="form-group required">
-							<label for="password">Пароль</label> <input class="form-control"
-								type="password" data-th-field="*{user.password}" id="password"
-								name="password" data-th-disabled="${dpass}" />
+						
+						<div class="form-group required" data-th-attrappend="class=${#fields.hasErrors('password')}? ' has-error'">
+							<label for="password">Пароль</label> 
+							<input class="form-control" type="password" id="password" name="password" 
+								data-th-field="*{password}" 
+								data-th-disabled="${dpass}" 
+								data-th-errorclass="password"/>
 							<!-- required="required"  -->
+							<span class="help-block" data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}">Incorrect password</span>
 						</div>
-						<div class="form-group">
+						
+						<div class="form-group" data-th-attrappend="class=${#fields.hasErrors('email')}? ' has-error'">
                             <label for="email">Email</label>
                             <input class="form-control" type="email" 
-		                            data-th-field="*{user.email}" id="email" name="email" 
+		                            data-th-field="*{email}" id="email" name="email" 
 		                            data-th-disabled="${demail}" />
+							<span class="help-block" data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}">Incorrect password</span>
                         </div>
 
-                        <div class="form-group required">
+                        <div class="form-group required" data-th-attrappend="class=${#fields.hasErrors('roles')}? ' has-error'">
                             <label for="roles">Уровень доступа</label>
-                            <select class="form-control" data-th-field="*{user.roles}" id="roles" 
+                            <select class="form-control" data-th-field="*{roles}" id="roles" 
                             		data-th-disabled="${drole}" >
-                                <option data-th-each="role : ${roles}" 
+                                <option data-th-each="role : ${allRoles}" 
                                 		data-th-value="${role.id}" 
                                 		data-th-text="${role.rolename}">Dropdown</option>
                             </select>
+							<span class="help-block" data-th-if="${#fields.hasErrors('roles')}" data-th-errors="*{roles}">Incorrect password</span>
                         </div>
-                        <div class="form-group required">
+						
+                        <div class="form-group required" data-th-attrappend="class=${#fields.hasErrors('employee')}? ' has-error'">
                             <label for="employee">Сотрудник</label>
-                            <select class="form-control" data-th-field="*{user.employee}" id="employee" data-th-disabled="${dempl}" >
-									<option data-th-each="employee : ${employees}"
+                            <select class="form-control" data-th-field="*{employee}" id="employee" data-th-disabled="${dempl}" >
+									<option data-th-each="employee : ${allEmployees}"
 										data-th-value="${employee.id}"
 										data-th-text="${employee.getSNP()}"
 										>Dropdown</option>
-										<!-- data-th-selected="${(user.employee != null) and (employee.id == user.employee.id)}" -->
 								</select>
+							<span class="help-block" data-th-if="${#fields.hasErrors('employee')}" data-th-errors="employee">Incorrect password</span>
                         </div>
                     </form>
                     <form data-th-fragment="formMessage" id="formMessage" name="formMessage">
-                        <div class="alert alert-success alert-dismissable" th:if="${message != null}">
+                        <div class="alert alert-success alert-dismissable" th:if="${message != null}" id="success" name="success">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <h4 data-th-text="${message}"></h4>
                         </div>

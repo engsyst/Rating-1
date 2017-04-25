@@ -64,53 +64,7 @@
                             <button type="submit" class="btn btn-primary" id="saveButton" form="userForm" formmethod="post" formaction="#" data-th-formaction="@{/user/save}">Добавить пользователя</button>
                         </div>
 				    </form>
-                    
-                    <!-- <form class="form" action="#" data-th-action="@{/user/save}" method="post">
-                        <div class="form-group">
-                            <label for="username">Имя пользователя</label>
-                            <input class="form-control" type="text" data-th-field="*{user.username}" id="username" name="username" required="required" />
-                        </div>
-                        <div class="form-group" >
-                            <label for="password">Пароль</label>
-                            <input class="form-control" type="password" data-th-field="*{user.password}" id="password" name="password" required="required" />
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input class="form-control" type="email" data-th-field="*{user.email}" id="email" name="email" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="roles">Уровень доступа</label>
-                            <select class="form-control" data-th-field="*{user.roles}" id="roles">
-                                <option data-th-each="role : ${roles}" data-th-value="${role.id}" data-th-text="${role.rolename}">Dropdown</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="employee">Сотрудник</label>
-                            <select class="form-control" data-th-field="*{user.employee}" id="employee">
-                                <option data-th-each="employee : ${employees}" data-th-value="${employee.id}" data-th-text="${employee.getSNP()}">Dropdown</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="saveButton"></label>
-                            <button type="submit" class="btn btn-primary" id="saveButton">Добавить пользователя</button>
-                        </div>
-                        <tr>
-                            <td class="col-sm-1"></td>
-                            <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('user.username')}" data-th-errors="*{user.username}">login error</td>
-                            <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('user.email')}" data-th-errors="*{user.email}">email error</td>
-                            <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('user.password')}" data-th-errors="*{user.password}">password error</td>
-                            <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('user.roles')}" data-th-errors="*{user.roles}">role error</td>
-                            <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('user.employee')}" data-th-errors="*{user.employee}">employee error</td>
-                            <td class="col-sm-2"></td>
-                        </tr>
-
-                        <div class="alert alert-success alert-dismissable" th:if="${message != null}">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4 data-th-text="${message}"></h4>
-                        </div>
-                    </form>
- -->                </div>
+                </div>
             </div><!-- /.col-lg-12 -->
         </div><!-- /.row -->
     </div><!-- page wrapper -->

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+
+    <!-- Core CSS - Include with every page -->
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"
+          data-th-href="@{/css/bootstrap.css}" />
+
+    <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
+          data-th-href="@{/font-awesome/css/font-awesome.css}" />
+
+    <!-- SB Admin CSS - Include with every page -->
+    <link type="text/css" rel="stylesheet" href="/css/sb-admin.css"
+          data-th-href="@{/css/sb-admin.css}" />
+
+    <style>
+        .no-border-on-me>thead>tr>th,
+        .no-border-on-me>tbody>tr>th,
+        .no-border-on-me>tfoot>tr>th,
+        .no-border-on-me>thead>tr>td,
+        .no-border-on-me>tbody>tr>td,
+        .no-border-on-me>tfoot>tr>td
+        {
+            border-top-style: none;
+            border-bottom-style: none;
+        }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+
+<div id="wrapper"><!-- /#wrapper -->
+
+    <div data-th-replace="fragments/sb-admin :: top-nav"></div>
+    <div data-th-replace="fragments/sb-admin :: vert-nav-admin (category, category.save)"></div>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Новая категория</h1>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-6">
+                    <!-- Add category form -->
+                    <form class="form" action="#" data-th-action="@{/category/save}" method="post">
+
+                        <div class="alert alert-success alert-dismissable" th:if="${message != null}">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h4 data-th-text="${message}"></h4>
+                        </div>
+
+                        <div class="form-group">
+                            <p><b>Пример:</b> 
+                            <ul>
+                            <li>Организационно-воспитательная работа</li>
+                            <li>Вождение студента на поводке на занятия</li>
+                            <li>25 часов на 1 студента</li>
+                            <li>Видео подтверждение</li>
+                            <li>Видео подтверждение предоставляется по каждому случаю и обязано содержать видимые отметки времени на материале</li>
+                            </ul>
+                            </p>
+                            <label for="categ">Вид нагрузки*</label>
+                            <select class="form-control" data-th-field="*{category.type}" id="type">
+                                <option data-th-each="type : ${types}" data-th-value="${type.id}" data-th-text="${type.title}">Dropdown</option>
+                            </select>
+                            <p><b>Пример:</b> 
+                            <br/>Организационно-воспитательная работа. 
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Название*</label>
+                            <input class="form-control" type="text" data-th-field="*{category.title}" id="title" name="title" required="required" 
+                            placeholder="Вождение студента на поводке на занятия"/>
+                            <!-- <p><b>Пример:</b> 
+                            <br/>Вождение студента на поводке на занятия.
+                            </p> -->
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Количество единиц затрат</label>
+                            <input class="form-control" type="number" data-th-field="*{category.timerate}" id="timerate" name="timerate" 
+                            placeholder="25"/>
+                            <!-- <p><b>Пример:</b> 
+                            <br/>25 
+                            </p> -->
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Единицы измерения затрат (например, часы)</label>
+                            <input class="form-control" type="text" data-th-field="*{category.timeunit}" id="timeunit" name="timeunit" 
+                            placeholder="часов"/>
+                            <!-- <p><b>Пример:</b> 
+                            <br/>часов 
+                            </p> -->
+                        </div>
+                        <div class="form-group">
+                            <label for="title">На сколько единиц</label>
+                            <input class="form-control" type="number" data-th-field="*{category.perrate}" id="perrate" name="perrate" 
+                            placeholder="1"/>
+                            <!-- <p><b>Пример:</b> 
+                            <br/>1 
+                            </p> -->
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Единицы измерения затрат (например, студент)</label>
+                            <input class="form-control" type="text" data-th-field="*{category.perunit}" id="perunit" name="perunit" 
+                            placeholder="студента"/>
+                            <!-- <p><b>Пример:</b> 
+                            <br/>студента
+                            </p> -->
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Предоставляемый отчет о работе</label>
+                            <textarea class="form-control" data-th-field="*{category.report}" id="report" name="report" 
+                            placeholder="Видео подтверждение"></textarea>
+                            <!-- <p><b>Пример:</b> 
+                            <br/>Видео подтверждение
+                            </p> -->
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Дополнительные сведения</label>
+                            <textarea class="form-control" data-th-field="*{category.description}" id="description" name="description" 
+                            placeholder="Видео подтверждение предоставляется по каждому случаю и обязано содержать видимые отметки времени на материале"></textarea>
+                            <!-- <p><b>Пример:</b> 
+                            <br/>Видео подтверждение предоставляется по каждому случаю и обязано содержать видимые отметки время на материале.
+                            </p> -->
+                        </div>
+                        <div class="form-group">
+                            <label for="saveButton"></label>
+                            <button type="submit" class="btn btn-primary" id="saveButton">Добавить категорию</button>
+                        </div>
+                        <tr>
+                               <td class="col-sm-1"></td>
+                               <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('category.title')}" data-th-errors="*{category.title}">title error</td>
+                               <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('category.type')}" data-th-errors="*{category.type}">type error</td>
+                               <td class="col-sm-2"></td>
+                        </tr>
+                    </form>
+                </div>
+            </div><!-- /.col-lg-12 -->
+        </div><!-- /.row -->
+    </div><!-- page wrapper -->
+</div><!-- /#wrapper -->
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript" src="/js/jquery-1.11.0.min.js"
+        data-th-src="@{/js/jquery-1.11.0.min.js}"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script type="text/javascript" src="/resources/js/bootstrap-3.1.1.min.js"
+        data-th-src="@{/js/bootstrap-3.1.1.min.js}"></script>
+
+<!-- Core Scripts - Include with every page -->
+<script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"
+        data-th-src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+
+<!-- SB Admin Scripts - Include with every page -->
+<script type="text/javascript" src="resources/js/sb-admin.js"
+        data-th-src="@{/js/sb-admin.js}"></script>
+
+<script type="text/javascript" src="resources/js/datepicker/js/bootstrap-datepicker.js"
+        data-th-src="@{/js/datepicker/js/bootstrap-datepicker.js}"></script>
+
+
+</body>
+</html>

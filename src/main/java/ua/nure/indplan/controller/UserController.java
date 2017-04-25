@@ -46,7 +46,7 @@ public class UserController {
 
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
-		binder.addValidators(validator);
+		binder.setValidator(validator);
 	}
 	
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
@@ -77,8 +77,8 @@ public class UserController {
     	List<Role> roles = roleService.getAllRoles();
     	roles.add(0, new Role());
     	model.addAttribute("user", user);
-    	model.addAttribute("employees", employees);
-    	model.addAttribute("roles", roles);
+    	model.addAttribute("allEmployees", employees);
+    	model.addAttribute("allRoles", roles);
     }
     
     /**
@@ -93,17 +93,10 @@ public class UserController {
     public String userSave(@Valid @ModelAttribute User user, BindingResult bindingResult,
                 RedirectAttributes redirectAttributes, Model model) {
         log.info("save:POST:userSave");
-        /*DataBinder binder = new DataBinder(user);
-        binder.addValidators(new UserValidator());
-         binder.validate();
-        BindingResult result = binder.getBindingResult();
-        if (result.hasErrors()) {
-        	return "userAdd";
-        }*/
         if (bindingResult.hasErrors()) {
             log.error(bindingResult.toString());
             fillUserModel(model, user);
-            model.addAttribute("errorMessage", errorsToString(bindingResult));
+//            model.addAttribute("errorMessage", errorsToString(bindingResult));
             return "userAdd";
         } else {
             userService.addUser(user);

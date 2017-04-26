@@ -56,8 +56,17 @@
                 <div class="col-sm-2"></div>
                 <div class="col-sm-6">
 					<!-- User form -->
-                    <form class="form" data-th-fragment="userForm (dname, dpass, demail, drole, dempl)" id="userForm" name="userForm" data-th-object="${user}">
+                    <div class="alert alert-success alert-dismissable" th:if="${message != null}" 
+                    		id="formMessage" data-th-fragment="formMessage">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4 data-th-text="${message}"></h4>
+                    </div>
+                    <form class="form" data-th-fragment="userForm (actionUri, actionText, dname, dpass, demail, drole, dempl)" 
+                    		id="userForm" name="userForm" method="post" action="#" 
+                    		data-th-action="@{${actionUri}}"
+                    		data-th-object="${user}">
                         <input  type="hidden" name="id" data-th-field="*{id}"/>
+                        
 						<div class="form-group required" data-th-attrappend="class=${#fields.hasErrors('username')}? ' has-error'">
                            <label for="username">Имя пользователя</label> 
                            <input class="form-control" type="text" id="username" name="username"
@@ -67,7 +76,6 @@
 								<!-- required="required" -->
 							<span class="help-block" data-th-if="${#fields.hasErrors('username')}" data-th-errors="*{username}">Incorrect username</span>
 						</div>
-						
 						<div class="form-group required" data-th-attrappend="class=${#fields.hasErrors('password')}? ' has-error'">
 							<label for="password">Пароль</label> 
 							<input class="form-control" type="password" id="password" name="password" 
@@ -77,7 +85,6 @@
 							<!-- required="required"  -->
 							<span class="help-block" data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}">Incorrect password</span>
 						</div>
-						
 						<div class="form-group" data-th-attrappend="class=${#fields.hasErrors('email')}? ' has-error'">
                             <label for="email">Email</label>
                             <input class="form-control" type="email" 
@@ -85,7 +92,6 @@
 		                            data-th-disabled="${demail}" />
 							<span class="help-block" data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}">Incorrect password</span>
                         </div>
-
                         <div class="form-group required" data-th-attrappend="class=${#fields.hasErrors('roles')}? ' has-error'">
                             <label for="roles">Уровень доступа</label>
                             <select class="form-control" data-th-field="*{roles}" id="roles" 
@@ -96,7 +102,6 @@
                             </select>
 							<span class="help-block" data-th-if="${#fields.hasErrors('roles')}" data-th-errors="*{roles}">Incorrect password</span>
                         </div>
-						
                         <div class="form-group required" data-th-attrappend="class=${#fields.hasErrors('employee')}? ' has-error'">
                             <label for="employee">Сотрудник</label>
                             <select class="form-control" data-th-field="*{employee}" id="employee" data-th-disabled="${dempl}" >
@@ -107,11 +112,10 @@
 								</select>
 							<span class="help-block" data-th-if="${#fields.hasErrors('employee')}" data-th-errors="employee">Incorrect password</span>
                         </div>
-                    </form>
-                    <form data-th-fragment="formMessage" id="formMessage" name="formMessage">
-                        <div class="alert alert-success alert-dismissable" th:if="${message != null}" id="success" name="success">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4 data-th-text="${message}"></h4>
+                        <div class="form-group">
+                            <label for="saveButton"></label>
+                            <button type="submit" class="btn btn-primary" 
+                            		id="saveButton" form="userForm" data-th-text="${actionText}">Сохранить</button>
                         </div>
                     </form>
                 </div>

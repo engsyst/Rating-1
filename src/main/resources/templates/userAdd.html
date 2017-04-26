@@ -55,15 +55,8 @@
                 <div class="col-sm-2"></div>
                 <div class="col-sm-6">
                     <!-- User form -->
-				    <form data-th-replace="fragments/user-form :: errorMessage"></form>
-				    <form data-th-replace="fragments/user-form :: formMessage"></form>
-				    <form data-th-replace="fragments/user-form :: userForm (false, false, false, false, false)"></form>
-				    <form >
-                        <div class="form-group">
-                            <label for="saveButton"></label>
-                            <button type="submit" class="btn btn-primary" id="saveButton" form="userForm" formmethod="post" formaction="#" data-th-formaction="@{/user/save}">Добавить пользователя</button>
-                        </div>
-				    </form>
+				    <div data-th-replace="fragments/user-form :: formMessage"></div>
+				    <form data-th-replace="fragments/user-form :: userForm (@{/user/save}, 'Сохранить', false, false, false, false, false)"></form>
                 </div>
             </div><!-- /.col-lg-12 -->
         </div><!-- /.row -->

@@ -55,15 +55,8 @@
                 <div class="col-sm-2"></div>
                 <div class="col-sm-6">
                     <!-- User form -->
-				    <form data-th-replace="fragments/user-form :: errorMessage"></form>
-				    <form data-th-replace="fragments/user-form :: userForm  (true, false, false, true, true)"></form>
-				    <form >
-                        <div class="form-group">
-                            <label for="saveButton"></label>
-                            <button type="submit" class="btn btn-primary" id="saveButton" form="userForm" formmethod="post" formaction="#" data-th-formaction="@{/user/update}">Сохранить</button>
-                        </div>
-				    </form>
-				    <form data-th-replace="fragments/user-form :: formMessage"></form>
+				    <div data-th-replace="fragments/user-form :: formMessage"></div>
+				    <div data-th-replace="fragments/user-form :: userForm  (@{/user/update}, 'Сохранить', true, false, false, true, true)"></div>
                     <!-- end User form -->
                 </div>
             </div><!-- /.col-lg-12 -->

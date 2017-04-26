@@ -1,49 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Список мероприятий</title>
-
-    <!-- Core CSS - Include with every page -->
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"
-          data-th-href="@{/css/bootstrap.css}" />
-
-    <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
-          data-th-href="@{/font-awesome/css/font-awesome.css}" />
-
-    <!-- SB Admin CSS - Include with every page -->
-    <link type="text/css" rel="stylesheet" href="/css/sb-admin.css"
-          data-th-href="@{/css/sb-admin.css}" />
-
-    <!-- DataTables CSS -->
-    <link type="text/css" rel="stylesheet" href="/css/dataTables-bootstrap.css"
-          data-th-href="@{/css/dataTables.bootstrap.css}" />
-
-    <!-- DataTables Responsive CSS -->
-    <link type="text/css" rel="stylesheet" href="/css/dataTables-responsive.css"
-          data-th-href="@{/css/dataTables-responsive.css}" />
-
-    <style>
-        .no-border-on-me>thead>tr>th,
-        .no-border-on-me>tbody>tr>th,
-        .no-border-on-me>tfoot>tr>th,
-        .no-border-on-me>thead>tr>td,
-        .no-border-on-me>tbody>tr>td,
-        .no-border-on-me>tfoot>tr>td
-        {
-            border-top-style: none;
-            border-bottom-style: none;
-        }
-    </style>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
+<head data-th-replace="fragments/sb-admin :: head"></head>
 
 <body>
 
@@ -106,21 +64,16 @@
                                     <td>
                                         <div class="btn-group">
                                             <button class="btn btn-warning btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
-                                                Действия<span class="caret"></span>
+                                                	Действия<span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="#">
+                                                    <a href="#" data-th-href="@{/category/update(id=${user.id})}">
                                                         <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;
-                                                        <span>Редактировать</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
+                                                        <span>Редактировать</span></a></li>
+                                                <li><a href="#" data-th-href="@{/category/delete(id=${user.id},phase=stage)}">
                                                         <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;
-                                                        <span >Удалить</span>
-                                                    </a>
-                                                </li>
+                                                        <span >Удалить</span></a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -135,35 +88,6 @@
     </div>		    <!-- page wrapper -->
 </div>              <!-- /#wrapper -->
 
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script type="text/javascript" src="/js/jquery-1.11.0.min.js"
-        data-th-src="@{/js/jquery-1.11.0.min.js}"></script>
-
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script type="text/javascript" src="/resources/js/bootstrap-3.1.1.min.js"
-        data-th-src="@{/js/bootstrap-3.1.1.min.js}"></script>
-
-<!-- Core Scripts - Include with every page -->
-<script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"
-        data-th-src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
-
-<!-- SB Admin Scripts - Include with every page -->
-<script type="text/javascript" src="resources/js/sb-admin.js"
-        data-th-src="@{/js/sb-admin.js}"></script>
-
-<!-- DataTables JavaScript -->
-<script src="/js/jquery.dataTables.min.js"></script>
-<script src="/js/dataTables.bootstrap.min.js"></script>
-
-<!-- For table (use jquery -->
-<script>
-    $(document).ready(function() {
-        $('#dataTables-categories').DataTable({
-            responsive: true
-        });
-    });
-</script>
-
+<div data-th-replace="fragments/sb-admin :: scripts"></div>
 </body>
 </html>

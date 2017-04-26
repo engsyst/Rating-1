@@ -1,45 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>Пользователь</title>
-
-    <!-- Core CSS - Include with every page -->
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"
-          data-th-href="@{/css/bootstrap.css}" />
-
-    <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
-          data-th-href="@{/font-awesome/css/font-awesome.css}" />
-
-    <!-- SB Admin CSS - Include with every page -->
-    <link type="text/css" rel="stylesheet" href="/css/sb-admin.css"
-          data-th-href="@{/css/sb-admin.css}" />
-
-    <style>
-        .no-border-on-me>thead>tr>th,
-        .no-border-on-me>tbody>tr>th,
-        .no-border-on-me>tfoot>tr>th,
-        .no-border-on-me>thead>tr>td,
-        .no-border-on-me>tbody>tr>td,
-        .no-border-on-me>tfoot>tr>td
-        {
-            border-top-style: none;
-            border-bottom-style: none;
-        }
-    </style>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
+<head data-th-replace="fragments/sb-admin :: head"></head>
 
 <body>
 
@@ -71,51 +33,49 @@
                            <label for="username">Имя пользователя</label> 
                            <input class="form-control" type="text" id="username" name="username"
 								data-th-field="*{username}" 
-								data-th-disabled="${dname}" 
-								data-th-errorclass="username"/>
+								data-th-disabled="${dname}"/>
 								<!-- required="required" -->
-							<span class="help-block" data-th-if="${#fields.hasErrors('username')}" data-th-errors="*{username}">Incorrect username</span>
+							<span class="help-block" data-th-if="${#fields.hasErrors('username')}" data-th-errors="*{username}">Incorrect</span>
 						</div>
 						<div class="form-group required" data-th-attrappend="class=${#fields.hasErrors('password')}? ' has-error'">
 							<label for="password">Пароль</label> 
-							<input class="form-control" type="password" id="password" name="password" 
+							<input class="form-control" type="password" id="password" name="password"
 								data-th-field="*{password}" 
 								data-th-disabled="${dpass}" 
 								data-th-errorclass="password"/>
 							<!-- required="required"  -->
-							<span class="help-block" data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}">Incorrect password</span>
+							<span class="help-block" data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}">Incorrect</span>
 						</div>
 						<div class="form-group" data-th-attrappend="class=${#fields.hasErrors('email')}? ' has-error'">
                             <label for="email">Email</label>
                             <input class="form-control" type="email" 
 		                            data-th-field="*{email}" id="email" name="email" 
 		                            data-th-disabled="${demail}" />
-							<span class="help-block" data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}">Incorrect password</span>
+							<span class="help-block" data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}">Incorrect</span>
                         </div>
                         <div class="form-group required" data-th-attrappend="class=${#fields.hasErrors('roles')}? ' has-error'">
                             <label for="roles">Уровень доступа</label>
-                            <select class="form-control" data-th-field="*{roles}" id="roles" 
-                            		data-th-disabled="${drole}" >
+                            <select class="form-control" data-th-field="*{roles}" id="roles" required="required"
+                            		data-th-disabled="${drole}">
                                 <option data-th-each="role : ${allRoles}" 
                                 		data-th-value="${role.id}" 
                                 		data-th-text="${role.rolename}">Dropdown</option>
                             </select>
-							<span class="help-block" data-th-if="${#fields.hasErrors('roles')}" data-th-errors="*{roles}">Incorrect password</span>
+							<span class="help-block" data-th-if="${#fields.hasErrors('roles')}" data-th-errors="*{roles}">Incorrect</span>
                         </div>
                         <div class="form-group required" data-th-attrappend="class=${#fields.hasErrors('employee')}? ' has-error'">
                             <label for="employee">Сотрудник</label>
-                            <select class="form-control" data-th-field="*{employee}" id="employee" data-th-disabled="${dempl}" >
-									<option data-th-each="employee : ${allEmployees}"
+                            <select class="form-control" data-th-field="*{employee}" id="employee" data-th-disabled="${dempl}">
+								<option data-th-each="employee : ${allEmployees}"
 										data-th-value="${employee.id}"
-										data-th-text="${employee.getSNP()}"
-										>Dropdown</option>
+										data-th-text="${employee.getSNP()}">Dropdown</option>
 								</select>
-							<span class="help-block" data-th-if="${#fields.hasErrors('employee')}" data-th-errors="employee">Incorrect password</span>
+							<span class="help-block" data-th-if="${#fields.hasErrors('employee')}" data-th-errors="employee">Incorrect</span>
                         </div>
                         <div class="form-group">
                             <label for="saveButton"></label>
-                            <button type="submit" class="btn btn-primary" 
-                            		id="saveButton" form="userForm" data-th-text="${actionText}">Сохранить</button>
+                            <button type="submit" class="btn btn-primary" id="saveButton" 
+                            		data-th-text="${actionText}">Save</button>
                         </div>
                     </form>
                 </div>
@@ -124,21 +84,22 @@
     </div><!-- page wrapper -->
 </div><!-- /#wrapper -->
 
+<div data-th-replace="fragments/sb-admin :: scripts"></div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script type="text/javascript" src="/js/jquery-1.11.0.min.js"
-        data-th-src="@{/js/jquery-1.11.0.min.js}"></script>
+<!-- <script type="text/javascript" src="/js/jquery-1.11.0.min.js"
+        data-th-src="@{/js/jquery-1.11.0.min.js}"></script> -->
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script type="text/javascript" src="/resources/js/bootstrap-3.1.1.min.js"
-        data-th-src="@{/js/bootstrap-3.1.1.min.js}"></script>
+<!-- <script type="text/javascript" src="/resources/js/bootstrap-3.1.1.min.js"
+        data-th-src="@{/js/bootstrap-3.1.1.min.js}"></script> -->
 
 <!-- Core Scripts - Include with every page -->
-<script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"
-        data-th-src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<!-- <script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"
+        data-th-src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script> -->
 
 <!-- SB Admin Scripts - Include with every page -->
-<script type="text/javascript" src="resources/js/sb-admin.js"
-        data-th-src="@{/js/sb-admin.js}"></script>
+<!-- <script type="text/javascript" src="resources/js/sb-admin.js"
+        data-th-src="@{/js/sb-admin.js}"></script> -->
 
 </body>
 </html>

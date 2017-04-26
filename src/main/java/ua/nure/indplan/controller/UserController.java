@@ -66,7 +66,7 @@ public class UserController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.GET)
     public String userSavePage(Model model) {
-        log.info("save:GET:userSavePage");
+        log.debug("save:GET:userSavePage");
         fillUserModel(model, new User(new Employee(), new Role()));
         return "userAdd";
     }
@@ -77,8 +77,11 @@ public class UserController {
     	List<Role> roles = roleService.getAllRoles();
     	roles.add(0, new Role());
     	model.addAttribute("user", user);
+    	log.debug("userPageModel: add attribute user", user);
     	model.addAttribute("allEmployees", employees);
+    	log.debug("userPageModel: add attribute allEmployees", employees);
     	model.addAttribute("allRoles", roles);
+        log.debug("userPageModel: add attribute allRoles", roles);
     }
     
     /**
@@ -143,7 +146,7 @@ public class UserController {
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String deleteUserPage(@RequestParam(value = "id", required = true) Integer id,
             Model model) {
-        log.info("delete:GET:deleteUserPage");
+        log.debug("delete:GET:deleteUserPage");
         User user = userService.getById(id);
         fillUserModel(model, user);
         return "userDetail";
@@ -154,7 +157,7 @@ public class UserController {
     		@RequestParam(value = "id", required = true) Integer id
 //            , @RequestParam(value = "phase", required = true) String phase
             ) {
-        log.info("delete:POST:deleteUser");
+        log.debug("delete:POST:deleteUser");
         User user = userService.getById(id);
         userService.deleteUser(user);
         return "redirect:/user/getAll";
@@ -171,16 +174,9 @@ public class UserController {
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String updateUserPage(@RequestParam(value = "id", required = true) Integer id,
             Model model) {
-        log.info("update:GET:updateUserPage");
+        log.debug("update:GET:updateUserPage", id);
         User user = userService.getById(id);
-        List<Employee> employees = employeeService.getAll();
-        List<Role> roles = roleService.getAllRoles();
-        model.addAttribute("employees", employees);
-        log.debug("updateUserPage: add attribute employees", employees);
-        model.addAttribute("roles", roles);
-        log.debug("updateUserPage: add attribute roles", roles);
-        model.addAttribute("user", user);
-        log.debug("updateUserPage: add attribute user", user);
+        fillUserModel(model, user);
         return "userEdit";
     }
 
@@ -192,6 +188,7 @@ public class UserController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String updateEmployee(@ModelAttribute User user) {
+    	log.debug("update:POST:updateUser", user);
         userService.updateUser(user);
         return "redirect:/user/getAll";
     }

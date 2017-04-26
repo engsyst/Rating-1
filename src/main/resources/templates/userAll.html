@@ -52,8 +52,7 @@
 
 		<div data-th-replace="fragments/sb-admin :: top-nav"></div>
 
-		<div
-			data-th-replace="fragments/sb-admin :: vert-nav-admin (user, user.getAll)"></div>
+		<div data-th-replace="fragments/sb-admin :: vert-nav-admin (user, user.getAll)"></div>
 
 		<div id="page-wrapper">
 			<div class="row">
@@ -92,15 +91,12 @@
 														Действия<span class="caret"></span>
 													</button>
 													<ul class="dropdown-menu">
-														<li><a href="#"
-															data-th-href="@{/user/update(id=${user.id})}"> <span
-																class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp; <span>Редактировать</span>
-														</a></li>
-														<li><a href="#"
-															data-th-href="@{/user/delete(id=${user.id},phase=stage)}">
+														<li><a href="#" data-th-href="@{/user/update(id=${user.id})}"> 
+															<span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;
+															<span>Редактировать</span></a></li>
+														<li><a href="#" data-th-href="@{/user/delete(id=${user.id},phase=stage)}">
 																<span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;
-																<span>Удалить</span>
-														</a></li>
+																<span>Удалить</span></a></li>
 													</ul>
 												</div>
 											</td>
@@ -132,49 +128,21 @@
 							</div> <!-- /.table responsive -->
 						</div>
 					</div>
-					</div><!-- /.modal -->			
 				</div> <!-- /.col-lg-12 -->
 				<!-- Modal -->
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				 	<div class="modal-dialog">
 						<div class="modal-content">
-						<h4>OOOOOOOOOOOOOOOOOO</h4>
+						<h4>Подтвердите</h4>
 						</div>
 					</div>
+				</div><!-- /.modal -->
 			</div> <!-- /.row -->
 			
 		</div> <!-- page wrapper -->
 	</div> <!-- /#wrapper -->
 
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script type="text/javascript" src="/js/jquery-1.11.0.min.js"
-        data-th-src="@{/js/jquery-1.11.0.min.js}"></script>
-
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script type="text/javascript" src="/resources/js/bootstrap-3.1.1.min.js"
-        data-th-src="@{/js/bootstrap-3.1.1.min.js}"></script>
-
-<!-- Core Scripts - Include with every page -->
-<script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"
-        data-th-src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
-
-<!-- SB Admin Scripts - Include with every page -->
-<script type="text/javascript" src="resources/js/sb-admin.js"
-        data-th-src="@{/js/sb-admin.js}"></script>
-
-<!-- DataTables JavaScript -->
-<script src="/js/jquery.dataTables.min.js"></script>
-<script src="/js/dataTables.bootstrap.min.js"></script>
-
-<!-- For table (use jquery -->
-<script>
-    $(document).ready(function() {
-        $('#dataTables-users').DataTable({
-            responsive: true
-        });
-    });
-</script>
+<div data-th-replace="fragments/sb-admin :: scripts"></div>
 
 <script src="/js/confirm.js"></script>
 

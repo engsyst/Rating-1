@@ -10,14 +10,14 @@
 
     <!-- Core CSS - Include with every page -->
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"
-          data-th-href="@{/css/bootstrap.css}" />
+          th:href="@{/css/bootstrap.css}" />
 
     <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
-          data-th-href="@{/font-awesome/css/font-awesome.css}" />
+          th:href="@{/font-awesome/css/font-awesome.css}" />
 
     <!-- SB Admin CSS - Include with every page -->
     <link type="text/css" rel="stylesheet" href="/css/sb-admin.css"
-          data-th-href="@{/css/sb-admin.css}" />
+          th:href="@{/css/sb-admin.css}" />
 
     <style>
         .no-border-on-me>thead>tr>th,
@@ -46,15 +46,15 @@
 <div id="wrapper"><!-- /#wrapper -->
 
     <!-- Load head and left menu -->
-    <div data-th-replace="fragments/sb-admin :: top-nav"></div>
-    <div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+    <div th:replace="fragments/sb-admin :: top-nav"></div>
+    <div th:replace="fragments/sb-admin :: vert-nav-admin"></div>
 
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Новая группа</h1>
                 <!-- Add employee form -->
-                <form class="form" action="#" data-th-action="@{/student/updateGroup}" data-th-object="${group}" method="post">
+                <form class="form" action="#" th:action="@{/student/updateGroup}" th:object="${group}" method="post">
                     <div class="table responsive">
                         <table class="no-border-on-me table ">
                             <thead>
@@ -64,16 +64,16 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td><input type="text" hidden="hidden" data-th-field="*{groupId}"/>
+                                <td><input type="text" hidden="hidden" th:field="*{groupId}"/>
 
-                                    <input class="form-control" type="text" data-th-field="*{title}" name="title" /></td>
+                                    <input class="form-control" type="text" th:field="*{title}" name="title" /></td>
                                 <td>
                                     <button type="submit" class="btn btn-primary">Сохранить изменения</button>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-sm-1"></td>
-                                <td class="col-sm-4 text-danger" data-th-if="${#fields.hasErrors('title')}" th-errors="*{title}">title error</td>
+                                <td class="col-sm-4 text-danger" th:if="${#fields.hasErrors('title')}" th-errors="*{title}">title error</td>
                                 <td class="col-sm-2"></td>
                             </tr>
                             </tbody>
@@ -82,7 +82,7 @@
 
                     <div class="alert alert-success alert-dismissable" th:if="${message != null}">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h4 data-th-text="${message}"></h4>
+                        <h4 th:text="${message}"></h4>
                     </div>
 
                 </form>
@@ -93,19 +93,19 @@
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script type="text/javascript" src="/js/jquery-1.11.0.min.js"
-        data-th-src="@{/js/jquery-1.11.0.min.js}"></script>
+        th:src="@{/js/jquery-1.11.0.min.js}"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script type="text/javascript" src="/resources/js/bootstrap-3.1.1.min.js"
-        data-th-src="@{/js/bootstrap-3.1.1.min.js}"></script>
+        th:src="@{/js/bootstrap-3.1.1.min.js}"></script>
 
 <!-- Core Scripts - Include with every page -->
 <script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"
-        data-th-src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+        th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 
 <!-- SB Admin Scripts - Include with every page -->
 <script type="text/javascript" src="resources/js/sb-admin.js"
-        data-th-src="@{/js/sb-admin.js}"></script>
+        th:src="@{/js/sb-admin.js}"></script>
 
 </body>
 </html>

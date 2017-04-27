@@ -6,22 +6,22 @@
 
     <!-- Core CSS - Include with every page -->
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"
-          data-th-href="@{/css/bootstrap.css}" />
+          th:href="@{/css/bootstrap.css}" />
 
     <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
-          data-th-href="@{/font-awesome/css/font-awesome.css}" />
+          th:href="@{/font-awesome/css/font-awesome.css}" />
 
     <!-- SB Admin CSS - Include with every page -->
     <link type="text/css" rel="stylesheet" href="/css/sb-admin.css"
-          data-th-href="@{/css/sb-admin.css}" />
+          th:href="@{/css/sb-admin.css}" />
 
     <!-- DataTables CSS -->
     <link type="text/css" rel="stylesheet" href="/css/dataTables-bootstrap.css"
-          data-th-href="@{/css/dataTables.bootstrap.css}" />
+          th:href="@{/css/dataTables.bootstrap.css}" />
 
     <!-- DataTables Responsive CSS -->
     <link type="text/css" rel="stylesheet" href="/css/dataTables-responsive.css"
-          data-th-href="@{/css/dataTables-responsive.css}" />
+          th:href="@{/css/dataTables-responsive.css}" />
 
     <style>
         .no-border-on-me>thead>tr>th,
@@ -49,9 +49,9 @@
 
 <div id="wrapper">                <!-- /#wrapper -->
 
-    <div data-th-replace="fragments/sb-admin :: top-nav"></div>
+    <div th:replace="fragments/sb-admin :: top-nav"></div>
 
-    <div data-th-replace="fragments/sb-admin :: vert-nav-admin (activity, activity.getAll)"></div>
+    <div th:replace="fragments/sb-admin :: vert-nav-admin (activity, activity.getAll)"></div>
 
     <div id="page-wrapper">
         <div class="row">
@@ -78,13 +78,13 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr data-th-each="activity : ${activities}">
-                                    <td data-th-text="${activity.title}"></td>
-                                    <td data-th-text="${activity.place}"></td>
-                                    <td data-th-text="${activity.start}"></td>
-                                    <td data-th-text="${activity.end}"></td>
-                                    <td data-th-text="${activity.deadline}"></td>
-                                    <td data-th-text="${activity.type}"></td>
+                                <tr th:each="activity : ${activities}">
+                                    <td th:text="${activity.title}"></td>
+                                    <td th:text="${activity.place}"></td>
+                                    <td th:text="${activity.start}"></td>
+                                    <td th:text="${activity.end}"></td>
+                                    <td th:text="${activity.deadline}"></td>
+                                    <td th:text="${activity.type}"></td>
                                     <td>
                                         <div class="btn-group">
                                             <button class="btn btn-warning btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
@@ -92,13 +92,13 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="#" data-th-href="@{/activity/update(id=${activity.activityId})}">
+                                                    <a href="#" th:href="@{/activity/update(id=${activity.activityId})}">
                                                         <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;
                                                         <span >Редактировать</span>
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#" data-th-href="@{/activity/delete(id=${activity.activityId},phase=stage)}">
+                                                    <a href="#" th:href="@{/activity/delete(id=${activity.activityId},phase=stage)}">
                                                         <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;
                                                         <span >Удалить</span>
                                                     </a>
@@ -108,7 +108,7 @@
                                     </td>
 
                                 </tr>
-                                <tr data-th-remove="all">
+                                <tr th:remove="all">
                                     <td>
                                         <div class="btn-group">
                                             <button class="btn btn-warning btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
@@ -144,19 +144,19 @@
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script type="text/javascript" src="/js/jquery-1.11.0.min.js"
-        data-th-src="@{/js/jquery-1.11.0.min.js}"></script>
+        th:src="@{/js/jquery-1.11.0.min.js}"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script type="text/javascript" src="/resources/js/bootstrap-3.1.1.min.js"
-        data-th-src="@{/js/bootstrap-3.1.1.min.js}"></script>
+        th:src="@{/js/bootstrap-3.1.1.min.js}"></script>
 
 <!-- Core Scripts - Include with every page -->
 <script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"
-        data-th-src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+        th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 
 <!-- SB Admin Scripts - Include with every page -->
 <script type="text/javascript" src="resources/js/sb-admin.js"
-        data-th-src="@{/js/sb-admin.js}"></script>
+        th:src="@{/js/sb-admin.js}"></script>
 
 <!-- DataTables JavaScript -->
 <script src="/js/jquery.dataTables.min.js"></script>

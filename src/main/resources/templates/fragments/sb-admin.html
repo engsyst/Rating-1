@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head data-th-fraagment="head">
+<head th:fraagment="head">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Core CSS - Include with every page -->
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"
-          data-th-href="@{/css/bootstrap.css}" />
+          th:href="@{/css/bootstrap.css}" />
 
     <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
-          data-th-href="@{/font-awesome/css/font-awesome.css}" />
+          th:href="@{/font-awesome/css/font-awesome.css}" />
 
     <!-- SB Admin CSS - Include with every page -->
     <link type="text/css" rel="stylesheet" href="/css/sb-admin.css"
-          data-th-href="@{/css/sb-admin.css}" />
+          th:href="@{/css/sb-admin.css}" />
 
     <style>
         .no-border-on-me>thead>tr>th,
@@ -35,7 +35,7 @@
 <body>
 
 <div id="wrapper">
-    <nav data-th-fragment="top-nav" class="navbar navbar-default navbar-static-top" style="margin-bottom: 0">
+    <nav th:fragment="top-nav" class="navbar navbar-default navbar-static-top" style="margin-bottom: 0">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -56,66 +56,66 @@
     </nav><!-- /.navbar-static-top -->
 
     <!-- Main menu -->
-    <nav data-th-fragment="vert-nav-admin (level1, level2)" class="navbar-default navbar-static-side" >
+    <nav th:fragment="vert-nav-admin (level1, level2)" class="navbar-default navbar-static-side" >
         <div class="sidebar-collapse">
             <ul class="nav" id="side-menu">
-                <li data-th-class="${level1} == 'employee' ? 'active'">
+                <li th:class="${level1} == 'employee' ? 'active'">
                     <a href="#"><i class="fa fa-star fa-fw"></i>Сотрудники<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li data-th-class="${level2} == 'employee.getAll' ? 'active'">
+                        <li th:class="${level2} == 'employee.getAll' ? 'active'">
                             <a href="/employee/getAll">Список сотрудников</a>
                         </li>
-                        <li data-th-class="${level2} == 'employee.save' ? 'active'">
+                        <li th:class="${level2} == 'employee.save' ? 'active'">
                             <a href="/employee/save">Добавить сотрудника</a>
                         </li>
                     </ul><!-- /.nav-second-level -->
                 </li><!-- /.nav-second-level -->
-                <li data-th-class="${level1} == 'user' ? 'active'">
+                <li th:class="${level1} == 'user' ? 'active'">
                     <a href="#"><i class="fa fa-users fa-fw"></i>Пользователи<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li data-th-class="${level2} == 'user.getAll' ? 'active'">
+                        <li th:class="${level2} == 'user.getAll' ? 'active'">
                             <a href="/user/getAll">Список пользователей</a>
                         </li>
-                        <li data-th-class="${level2} == 'user.save' ? 'active'">
+                        <li th:class="${level2} == 'user.save' ? 'active'">
                             <a href="/user/save">Добавить пользователя</a>
                         </li>
                     </ul><!-- /.nav-second-level -->
                 </li><!-- /.nav-second-level -->
-                <li data-th-class="${level1} == 'student' ? 'active'">
+                <li th:class="${level1} == 'student' ? 'active'">
                     <a href="#"><i class="fa fa-users fa-fw"></i>Студенты<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li data-th-class="${level2} == 'student.allGroups' ? 'active'">
+                        <li th:class="${level2} == 'student.allGroups' ? 'active'">
                             <a href="/student/allGroups">Список групп</a>
                         </li>
-                        <li data-th-class="${level2} == 'student.saveGroup' ? 'active'">
+                        <li th:class="${level2} == 'student.saveGroup' ? 'active'">
                             <a href="/student/saveGroup">Добавить группу</a>
                         </li>
-                        <li data-th-class="${level2} == 'student.allStudents' ? 'active'">
+                        <li th:class="${level2} == 'student.allStudents' ? 'active'">
                             <a href="/student/allStudents">Список студентов</a>
                         </li>
-                        <li data-th-class="${level2} == 'student.saveStudent' ? 'active'">
+                        <li th:class="${level2} == 'student.saveStudent' ? 'active'">
                             <a href="/student/saveStudent">Добавить студента</a>
                         </li>
                     </ul><!-- /.nav-second-level -->
                 </li><!-- /.nav-second-level -->
-                <li data-th-class="${level1} == 'activity' ? 'active'">
+                <li th:class="${level1} == 'activity' ? 'active'">
                     <a href="#"><i class="fa fa-users fa-fw"></i>Текущие мероприятия<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li data-th-class="${level2} == 'activity.getAll' ? 'active'">
+                        <li th:class="${level2} == 'activity.getAll' ? 'active'">
                             <a href="/activity/getAll">Список мероприятий</a>
                         </li>
-                        <li data-th-class="${level2} == 'activity.save' ? 'active'">
+                        <li th:class="${level2} == 'activity.save' ? 'active'">
                             <a href="/activity/save">Добавить мероприятие</a>
                         </li>
                     </ul><!-- /.nav-second-level -->
                 </li>
-                <li data-th-class="${level1} == 'category' ? 'active'">
+                <li th:class="${level1} == 'category' ? 'active'">
                     <a href="#"><i class="fa fa-users fa-fw"></i>Категории<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li data-th-class="${level2} == 'category.getAll' ? 'active'">
+                        <li th:class="${level2} == 'category.getAll' ? 'active'">
                             <a href="/category/getAll">Список категорий</a>
                         </li>
-                        <li data-th-class="${level2} == 'category.save' ? 'active'">
+                        <li th:class="${level2} == 'category.save' ? 'active'">
                             <a href="/category/save">Добавить </a>
                         </li>
                     </ul><!-- /.nav-second-level -->
@@ -133,22 +133,22 @@
     </div><!-- /#page-wrapper -->
 </div><!-- /#wrapper -->
 
-<div data-th-fragment="scripts">
+<div th:fragment="scripts">
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script type="text/javascript" src="/js/jquery-1.11.0.min.js"
-        data-th-src="@{/js/jquery-1.11.0.min.js}"></script>
+        th:src="@{/js/jquery-1.11.0.min.js}"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script type="text/javascript" src="/js/bootstrap-3.1.1.min.js"
-        data-th-src="@{/js/bootstrap-3.1.1.min.js}"></script>
+        th:src="@{/js/bootstrap-3.1.1.min.js}"></script>
 
 <!-- Core Scripts - Include with every page -->
 <script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"
-        data-th-src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+        th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 
 <!-- SB Admin Scripts - Include with every page -->
 <script type="text/javascript" src="/js/sb-admin.js"
-        data-th-src="@{/js/sb-admin.js}"></script>
+        th:src="@{/js/sb-admin.js}"></script>
 </div>
 
 </body>

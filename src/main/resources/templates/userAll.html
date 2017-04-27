@@ -6,22 +6,22 @@
 
     <!-- Core CSS - Include with every page -->
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"
-          data-th-href="@{/css/bootstrap.css}" />
+          th:href="@{/css/bootstrap.css}" />
 
     <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
-          data-th-href="@{/font-awesome/css/font-awesome.css}" />
+          th:href="@{/font-awesome/css/font-awesome.css}" />
 
     <!-- SB Admin CSS - Include with every page -->
     <link type="text/css" rel="stylesheet" href="/css/sb-admin.css"
-          data-th-href="@{/css/sb-admin.css}" />
+          th:href="@{/css/sb-admin.css}" />
 
     <!-- DataTables CSS -->
     <link type="text/css" rel="stylesheet" href="/css/dataTables-bootstrap.css"
-          data-th-href="@{/css/dataTables.bootstrap.css}" />
+          th:href="@{/css/dataTables.bootstrap.css}" />
 
     <!-- DataTables Responsive CSS -->
     <link type="text/css" rel="stylesheet" href="/css/dataTables-responsive.css"
-          data-th-href="@{/css/dataTables-responsive.css}" />
+          th:href="@{/css/dataTables-responsive.css}" />
 
     <style>
         .no-border-on-me>thead>tr>th,
@@ -50,9 +50,9 @@
 	<div id="wrapper">
 		<!-- /#wrapper -->
 
-		<div data-th-replace="fragments/sb-admin :: top-nav"></div>
+		<div th:replace="fragments/sb-admin :: top-nav"></div>
 
-		<div data-th-replace="fragments/sb-admin :: vert-nav-admin (user, user.getAll)"></div>
+		<div th:replace="fragments/sb-admin :: vert-nav-admin (user, user.getAll)"></div>
 
 		<div id="page-wrapper">
 			<div class="row">
@@ -77,13 +77,12 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr data-th-each="user : ${users}">
-											<td data-th-text="${user.username}">Имя пользователя</td>
-											<td data-th-text="${user.email}">Email</td>
-											<td data-th-text="${user.createTime}">Дата регистрации</td>
-											<td data-th-text="${user.roles[0].rolename}">Права
-												доступа</td>
-											<td data-th-text="${user.employee.getSNP()}">Сотрудник</td>
+										<tr th:each="user : ${users}">
+											<td th:text="${user.username}">Имя пользователя</td>
+											<td th:text="${user.email}">Email</td>
+											<td th:text="${user.createTime}">Дата регистрации</td>
+											<td th:text="${user.roles[0].rolename}">Права доступа</td>
+											<td th:text="${user.employee.getSNP()}">Сотрудник</td>
 											<td>
 												<div class="btn-group">
 													<button class="btn btn-warning btn-xs dropdown-toggle"
@@ -91,18 +90,28 @@
 														Действия<span class="caret"></span>
 													</button>
 													<ul class="dropdown-menu">
-														<li><a href="#" data-th-href="@{/user/update(id=${user.id})}"> 
+														<li><a href="#" th:href="@{/user/update(id=${user.id})}"> 
 															<span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;
 															<span>Редактировать</span></a></li>
-														<li><a href="#" data-th-href="@{/user/delete(id=${user.id},phase=stage)}">
+														<li><!-- <a href="#" th:href="@{/user/delete(id=${user.id},phase=stage)}"
+																data-toggle="confirmation" 
+																data-popout="true"
+																data-placement="top" 
+																data-title="Вы уверены?">
 																<span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;
-																<span>Удалить</span></a></li>
+																<span>Удалить</span></a> -->
+														<a href="#" th:href="@{/user/delete(id=${user.id})}" 
+																data-toggle="modal" 
+																data-target="#myModal" 
+																title="Удалить">
+																<span class="glyphicon glyphicon-trash"></span></a> 
+														</li>
 													</ul>
 												</div>
 											</td>
 
 										</tr>
-										<tr data-th-remove="all">
+										<tr th:remove="all">
 											<td>
 												<div class="btn-group">
 													<button class="btn btn-warning btn-xs dropdown-toggle"
@@ -110,15 +119,23 @@
 														Действия<span class="caret"></span>
 													</button>
 													<ul class="dropdown-menu">
-														<li><a href="#"> <span
-																class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp; <span>Редактировать</span>
+														<li><a href="#"> 
+															<span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp; 
+															<span>Редактировать</span>
 														</a></li>
-														<li><a href="#" data-th-href="@{/user/delete(id=${user.id})}" data-toggle="modal" data-target="#myModal"
-															title="Удалить"><span class="glyphicon glyphicon-trash"></span>
-														</a> 
-														<!-- <a href="#"> <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;
-																<span>Удалить</span>
-														</a> --></li>
+														<li>
+														<!-- <a href="get?id=${book.id }" class="btn btn-primary"
+															data-toggle="modal" data-target="#myModal"
+															title="Редактировать"> <i
+																class="glyphicon glyphicon-edit"></i>
+														</a> --> 
+														<a href="/user/delete?id=${user.id}" th:href="@{/user/delete(id=${user.id})}" 
+																data-toggle="modal" 
+																data-target="#myModal" 
+																title="Удалить">
+																<span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp; 
+																<span>Удалить</span></a> 
+														</li>
 													</ul>
 												</div>
 											</td>
@@ -129,22 +146,35 @@
 						</div>
 					</div>
 				</div> <!-- /.col-lg-12 -->
-				<!-- Modal -->
-				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				 	<div class="modal-dialog">
-						<div class="modal-content">
-						<h4>Подтвердите</h4>
-						</div>
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			 	<div class="modal-dialog">
+					<div class="modal-content">
 					</div>
-				</div><!-- /.modal -->
+				</div>
+			</div><!-- /.modal -->			
 			</div> <!-- /.row -->
 			
 		</div> <!-- page wrapper -->
 	</div> <!-- /#wrapper -->
 
-<div data-th-replace="fragments/sb-admin :: scripts"></div>
+<div th:replace="fragments/sb-admin :: scripts"></div>
 
-<script src="/js/confirm.js"></script>
+<!-- DataTables JavaScript -->
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/dataTables.bootstrap.min.js"></script>
+
+<!-- For table (use jquery -->
+<script>
+    $(document).ready(function() {
+        $('#dataTables-users').DataTable({
+            responsive: true
+        });
+    });
+</script>
+
+<!-- Confirmation -->
+<script type="text/javascript" src="/js/confirm.js" th:src="@{/js/confirm.js}"></script>
 
 </body>
 </html>

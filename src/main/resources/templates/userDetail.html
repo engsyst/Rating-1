@@ -1,4 +1,7 @@
-<div class="modal-content" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="modal-content">
 
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -6,11 +9,20 @@
 	</div>
 	<div class="modal-body">
 		<div class="row">
-			<form th:replace="fragments/user-form :: userForm (@{/user/delete(id=${user.id}), 'Удалить', false, false, false, false, false)"></form>
+			<ul th:object="${user}">
+				<li th:text="*{username}"></li>
+				<li th:text="*{email}"></li>
+				<li th:text="*{employee.getSNP()}"></li>
+			</ul>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button class="btn btn-success" type="submit" form="user" name="id" value="${user.id }">Удалить</button>
-		<button class="btn btn-danger" type="button" data-dismiss="modal">Отмена</button>
+		<form action="#" th:action="@{/user/delete(id=${user.id})}" method="post">
+			<button class="btn btn-success" type="submit" name="id" th:field="${user.id }">Да</button>
+			<button class="btn btn-danger" type="button" data-dismiss="modal">Нет</button>
+		</form>
 	</div>
 </div>
+</body>
+
+</html>

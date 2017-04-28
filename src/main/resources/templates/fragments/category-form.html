@@ -51,7 +51,7 @@
                         <div class="form-group required" th:attrappend="class=${#fields.hasErrors('title')}? ' has-error'">
                             <label for="title">Название*</label>
                             <input class="form-control" type="text" id="title" name="title" 
-                            		placeholder="Вождение студента на поводке на занятия"
+		                            th:placeholder="#{category.title.placeholder}"
 		                            th:field="*{title}" 
 		                            th:disabled="${dtitle}" />
                             <!-- required="required"  -->
@@ -60,7 +60,7 @@
                         <div class="form-group" th:attrappend="class=${#fields.hasErrors('timerate')}? ' has-error'">
                             <label for="timerate">Количество единиц затрат</label>
                             <input class="form-control" type="number" id="timerate" name="timerate" 
-		                            placeholder="25"
+		                            th:placeholder="#{category.timerate.placeholder}"
 		                            th:field="*{timerate}" 
 		                            th:disabled="${dtimerate}" />
  							<span class="help-block" th:if="${#fields.hasErrors('timerate')}" th:errors="*{timerate}">Incorrect</span>
@@ -68,7 +68,7 @@
                         <div class="form-group" th:attrappend="class=${#fields.hasErrors('timeunit')}? ' has-error'">
                             <label for="timeunit">Единицы измерения затрат (например, часы)</label>
                             <input class="form-control" type="text" id="timeunit" name="timeunit" 
-		                            placeholder="часов"
+		                            th:placeholder="#{category.timeunit.placeholder}"
 		                            th:field="*{timeunit}" 
 		                            th:disabled="${dtimeunit}" />
  							<span class="help-block" th:if="${#fields.hasErrors('timeunit')}" th:errors="*{timeunit}">Incorrect</span>
@@ -76,7 +76,7 @@
                         <div class="form-group" th:attrappend="class=${#fields.hasErrors('perrate')}? ' has-error'">
                             <label for="perrate">На сколько единиц</label>
                             <input class="form-control" type="number" id="perrate" name="perrate" 
-                            		placeholder="1"
+                            		th:placeholder="#{category.perrate.placeholder}"
                             		th:field="*{perrate}"
                             		th:disabled="${dperrate}" />
  							<span class="help-block" th:if="${#fields.hasErrors('perrate')}" th:errors="*{perrate}">Incorrect</span>
@@ -84,23 +84,23 @@
                         <div class="form-group" th:attrappend="class=${#fields.hasErrors('perunit')}? ' has-error'">
                             <label for="perunit">Единицы измерения затрат (например, студент)</label>
                             <input class="form-control" type="text" id="perunit" name="perunit" 
-		                            placeholder="студента"
+		                            th:placeholder="#{category.perunit.placeholder}"
 		                            th:field="*{perunit}" 
 		                            th:disabled="${dperunit}" />
  							<span class="help-block" th:if="${#fields.hasErrors('perunit')}" th:errors="*{perunit}">Incorrect</span>
                         </div>
                         <div class="form-group" th:attrappend="class=${#fields.hasErrors('report')}? ' has-error'">
-                            <label for="report">Предоставляемый отчет о работе</label>
+                            <label for="report" th:text="#{category.report.title}">Предоставляемый отчет о работе</label>
                             <textarea class="form-control" id="report" name="report" 
-                            		placeholder="Видео подтверждение"
+                            		th:placeholder="#{category.report.placeholder}"
                             		th:field="*{report}" 
                             		th:disabled="${dreport}"></textarea>
  							<span class="help-block" th:if="${#fields.hasErrors('report')}" th:errors="*{report}">Incorrect</span>
                         </div>
                         <div class="form-group" th:attrappend="class=${#fields.hasErrors('description')}? ' has-error'">
-                            <label for="description">Дополнительные сведения</label>
+                            <label for="description" th:text="#{category.description.title}">Дополнительные сведения</label>
                             <textarea class="form-control" id="description" name="description" 
-                            		placeholder="Видео подтверждение предоставляется по каждому случаю и обязано содержать видимые отметки времени на материале"
+                            		th:placeholder="#{category.description.placeholder}"
                             		th:field="*{description}" 
                             		th:disabled="${ddescription}"></textarea>
  							<span class="help-block" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Incorrect</span>

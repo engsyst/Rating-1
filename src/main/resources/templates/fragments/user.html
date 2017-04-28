@@ -6,11 +6,18 @@
 	</div>
 	<div class="modal-body">
 		<div class="row">
-			<form th:replace="fragments/user-form :: userForm (@{/user/delete(id=${user.id}), 'Удалить', false, false, false, false, false)"></form>
+			<ul th:object="${user}">
+				<li th:text="*{username}"></li>
+				<li th:text="*{email}"></li>
+				<li th:text="*{employee.getSNP()}"></li>
+			</ul>
+			<!-- <form th:replace="fragments/user-form :: userForm (@{/user/delete(id=${user.id}), 'Удалить', false, false, false, false, false)"></form> -->
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button class="btn btn-success" type="submit" form="user" name="id" value="${user.id }">Подтвердить</button>
-		<button class="btn btn-danger" type="button" data-dismiss="modal">Отмена</button>
+		<form action="">
+			<button class="btn btn-success" type="submit" name="id" th:field="${user.id }">Удалить</button>
+			<button class="btn btn-danger" type="button" data-dismiss="modal">Отмена</button>
+		</form>
 	</div>
 </div>

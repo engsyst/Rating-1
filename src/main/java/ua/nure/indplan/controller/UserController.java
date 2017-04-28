@@ -7,7 +7,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -57,7 +58,10 @@ public class UserController {
         model.addAttribute("users", users);
         return "userAll";
     }
-
+    
+    @Autowired
+    MessageSource messageSource;
+    
     /**
      * Go to save page. Send to page lists of employees and roles, that need to fill information about user.
      * GET method load page and fill some fields automatically.
@@ -104,8 +108,8 @@ public class UserController {
             return "userAdd";
         } else {
             userService.addUser(user);
-            String message = "Пользователь успешно добавлен";
-            redirectAttributes.addFlashAttribute("message", message);
+//            String message = "Пользователь успешно добавлен";
+            redirectAttributes.addFlashAttribute("message", messageSource.getMessage("user.added", null, LocaleContextHolder.getLocale()));
             return "redirect:/user/save";
         }
     }
@@ -114,22 +118,22 @@ public class UserController {
     	StringBuffer sb = new StringBuffer();
     	
     	if (br.hasFieldErrors("username")) {
-    		for (String msg : br.resolveMessageCodes("user.username.incorrect")) {
+    		for (String msg : br.resolveMessageCodes("user.username.hint")) {
     			sb.append(msg);
 			}
     	}
     	if (br.hasFieldErrors("password")) {
-    		for (String msg : br.resolveMessageCodes("user.password.incorrect")) {
+    		for (String msg : br.resolveMessageCodes("user.password.hint")) {
     			sb.append(msg);
     		}
     	}
     	if (br.hasFieldErrors("roles")) {
-    		for (String msg : br.resolveMessageCodes("user.roles.incorrect")) {
+    		for (String msg : br.resolveMessageCodes("user.roles.hint")) {
     			sb.append(msg);
     		}
     	}
     	if (br.hasFieldErrors("employee")) {
-    		for (String msg : br.resolveMessageCodes("user.employee.incorrect")) {
+    		for (String msg : br.resolveMessageCodes("user.employee.hint")) {
     			sb.append(msg);
     		}
     	}
@@ -149,7 +153,8 @@ public class UserController {
             Model model) {
         log.debug("delete:GET:deleteUserPage");
         User user = userService.getById(id);
-        fillUserModel(model, user);
+    	model.addAttribute("user", user);
+    	log.debug("userPageModel: add attribute user", user);
         return "userDetail";
     }
 

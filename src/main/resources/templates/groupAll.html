@@ -10,22 +10,22 @@
 
     <!-- Core CSS - Include with every page -->
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"
-          data-th-href="@{/css/bootstrap.css}" />
+          th:href="@{/css/bootstrap.css}" />
 
     <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
-          data-th-href="@{/font-awesome/css/font-awesome.css}" />
+          th:href="@{/font-awesome/css/font-awesome.css}" />
 
     <!-- SB Admin CSS - Include with every page -->
     <link type="text/css" rel="stylesheet" href="/css/sb-admin.css"
-          data-th-href="@{/css/sb-admin.css}" />
+          th:href="@{/css/sb-admin.css}" />
 
     <!-- DataTables CSS -->
     <link type="text/css" rel="stylesheet" href="/css/dataTables-bootstrap.css"
-          data-th-href="@{/css/dataTables.bootstrap.css}" />
+          th:href="@{/css/dataTables.bootstrap.css}" />
 
     <!-- DataTables Responsive CSS -->
     <link type="text/css" rel="stylesheet" href="/css/dataTables-responsive.css"
-          data-th-href="@{/css/dataTables-responsive.css}" />
+          th:href="@{/css/dataTables-responsive.css}" />
 
     <style>
         .no-border-on-me>thead>tr>th,
@@ -54,8 +54,8 @@
 <div id="wrapper"><!-- /#wrapper -->
 
     <!-- Load head and left menu -->
-    <div data-th-replace="fragments/sb-admin :: top-nav"></div>
-    <div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+    <div th:replace="fragments/sb-admin :: top-nav"></div>
+    <div th:replace="fragments/sb-admin :: vert-nav-admin"></div>
 
     <div id="page-wrapper">
         <div class="row">
@@ -77,21 +77,21 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr data-th-each="group : ${groups}">
-                                    <td data-th-text="${group.title}">Название</td>
+                                <tr th:each="group : ${groups}">
+                                    <td th:text="${group.title}">Название</td>
                                     <td style="text-align: center;">
-                                        <a href="#" data-th-href="@{/student/updateGroup(id=${group.groupId})}">
+                                        <a href="#" th:href="@{/student/updateGroup(id=${group.groupId})}">
                                             <button type="button" class="btn btn-default btn-xs">
                                                 <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Редактировать
                                             </button></a> &nbsp;
-                                        <a href="#" data-th-href="@{/student/deleteGroup(id=${group.groupId},phase=stage)}">
+                                        <a href="#" th:href="@{/student/deleteGroup(id=${group.groupId},phase=stage)}">
                                             <button type="button" class="btn btn-default btn-xs">
                                                 <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Удалить
                                             </button>
                                         </a>
                                     </td>
                                 </tr>
-                                <tr data-th-remove="all">
+                                <tr th:remove="all">
                                     <td style="text-align: center;">
                                         <a href="#">
                                             <button type="button" class="btn btn-default btn-xs">
@@ -107,7 +107,7 @@
                             </table>
                             <div class="alert alert-success alert-dismissable" th:if="${message != null}">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                <h4 data-th-text="${message}"></h4>
+                                <h4 th:text="${message}"></h4>
                             </div>
                         </div><!-- /.dataTable_wrapper -->
                     </div>
@@ -119,19 +119,19 @@
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script type="text/javascript" src="/js/jquery-1.11.0.min.js"
-        data-th-src="@{/js/jquery-1.11.0.min.js}"></script>
+        th:src="@{/js/jquery-1.11.0.min.js}"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script type="text/javascript" src="/resources/js/bootstrap-3.1.1.min.js"
-        data-th-src="@{/js/bootstrap-3.1.1.min.js}"></script>
+        th:src="@{/js/bootstrap-3.1.1.min.js}"></script>
 
 <!-- Core Scripts - Include with every page -->
 <script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"
-        data-th-src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+        th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 
 <!-- SB Admin Scripts - Include with every page -->
 <script type="text/javascript" src="resources/js/sb-admin.js"
-        data-th-src="@{/js/sb-admin.js}"></script>
+        th:src="@{/js/sb-admin.js}"></script>
 
 <!-- DataTables JavaScript -->
 <script src="/js/jquery.dataTables.min.js"></script>

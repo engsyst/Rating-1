@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,7 +48,7 @@ public class UserController {
 
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
-		binder.addValidators(validator);
+		binder.setValidator(validator);
 	}
 	
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
@@ -56,7 +58,10 @@ public class UserController {
         model.addAttribute("users", users);
         return "userAll";
     }
-
+    
+    @Autowired
+    MessageSource messageSource;
+    
     /**
      * Go to save page. Send to page lists of employees and roles, that need to fill information about user.
      * GET method load page and fill some fields automatically.
@@ -66,7 +71,7 @@ public class UserController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.GET)
     public String userSavePage(Model model) {
-        log.info("save:GET:userSavePage");
+        log.debug("save:GET:userSavePage");
         fillUserModel(model, new User(new Employee(), new Role()));
         return "userAdd";
     }
@@ -77,8 +82,11 @@ public class UserController {
     	List<Role> roles = roleService.getAllRoles();
     	roles.add(0, new Role());
     	model.addAttribute("user", user);
+    	log.debug("userPageModel: add attribute user", user);
     	model.addAttribute("allEmployees", employees);
+    	log.debug("userPageModel: add attribute allEmployees", employees);
     	model.addAttribute("allRoles", roles);
+        log.debug("userPageModel: add attribute allRoles", roles);
     }
     
     /**
@@ -93,22 +101,15 @@ public class UserController {
     public String userSave(@Valid @ModelAttribute User user, BindingResult bindingResult,
                 RedirectAttributes redirectAttributes, Model model) {
         log.info("save:POST:userSave");
-        /*DataBinder binder = new DataBinder(user);
-        binder.addValidators(new UserValidator());
-         binder.validate();
-        BindingResult result = binder.getBindingResult();
-        if (result.hasErrors()) {
-        	return "userAdd";
-        }*/
         if (bindingResult.hasErrors()) {
             log.error(bindingResult.toString());
             fillUserModel(model, user);
-            model.addAttribute("errorMessage", errorsToString(bindingResult));
+//            model.addAttribute("errorMessage", errorsToString(bindingResult));
             return "userAdd";
         } else {
             userService.addUser(user);
-            String message = "Пользователь успешно добавлен";
-            redirectAttributes.addFlashAttribute("message", message);
+//            String message = "Пользователь успешно добавлен";
+            redirectAttributes.addFlashAttribute("message", messageSource.getMessage("user.added", null, LocaleContextHolder.getLocale()));
             return "redirect:/user/save";
         }
     }
@@ -117,22 +118,22 @@ public class UserController {
     	StringBuffer sb = new StringBuffer();
     	
     	if (br.hasFieldErrors("username")) {
-    		for (String msg : br.resolveMessageCodes("user.username.incorrect")) {
+    		for (String msg : br.resolveMessageCodes("user.username.hint")) {
     			sb.append(msg);
 			}
     	}
     	if (br.hasFieldErrors("password")) {
-    		for (String msg : br.resolveMessageCodes("user.password.incorrect")) {
+    		for (String msg : br.resolveMessageCodes("user.password.hint")) {
     			sb.append(msg);
     		}
     	}
     	if (br.hasFieldErrors("roles")) {
-    		for (String msg : br.resolveMessageCodes("user.roles.incorrect")) {
+    		for (String msg : br.resolveMessageCodes("user.roles.hint")) {
     			sb.append(msg);
     		}
     	}
     	if (br.hasFieldErrors("employee")) {
-    		for (String msg : br.resolveMessageCodes("user.employee.incorrect")) {
+    		for (String msg : br.resolveMessageCodes("user.employee.hint")) {
     			sb.append(msg);
     		}
     	}
@@ -150,18 +151,17 @@ public class UserController {
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String deleteUserPage(@RequestParam(value = "id", required = true) Integer id,
             Model model) {
-        log.info("delete:GET:deleteUserPage");
+        log.debug("delete:GET:deleteUserPage");
         User user = userService.getById(id);
-        fillUserModel(model, user);
+    	model.addAttribute("user", user);
+    	log.debug("userPageModel: add attribute user", user);
         return "userDetail";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteUser(
-    		@RequestParam(value = "id", required = true) Integer id
-//            , @RequestParam(value = "phase", required = true) String phase
-            ) {
-        log.info("delete:POST:deleteUser");
+    		@RequestParam(value = "id", required = true) Integer id) {
+        log.debug("delete:POST:deleteUser");
         User user = userService.getById(id);
         userService.deleteUser(user);
         return "redirect:/user/getAll";
@@ -178,16 +178,9 @@ public class UserController {
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String updateUserPage(@RequestParam(value = "id", required = true) Integer id,
             Model model) {
-        log.info("update:GET:updateUserPage");
+        log.debug("update:GET:updateUserPage", id);
         User user = userService.getById(id);
-        List<Employee> employees = employeeService.getAll();
-        List<Role> roles = roleService.getAllRoles();
-        model.addAttribute("employees", employees);
-        log.debug("updateUserPage: add attribute employees", employees);
-        model.addAttribute("roles", roles);
-        log.debug("updateUserPage: add attribute roles", roles);
-        model.addAttribute("user", user);
-        log.debug("updateUserPage: add attribute user", user);
+        fillUserModel(model, user);
         return "userEdit";
     }
 
@@ -199,6 +192,7 @@ public class UserController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String updateEmployee(@ModelAttribute User user) {
+    	log.debug("update:POST:updateUser", user);
         userService.updateUser(user);
         return "redirect:/user/getAll";
     }

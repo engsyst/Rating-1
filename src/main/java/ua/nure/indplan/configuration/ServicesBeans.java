@@ -72,7 +72,7 @@ public class ServicesBeans {
     	return new EmployeeFormatter();
     }
     
-    @Bean
+/*    @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
         slr.setDefaultLocale(Locale.US);
@@ -85,4 +85,4 @@ public class ServicesBeans {
         lci.setParamName("lang");
         return lci;
     }
-}
+*/}

@@ -91,27 +91,20 @@
 													</button>
 													<ul class="dropdown-menu">
 														<li><a href="#" th:href="@{/user/update(id=${user.id})}"> 
-															<span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;
-															<span>Редактировать</span></a></li>
-														<li><!-- <a href="#" th:href="@{/user/delete(id=${user.id},phase=stage)}"
-																data-toggle="confirmation" 
-																data-popout="true"
-																data-placement="top" 
-																data-title="Вы уверены?">
-																<span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;
-																<span>Удалить</span></a> -->
-														<a href="#" th:href="@{/user/delete(id=${user.id})}" 
+															<span class="glyphicon glyphicon-pencil"></span>
+															<span>&nbsp;Редактировать</span></a></li>
+														<li><a href="#" th:href="@{/user/delete(id=${user.id})}" 
 																data-toggle="modal" 
 																data-target="#myModal" 
-																title="Удалить">
-																<span class="glyphicon glyphicon-trash"></span></a> 
-														</li>
+																th:title="Удалить">
+																<span class="glyphicon glyphicon-trash"></span>
+																<span>&nbsp;Удалить</span></a></li>
 													</ul>
 												</div>
 											</td>
 
 										</tr>
-										<tr th:remove="all">
+										<!-- <tr th:remove="all">
 											<td>
 												<div class="btn-group">
 													<button class="btn btn-warning btn-xs dropdown-toggle"
@@ -124,11 +117,6 @@
 															<span>Редактировать</span>
 														</a></li>
 														<li>
-														<!-- <a href="get?id=${book.id }" class="btn btn-primary"
-															data-toggle="modal" data-target="#myModal"
-															title="Редактировать"> <i
-																class="glyphicon glyphicon-edit"></i>
-														</a> --> 
 														<a href="/user/delete?id=${user.id}" th:href="@{/user/delete(id=${user.id})}" 
 																data-toggle="modal" 
 																data-target="#myModal" 
@@ -139,7 +127,7 @@
 													</ul>
 												</div>
 											</td>
-										</tr>
+										</tr> -->
 									</tbody>
 								</table>
 							</div> <!-- /.table responsive -->

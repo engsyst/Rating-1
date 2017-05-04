@@ -17,11 +17,11 @@ public class WorkValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		Work c = (Work) target;
-		if (c.getType() == null || c.getType().getId() == 0) {
+		Work w = (Work) target;
+		if (w.getType() == null || w.getType().getId() == 0) {
 			errors.rejectValue("type", "work.type.hint", "type is empty");
 		}
-		if (StringUtils.isEmpty(c.getTitle().trim())) {
+		if (StringUtils.isEmpty(w.getTitle().trim())) {
 			errors.rejectValue("title", "work.title.hint", new Object[] {1, 255}, "title is empty");
 		}
 	}

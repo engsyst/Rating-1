@@ -32,11 +32,22 @@
     th:src="@{/js/datepicker/locales/bootstrap-datepicker.ru.min.js}"></script>
 <script type="text/javascript" src="/js/datepicker/locales/bootstrap-datepicker.uk.min.js" charset="UTF-8"
     th:src="@{/js/datepicker/locales/bootstrap-datepicker.uk.min.js}"></script>
+<!-- /*[[${#messages.msg('date.pattern.js')}]]*/ -->
 <script th:inline="javascript">
+$.fn.datepicker.defaults.format = "dd.mm.yyyy";
 	$('#date').datepicker({
 	    clearBtn: true,
 	    language: /*[[${#strings.concat(#locale.language, '-', #locale.country)}]]*/,
-	    autoclose: true
+	    autoclose: true,
+		format: 'dd.mm.yyyy'/* {
+	        toDisplay: function (date, format, language) {
+	            var d = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
+	            return d;
+	        },
+	        toValue: function (date, format, language) {
+	            return new Date(date);
+	        }
+	    } */
 	});
 </script>
 

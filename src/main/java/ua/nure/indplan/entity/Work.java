@@ -60,7 +60,7 @@ public class Work implements Serializable {
 	}
 
 
-	@Column(length=1000)
+	@Column(length=1000, nullable=true)
 	public String getDoc() {
 		return this.doc;
 	}

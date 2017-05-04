@@ -48,7 +48,7 @@ public class UserController {
 
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
-		binder.setValidator(validator);
+		binder.addValidators(validator);
 	}
 	
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)

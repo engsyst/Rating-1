@@ -21,9 +21,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
@@ -105,8 +109,11 @@ public class User implements Serializable, UserDetails {
 		this.enabled = enabled;
 	}
 
+	@Autowired
+	MessageSource messages;
+	
 	@Column(nullable=false, length=32)
-	@Size(min = 1, max = 32)
+	@Size(min = 1, max = 32, message="user.password.hint")
 	public String getPassword() {
 		return this.password;
 	}
@@ -126,6 +133,7 @@ public class User implements Serializable, UserDetails {
 	}
 
 	//bi-directional many-to-one association to Employee
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name="employee_id", nullable=false)
 	public Employee getEmployee() {

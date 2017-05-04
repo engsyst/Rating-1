@@ -62,10 +62,10 @@
 								th:errors="*{author}">Incorrect</span>
 						</div>
 
-						<div class="form-group required">
-                           <label class="control-label" for="date" th:text="#{work.date}">Дата</label>
-                           <input type='text' class="form-control" data-date-format="dd-mm-yyyy" id="date" 
-                           		th:field="*{date}" 
+						<div class="form-group required"> <!-- #{work.date} -->
+                           <label class="control-label" for="date" th:text="*{date != null ? #dates.format(date, #messages.msg('date.pattern.java')) : ''}">Дата</label>
+                           <input type='text' class="form-control" id="date" 
+                           		th:name="date" th:value="*{date != null ? #dates.format(date, #messages.msg('date.pattern.java')) : ''}"
                            		th:disabled="${ddate}"/>
                            <span class="help-block" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Incorrect</span>
                         </div>

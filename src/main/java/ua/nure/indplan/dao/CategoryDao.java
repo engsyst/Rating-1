@@ -11,7 +11,7 @@ import java.util.List;
 @Transactional
 public interface CategoryDao {
 
-    List<Category> getAllCategories();
+    List<Category> getAll();
 
     void addCategory(Category category);
 

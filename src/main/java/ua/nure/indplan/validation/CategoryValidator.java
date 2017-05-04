@@ -19,7 +19,7 @@ public class CategoryValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		Category c = (Category) target;
 		if (c.getType() == null || c.getType().getId() == 0) {
-			errors.rejectValue("tipe", "category.type.hint", "type is empty");
+			errors.rejectValue("type", "category.type.hint", "type is empty");
 		}
 		if (StringUtils.isEmpty(c.getTitle().trim())) {
 			errors.rejectValue("title", "category.title.hint", new Object[] {1, 255}, "title is empty");

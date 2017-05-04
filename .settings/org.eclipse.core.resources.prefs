@@ -4,5 +4,6 @@ encoding//src/main/resources=UTF-8
 encoding//src/main/resources/templates/userAdd.html=UTF-8
 encoding//src/main/resources/templates/userDetail.html=UTF-8
 encoding//src/main/resources/templates/userEdit.html=UTF-8
+encoding//src/main/resources/templates/workDetail.html=UTF-8
 encoding//src/test/java=UTF-8
 encoding/<project>=UTF-8

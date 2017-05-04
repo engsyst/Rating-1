@@ -20,7 +20,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @SuppressWarnings("unchecked")
 	@Override
-    public List<Category> getAllCategories() {
+    public List<Category> getAll() {
         return getSession().createQuery("from Category").list();
     }
 

@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -225,12 +226,31 @@ public class Category implements java.io.Serializable {
 			return false;
 		return true;
 	}
-
+	
+	public String rates() {
+		return timerate == null ? null : new StringBuffer().append(timerate).append(' ').append(timeunit)
+				.append(" на ").append(perrate).append(' ').append(perunit).toString();
+	}
+// 099 256 71 24
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", title=" + title + ", timerate=" + timerate + ", timeunit=" + timeunit
-				+ ", perrate=" + perrate + ", perunit=" + perunit + ", report=" + report + ", description="
-				+ description + "]";
+		StringBuffer sb = new StringBuffer();
+		sb.append("Category [");
+		sb.append(title);
+		sb.append(", ");
+		sb.append(timerate);
+		sb.append(" ");
+		sb.append(timeunit);
+		sb.append(" на ");
+		sb.append(perrate);
+		sb.append(" ");
+		sb.append(perunit);
+		sb.append(", ");
+		sb.append(report);
+		sb.append(", ");
+		sb.append(description);
+		sb.append("]");
+		return sb.toString();
 	}
 
 	

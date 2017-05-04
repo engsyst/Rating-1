@@ -11,14 +11,14 @@ import java.util.Set;
  */
 @Entity
 @Table(name="worktype")
-@NamedQuery(name="Worktype.findAll", query="SELECT w FROM Worktype w")
-public class Worktype implements Serializable {
+@NamedQuery(name="WorkType.findAll", query="SELECT w FROM WorkType w")
+public class WorkType implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String title;
 	private Set<Work> works;
 
-	public Worktype() {
+	public WorkType() {
 	}
 
 
@@ -45,7 +45,7 @@ public class Worktype implements Serializable {
 
 
 	//bi-directional many-to-one association to Work
-	@OneToMany(mappedBy="worktype", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="type", fetch=FetchType.EAGER)
 	public Set<Work> getWorks() {
 		return this.works;
 	}
@@ -56,14 +56,14 @@ public class Worktype implements Serializable {
 
 	public Work addWork(Work work) {
 		getWorks().add(work);
-		work.setWorktype(this);
+		work.setType(this);
 
 		return work;
 	}
 
 	public Work removeWork(Work work) {
 		getWorks().remove(work);
-		work.setWorktype(null);
+		work.setType(null);
 
 		return work;
 	}

@@ -22,7 +22,7 @@ public class Work implements Serializable {
 	private String title;
 	private Set<Category> categories;
 	private Set<Employee> employees;
-	private Worktype worktype;
+	private WorkType type;
 
 	public Work() {
 	}
@@ -105,12 +105,12 @@ public class Work implements Serializable {
 	//bi-directional many-to-one association to Worktype
 	@ManyToOne
 	@JoinColumn(name="type_id", nullable=false)
-	public Worktype getWorktype() {
-		return this.worktype;
+	public WorkType getType() {
+		return this.type;
 	}
 
-	public void setWorktype(Worktype worktype) {
-		this.worktype = worktype;
+	public void setType(WorkType worktype) {
+		this.type = worktype;
 	}
 
 }

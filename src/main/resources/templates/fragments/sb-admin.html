@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:fraagment="head">
+<head th:fragment="head">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,7 +17,10 @@
     <link type="text/css" rel="stylesheet" href="/css/sb-admin.css"
           th:href="@{/css/sb-admin.css}" />
 
-    <style>
+    <link type="text/css" rel="stylesheet" href="/css/datepicker.css"
+          th:href="@{/css/datepicker.css}" />
+
+   <style>
         .no-border-on-me>thead>tr>th,
         .no-border-on-me>tbody>tr>th,
         .no-border-on-me>tfoot>tr>th,
@@ -109,6 +112,17 @@
                         </li>
                     </ul><!-- /.nav-second-level -->
                 </li>
+                <li th:class="${level1} == 'work' ? 'active'">
+                    <a href="#"><i class="fa fa-users fa-fw"></i>Работы<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li th:class="${level2} == 'work.getAll' ? 'active'">
+                            <a href="/work/getAll">Список работ</a>
+                        </li>
+                        <li th:class="${level2} == 'work.save' ? 'active'">
+                            <a href="/work/save">Добавить работу</a>
+                        </li>
+                    </ul><!-- /.nav-second-level -->
+                </li>
                 <li th:class="${level1} == 'category' ? 'active'">
                     <a href="#"><i class="fa fa-users fa-fw"></i>Категории<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -149,6 +163,10 @@
 <!-- SB Admin Scripts - Include with every page -->
 <script type="text/javascript" src="/js/sb-admin.js"
         th:src="@{/js/sb-admin.js}"></script>
+        
+<!-- <script type="text/javascript">
+	$(function() { $('#date').datepicker(); });
+</script> -->
 </div>
 
 </body>

@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface CategoryService {
 
-    List<Category> getAllCategories();
+    List<Category> getAll();
 
     void addCategory(Category category);
 

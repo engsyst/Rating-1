@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+      
+<head th:include="fragments/sb-admin :: head"></head>
+
+<body>
+
+<div id="wrapper"><!-- /#wrapper -->
+
+    <div th:replace="fragments/sb-admin :: top-nav"></div>
+    <div th:replace="fragments/sb-admin :: vert-nav-admin (work, work.save)"></div>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header" th:text="work.new">Новая работа</h1>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-6">
+                    <!-- Add work form -->
+                    <div class="alert alert-success alert-dismissable" th:if="${message != null}">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4 th:text="${message}"></h4>
+                    </div>
+
+                    <!-- <form class="form" action="#" th:action="@{/work/save}" method="post"> -->
+                    <form class="form dropzone needsclick dz-clickable" th:fragment="workForm (actionUri, actionText, dtype, dtitle, dauthor, ddate, demployees)" 
+                    		id="workForm" name="workForm" method="post" action="#" enctype="multipart/form-data"
+                    		th:action="@{${actionUri}}"
+                    		th:object="${work}">
+      <!-- id="my-awesome-dropzone" -->
+                        <input  type="hidden" name="id" th:field="*{id}"/>
+ 
+                        <div class="form-group required" th:attrappend="class=${#fields.hasErrors('type')}? ' has-error'">
+                            <label class="control-label" for="type" th:text="#{work.type}"><span class="asteriskField">*</span>Вид нагрузки</label>
+                            <select class="form-control" th:field="*{type}" id="type" required="required"
+                            		th:disabled="${dtype}">
+                                <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.title}">Dropdown</option>
+                            </select>
+                            <span class="help-block" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Incorrect</span>
+                        </div>
+                        <div class="form-group required" th:attrappend="class=${#fields.hasErrors('title')}? ' has-error'">
+                            <label class="control-label" for="title" th:text="${#locale.language}">Название*</label>
+                            <label class="control-label" for="title" th:text="#{title}">Название*</label>
+                            <input class="form-control" type="text" id="title"
+		                            th:placeholder="#{work.title.placeholder}"
+		                            th:field="*{title}" 
+		                            th:disabled="${dtitle}" />
+                            <!-- required="required"  -->
+ 							<span class="help-block" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Incorrect</span>
+                        </div>
+                        <!-- TODO add authors from employees -->
+						<div class="form-group required">
+							<label class="control-label" for="author" th:text="#{work.author}">Автор(ы)</label>
+							<div class="input-group">
+								<input class="form-control" type="text" id="author" 
+									th:placeholder="#{work.author.placeholder}" 
+									th:field="*{author}"
+                           			th:disabled="${dauthor}"/>
+								<div class="input-group-addon"><i class="fa fa-level-up"> </i></div>
+							</div>
+							<span class="help-block" th:if="${#fields.hasErrors('author')}"
+								th:errors="*{author}">Incorrect</span>
+						</div>
+
+						<div class="form-group required">
+                           <label class="control-label" for="date" th:text="#{work.date}">Дата</label>
+                           <input type='text' class="form-control" data-date-format="dd-mm-yyyy" id="date" 
+                           		th:field="*{date}" 
+                           		th:disabled="${ddate}"/>
+                           <span class="help-block" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Incorrect</span>
+                        </div>
+                        <div class="form-group required col-cm-10" th:attrappend="class=${#fields.hasErrors('employees')}? ' has-error'">
+                            <label class="control-label" for="employees" th:text="#{employee}">Сотрудник</label>
+                            <select class="form-control" th:field="*{employees}" id="employee" required="required"
+                            		th:disabled="${demployees}">
+                                <option th:each="emp : ${employees}" th:value="${emp.id}" th:text="${emp.getSNP()}">Dropdown</option>
+                            </select>
+                            <span class="help-block" th:if="${#fields.hasErrors('employees')}" th:errors="*{employees}">Incorrect</span>
+                        </div>
+                        <div class="form-group required col-cm-10">
+                            <label class="control-label" for="categories" th:text="#{category}">Категория</label>
+                            <select class="form-control" id="categories" 
+                            		th:field="${categories}" 
+                            		th:disabled="${dcategories}">
+                                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.title}">Dropdown</option>
+                            </select>
+                        </div>
+						<div class="form-group">
+							<label class="control-label" for="doc"><span th:text="#{work.doc}">Загрузить</span>
+								<button id="clear" class="btn btn-default btn-xs" type="button">Clear</button></label>
+							<div class="input-group">
+								<input type="file" id="doc" name="doc"
+									th:placeholder="#{work.doc.placeholder}" 
+									th:field="*{doc}"
+                           			th:disabled="${ddoc}"/>
+							</div>
+						</div>
+                        <div class="form-group">
+                            <label for="saveButton"></label>
+                            <button type="submit" class="btn btn-primary" id="saveButton" 
+                            		th:text="${actionText}">Save</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div><!-- /.col-lg-12 -->
+        </div><!-- /.row -->
+    </div><!-- page wrapper -->
+</div><!-- /#wrapper -->
+
+<div th:replace="fragments/sb-admin :: scripts"></div>
+
+
+</body>
+</html>

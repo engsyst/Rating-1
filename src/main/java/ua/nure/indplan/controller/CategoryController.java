@@ -52,7 +52,7 @@ public class CategoryController {
 	
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public String getAll(Model model) {
-        List<Category> categories = categoryService.getAllCategories();
+        List<Category> categories = categoryService.getAll();
         model.addAttribute("categories", categories);
         return  "categoryAll";
     }

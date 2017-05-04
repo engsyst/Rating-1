@@ -57,11 +57,11 @@
                     <form class="form" action="#" th:action="@{/activity/save}" method="post">
                         <div class="form-group">
                             <label for="title">Название</label>
-                            <input class="form-control" type="text" th:field="*{activity.title}" id="title" name="title" required="" />
+                            <input class="form-control" type="text" th:field="*{activity.title}" id="title" name="title" required="required" />
                         </div>
                         <div class="form-group" >
                             <label for="place">Место проведения</label>
-                            <input class="form-control" type="text" th:field="*{activity.place}" id="place" name="place" required="" />
+                            <input class="form-control" type="text" th:field="*{activity.place}" id="place" name="place" required="required" />
                         </div>
                         <div class="form-group">
                             <label for="start">Дата начала</label>
@@ -106,24 +106,24 @@
 </div><!-- /#wrapper -->
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script type="text/javascript" src="/js/jquery-1.11.0.min.js"
-            th:src="@{/js/jquery-1.11.0.min.js}"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript" src="/js/jquery-1.11.0.min.js"
+        th:src="@{/js/jquery-1.11.0.min.js}"></script>
 
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script type="text/javascript" src="/resources/js/bootstrap-3.1.1.min.js"
-            th:src="@{/js/bootstrap-3.1.1.min.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script type="text/javascript" src="/js/bootstrap-3.1.1.min.js"
+        th:src="@{/js/bootstrap-3.1.1.min.js}"></script>
 
-    <!-- Core Scripts - Include with every page -->
-    <script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"
-            th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<!-- Core Scripts - Include with every page -->
+<script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 
-    <!-- SB Admin Scripts - Include with every page -->
-    <script type="text/javascript" src="resources/js/sb-admin.js"
-            th:src="@{/js/sb-admin.js}"></script>
+<!-- SB Admin Scripts - Include with every page -->
+<script type="text/javascript" src="/js/sb-admin.js"
+        th:src="@{/js/sb-admin.js}"></script>
 
-    <script type="text/javascript" src="resources/js/datepicker/js/bootstrap-datepicker.js"
-        th:src="@{/js/datepicker/js/bootstrap-datepicker.js}"></script>
+<script type="text/javascript" src="/js/datepicker/js/bootstrap-datepicker.js"
+    th:src="@{/js/datepicker/js/bootstrap-datepicker.js}"></script>
 
 
     <script type="text/javascript">

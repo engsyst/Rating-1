@@ -3,6 +3,8 @@ package ua.nure.indplan.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -154,7 +156,7 @@ public class Category implements java.io.Serializable {
 		this.deleted = deleted;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(name = "work_has_category", joinColumns = {
 			@JoinColumn(name = "category_id", nullable = false, updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "work_id", nullable = false, updatable = false) })

@@ -18,7 +18,7 @@
                 <div class="col-sm-6">
                     <!-- Add work form -->
 				    <div th:replace="fragments/user-form :: formMessage"></div>
-					<form th:replace="fragments/work-form :: workForm (@{/work/update(id=${work.id})}, #{save}, false, false, false, false, false, false, false, false)"></form>
+					<form th:replace="fragments/work-form :: workForm (@{/work/update(id=${work.id})}, #{save}, false, false, false, false, false)"></form>
 					</div>
             </div><!-- /.col-lg-12 -->
         </div><!-- /.row -->
@@ -26,6 +26,34 @@
 </div><!-- /#wrapper -->
 
 <div th:replace="fragments/sb-admin :: scripts"></div>
+
+<!-- Datepicker -->
+<script type="text/javascript" src="/js/datepicker/js/bootstrap-datepicker.js"
+    th:src="@{/js/datepicker/js/bootstrap-datepicker.js}"></script>
+<script type="text/javascript" src="/js/datepicker/locales/bootstrap-datepicker.ru.min.js" charset="UTF-8"
+    th:src="@{/js/datepicker/locales/bootstrap-datepicker.ru.min.js}"></script>
+<script type="text/javascript" src="/js/datepicker/locales/bootstrap-datepicker.uk.min.js" charset="UTF-8"
+    th:src="@{/js/datepicker/locales/bootstrap-datepicker.uk.min.js}"></script>
+<script th:inline="javascript">
+	$.fn.datepicker.defaults.format = "dd.mm.yyyy";
+	$('#date').datepicker({
+	    clearBtn: true,
+	    language: /*[[${#strings.concat(#locale.language, '-', #locale.country)}]]*/,
+	    autoclose: true,
+		format: /*[[${#messages.msg('date.pattern.js')}]]*/
+	});
+</script>
+
+<!-- Fileuploader -->
+<script type="text/javascript" src="/js/bootstrap-filestyle.js"
+    th:src="@{/js/bootstrap-filestyle.js}"></script>
+<script th:inline="javascript">
+	$('#doc').filestyle({
+		buttonBefore : true,
+		buttonName : 'btn-success',
+		buttonText: /*[[${#strings.concat('&nbsp;', #messages.msg('upload'))}]]*/
+	});
+</script>
 
 </body>
 </html>

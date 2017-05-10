@@ -1,6 +1,10 @@
 package ua.nure.indplan.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -12,13 +16,16 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.MapBindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.nure.indplan.entity.Category;
@@ -27,6 +34,7 @@ import ua.nure.indplan.entity.Work;
 import ua.nure.indplan.entity.WorkType;
 import ua.nure.indplan.service.CategoryService;
 import ua.nure.indplan.service.EmployeeService;
+import ua.nure.indplan.service.StorageService;
 import ua.nure.indplan.service.WorkService;
 import ua.nure.indplan.service.WorkTypeService;
 import ua.nure.indplan.validation.WorkValidator;
@@ -54,12 +62,19 @@ public class WorkController {
 
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
-		binder.addValidators(validator);
+		binder.setValidator(validator);
 	}
     
     @Autowired
     MessageSource messageSource;
 	
+    private final StorageService storageService;
+
+    @Autowired
+    public WorkController(StorageService storageService) {
+        this.storageService = storageService;
+    }
+
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public String getAll(Model model) {
         List<Work> works = workService.getAllCategories();
@@ -72,20 +87,33 @@ public class WorkController {
     }
 
     void fillModel(Work work, Model model) {
+    	
+    	
     	List<WorkType> types = new ArrayList<>();
     	types.add(new WorkType());
     	types.addAll(workTypeService.getAll());
     	model.addAttribute("types",types);
     	logger.trace("setModelAttr:types", types);
+    	
     	List<Employee> employees = new ArrayList<>();
     	employees.add(new Employee());
     	employees.addAll(employeeService.getAll());
     	model.addAttribute("employees",employees);
     	logger.trace("setModelAttr:employees", employees);
+    	
     	List<Category> categories = new ArrayList<>();
     	categories.add(new Category());
     	categories.addAll(categoryService.getAll());
     	model.addAttribute("categories",categories);
+    	logger.trace("setModelAttr:categories", categories);
+    	
+//    	model.addAttribute("id", work.getId());
+//    	model.addAttribute("title", work.getTitle());
+//    	model.addAttribute("authors", work.getTitle());
+//    	model.addAttribute("date", work.getDate());
+//    	model.addAttribute("doc", work.getDoc());
+//    	model.addAttribute("type", work.getType());
+//    	model.addAttribute("employees", work.getEmployees());
     	model.addAttribute("work", work);
     	logger.trace("setModelAttr:work", work);
     	
@@ -98,34 +126,71 @@ public class WorkController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String workAdd(@Valid @ModelAttribute Work work, BindingResult bindingResult,
-            RedirectAttributes redirectAttributes, Model model) {
+	public String workAdd(
+//			@RequestParam WorkType type, 
+//			@RequestParam String title, 
+//			@RequestParam String author, 
+//			@RequestParam Employee employees, 
+//			@RequestParam Category categories, 
+			@RequestParam Date date, 
+			@RequestParam MultipartFile file, 
+			@ModelAttribute Work work,
+			BindingResult bindingResult,
+			RedirectAttributes redirectAttributes, 
+			Model model
+			) {
     	logger.debug("save:POST:workSave");
+//    	Work work = new Work(0, title, author, date, type, Collections.singleton(categories), Collections.singleton(employees), doc.getOriginalFilename());
+//    	employees.getWorks().add(work);
+//    	BindingResult bindingResult = new MapBindingResult(new LinkedHashMap<>(), "work");
+//    	validator.validate(work, bindingResult);
         if (bindingResult.hasErrors()) {
         	logger.debug(bindingResult.toString());
             fillModel(work, model);
             return "workAdd";
         } else {
+        	work.getCategories().toArray(new Category[0])[0].getWorks().add(work);
+        	work.getEmployees().toArray(new Employee[0])[0].getWorks().add(work);
             workService.addWork(work);
             logger.trace("addWork", work);
-//            String message = "Категория успешно добавлена";
-//            redirectAttributes.addFlashAttribute("message", message);
+            if (!StringUtils.isEmpty(file.getOriginalFilename())) {
+            	storageService.store(file);
+            	work.setDoc(work.getId() + "_." + file.getOriginalFilename());
+            	workService.updateWork(work);
+            }
             redirectAttributes.addFlashAttribute("message", messageSource.getMessage("work.added", null, LocaleContextHolder.getLocale()));
             return "redirect:/work/save";
         }
     }
     
     @RequestMapping(value = "/update", method = RequestMethod.GET)
-    public String workUpdatePage(@RequestParam(value = "id", required = true) Integer id, Model model) {
+    public String workUpdatePage(
+    		@RequestParam(value = "id", required = true) 
+    			Integer id, 
+    			Model model) {
     	Work work = workService.getById(id);
         fillModel(work, model);
     	return "workEdit";
     }
     
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String workUpdate(@Valid @ModelAttribute Work work, BindingResult bindingResult,
-    		RedirectAttributes redirectAttributes, Model model) {
+    public String workUpdate(
+    		@RequestParam Integer id, 
+			@RequestParam WorkType type, 
+			@RequestParam String title, 
+			@RequestParam String author, 
+			@RequestParam Employee employees, 
+			@RequestParam Category categories, 
+			@RequestParam Date date, 
+			@RequestParam MultipartFile doc, 
+			RedirectAttributes redirectAttributes, 
+			Model model
+			) {
     	logger.debug("update:POST:workUpdate");
+    	Work work = new Work(id, title, author, date, type, Collections.singleton(categories), 
+    			Collections.singleton(employees), doc.getOriginalFilename());
+    	BindingResult bindingResult = new MapBindingResult(new LinkedHashMap<>(), "work");
+    	validator.validate(work, bindingResult);
     	if (bindingResult.hasErrors()) {
     		logger.debug(bindingResult.toString());
             fillModel(work, model);

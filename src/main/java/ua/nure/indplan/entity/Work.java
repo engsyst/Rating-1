@@ -1,9 +1,27 @@
 package ua.nure.indplan.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 
 
 /**
@@ -25,6 +43,20 @@ public class Work implements Serializable {
 	private WorkType type;
 
 	public Work() {
+	}
+
+
+	public Work(int id, String title, String author, Date date, WorkType type, Set<Category> categories,
+			Set<Employee> employees, String doc) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.author = author;
+		this.date = date;
+		this.type = type;
+		this.categories = categories;
+		this.employees = employees;
+		this.doc = doc;
 	}
 
 
@@ -50,6 +82,9 @@ public class Work implements Serializable {
 	}
 
 
+	@Autowired
+	MessageSource messages;
+	
 	@Temporal(TemporalType.DATE)
 	public Date getDate() {
 		return this.date;
@@ -81,9 +116,9 @@ public class Work implements Serializable {
 
 
 	//bi-directional many-to-many association to Category
-	@ManyToMany(mappedBy="works", fetch=FetchType.EAGER)
+	@ManyToMany(mappedBy="works", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	public Set<Category> getCategories() {
-		return this.categories;
+		return categories == null ? new LinkedHashSet<>() : this.categories;
 	}
 
 	public void setCategories(Set<Category> categories) {
@@ -92,9 +127,9 @@ public class Work implements Serializable {
 
 
 	//bi-directional many-to-many association to Employee
-	@ManyToMany(mappedBy="works", fetch=FetchType.EAGER)
+	@ManyToMany(mappedBy="works", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	public Set<Employee> getEmployees() {
-		return this.employees;
+		return employees == null ? new LinkedHashSet<>() : employees;
 	}
 
 	public void setEmployees(Set<Employee> employees) {

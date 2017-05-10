@@ -27,23 +27,23 @@
                     		id="workForm" name="workForm" method="post" action="#" enctype="multipart/form-data"
                     		th:action="@{${actionUri}}"
                     		th:object="${work}">
-      <!-- id="my-awesome-dropzone" -->
-                        <input  type="hidden" name="id" th:field="*{id}"/>
+                        <input  type="hidden" th:field="*{id}"/>
  
                         <div class="form-group required" th:attrappend="class=${#fields.hasErrors('type')}? ' has-error'">
                             <label class="control-label" for="type" th:text="#{work.type}"><span class="asteriskField">*</span>Вид нагрузки</label>
-                            <select class="form-control" th:field="*{type}" id="type" required="required"
+                            <select class="form-control" id="type" 
+                            		th:field="*{type}" 
+                            		required="required"
                             		th:disabled="${dtype}">
-                                <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.title}">Dropdown</option>
+                                <option th:each="t : ${types}" th:value="${t.id}" th:text="${t.title}">Dropdown</option>
                             </select>
                             <span class="help-block" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Incorrect</span>
                         </div>
                         <div class="form-group required" th:attrappend="class=${#fields.hasErrors('title')}? ' has-error'">
-                            <label class="control-label" for="title" th:text="${#locale.language}">Название*</label>
                             <label class="control-label" for="title" th:text="#{title}">Название*</label>
                             <input class="form-control" type="text" id="title"
 		                            th:placeholder="#{work.title.placeholder}"
-		                            th:field="*{title}" 
+		                            th:field="*{title}" th:value="*{title}"
 		                            th:disabled="${dtitle}" />
                             <!-- required="required"  -->
  							<span class="help-block" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Incorrect</span>
@@ -54,13 +54,34 @@
 							<div class="input-group">
 								<input class="form-control" type="text" id="author" 
 									th:placeholder="#{work.author.placeholder}" 
-									th:field="*{author}"
+									th:field="*{author}" th:value="*{author}"
                            			th:disabled="${dauthor}"/>
 								<div class="input-group-addon"><i class="fa fa-level-up"> </i></div>
 							</div>
-							<span class="help-block" th:if="${#fields.hasErrors('author')}"
-								th:errors="*{author}">Incorrect</span>
+							<span class="help-block" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Incorrect</span>
 						</div>
+                        <div class="form-group required col-cm-10" th:attrappend="class=${#fields.hasErrors('employees')}? ' has-error'">
+                            <label class="control-label" for="employees" th:text="#{employee}">Сотрудник</label>
+							<div class="input-group">
+	                            <select class="form-control" 
+	                            		th:field="*{employees}" id="employee" required="required"
+	                            		th:disabled="${demployees}">
+	                                <option th:each="emp : ${employees}" th:value="${emp.id}" 
+	                                	th:text="${emp.getSNP()}">Dropdown</option>
+	                            </select>
+								<div class="input-group-addon"><i class="fa fa-level-up"> </i></div>
+                            </div>
+                            <span class="help-block" th:if="${#fields.hasErrors('employees')}" th:errors="*{employees}">Incorrect</span>
+                        </div>
+                        <div class="form-group required col-cm-10">
+                            <label class="control-label" for="categories" th:text="#{category}">Категория</label>
+                            <select class="form-control" id="categories" 
+                            		th:field="*{categories}" 
+                            		th:value="${categories}" 
+                            		th:disabled="${dcategories}">
+                                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.title}">Dropdown</option>
+                            </select>
+                        </div>
 
 						<div class="form-group required"> <!-- #{work.date} -->
                            <label class="control-label" for="date" th:text="*{date != null ? #dates.format(date, #messages.msg('date.pattern.java')) : ''}">Дата</label>
@@ -69,29 +90,12 @@
                            		th:disabled="${ddate}"/>
                            <span class="help-block" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Incorrect</span>
                         </div>
-                        <div class="form-group required col-cm-10" th:attrappend="class=${#fields.hasErrors('employees')}? ' has-error'">
-                            <label class="control-label" for="employees" th:text="#{employee}">Сотрудник</label>
-                            <select class="form-control" th:field="*{employees}" id="employee" required="required"
-                            		th:disabled="${demployees}">
-                                <option th:each="emp : ${employees}" th:value="${emp.id}" th:text="${emp.getSNP()}">Dropdown</option>
-                            </select>
-                            <span class="help-block" th:if="${#fields.hasErrors('employees')}" th:errors="*{employees}">Incorrect</span>
-                        </div>
-                        <div class="form-group required col-cm-10">
-                            <label class="control-label" for="categories" th:text="#{category}">Категория</label>
-                            <select class="form-control" id="categories" 
-                            		th:field="${categories}" 
-                            		th:disabled="${dcategories}">
-                                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.title}">Dropdown</option>
-                            </select>
-                        </div>
 						<div class="form-group">
 							<label class="control-label" for="doc"><span th:text="#{work.doc}">Загрузить</span>
 								<button id="clear" class="btn btn-default btn-xs" type="button">Clear</button></label>
 							<div class="input-group">
-								<input type="file" id="doc" name="doc"
+								<input type="file" id="file" name="file"
 									th:placeholder="#{work.doc.placeholder}" 
-									th:field="*{doc}"
                            			th:disabled="${ddoc}"/>
 							</div>
 						</div>

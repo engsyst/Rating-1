@@ -8,16 +8,19 @@ import ua.nure.indplan.service.CategoryService;
 import ua.nure.indplan.service.CategoryTypeService;
 import ua.nure.indplan.service.EmployeeService;
 import ua.nure.indplan.service.RoleService;
+import ua.nure.indplan.service.StorageService;
 import ua.nure.indplan.service.UserService;
 import ua.nure.indplan.service.WorkService;
 import ua.nure.indplan.service.WorkTypeService;
 import ua.nure.indplan.service.realization.ActivityServiceImpl;
+import ua.nure.indplan.service.realization.CategoryFormatter;
 import ua.nure.indplan.service.realization.CategoryServiceImpl;
 import ua.nure.indplan.service.realization.CategoryTypeFormatter;
 import ua.nure.indplan.service.realization.CategoryTypeServiceImpl;
 import ua.nure.indplan.service.realization.DateFormatter;
 import ua.nure.indplan.service.realization.EmployeeFormatter;
 import ua.nure.indplan.service.realization.EmployeeServiceImpl;
+import ua.nure.indplan.service.realization.FileSystemStorageService;
 import ua.nure.indplan.service.realization.RoleFormatter;
 import ua.nure.indplan.service.realization.RoleServiceImpl;
 import ua.nure.indplan.service.realization.UserServiceImpl;
@@ -64,6 +67,11 @@ public class ServicesBeans {
     }
     
     @Bean
+    public CategoryFormatter categoryFormatter() {
+    	return new CategoryFormatter();
+    }
+    
+    @Bean
     public WorkService workService() {
     	return new WorkServiceImpl();
     }
@@ -92,18 +100,4 @@ public class ServicesBeans {
     public EmployeeFormatter employeeFormatter() {
     	return new EmployeeFormatter();
     }
-    
-/*    @Bean
-    public LocaleResolver localeResolver() {
-        SessionLocaleResolver slr = new SessionLocaleResolver();
-        slr.setDefaultLocale(Locale.US);
-        return slr;
-    }
-    
-    @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
-        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-        lci.setParamName("lang");
-        return lci;
-    }
-*/}
+}

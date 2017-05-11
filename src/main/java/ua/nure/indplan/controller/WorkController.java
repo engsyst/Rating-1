@@ -93,45 +93,37 @@ public class WorkController {
     	types.add(new WorkType());
     	types.addAll(workTypeService.getAll());
     	model.addAttribute("types",types);
-    	logger.trace("setModelAttr:types", types);
+    	logger.trace("setModelAttr:types" + types);
     	
     	List<Employee> employees = new ArrayList<>();
     	employees.add(new Employee());
     	employees.addAll(employeeService.getAll());
     	model.addAttribute("employees",employees);
-    	logger.trace("setModelAttr:employees", employees);
+    	logger.trace("setModelAttr:employees" + employees);
     	
     	List<Category> categories = new ArrayList<>();
     	categories.add(new Category());
     	categories.addAll(categoryService.getAll());
     	model.addAttribute("categories",categories);
-    	logger.trace("setModelAttr:categories", categories);
+    	logger.trace("setModelAttr:categories" + categories);
     	
-//    	model.addAttribute("id", work.getId());
-//    	model.addAttribute("title", work.getTitle());
-//    	model.addAttribute("authors", work.getTitle());
-//    	model.addAttribute("date", work.getDate());
-//    	model.addAttribute("doc", work.getDoc());
-//    	model.addAttribute("type", work.getType());
-//    	model.addAttribute("employees", work.getEmployees());
     	model.addAttribute("work", work);
-    	logger.trace("setModelAttr:work", work);
+    	logger.trace("setModelAttr:work" + work);
     	
     }
     
     @RequestMapping(value = "/save", method = RequestMethod.GET)
     public String workAddPage(Model model) {
-    	fillModel(new Work(), model);
+    	Work work = new Work();
+    	fillModel(work, model);
+    	logger.debug("work:save:GET" + work);
         return "workAdd";
     }
+    
+    private static final String PREFIX_DELIMITER = "_.";
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String workAdd(
-//			@RequestParam WorkType type, 
-//			@RequestParam String title, 
-//			@RequestParam String author, 
-//			@RequestParam Employee employees, 
-//			@RequestParam Category categories, 
 			@RequestParam Date date, 
 			@RequestParam MultipartFile file, 
 			@ModelAttribute Work work,
@@ -140,22 +132,23 @@ public class WorkController {
 			Model model
 			) {
     	logger.debug("save:POST:workSave");
-//    	Work work = new Work(0, title, author, date, type, Collections.singleton(categories), Collections.singleton(employees), doc.getOriginalFilename());
-//    	employees.getWorks().add(work);
-//    	BindingResult bindingResult = new MapBindingResult(new LinkedHashMap<>(), "work");
-//    	validator.validate(work, bindingResult);
+    	logger.debug("work:save:POST" + work);
         if (bindingResult.hasErrors()) {
         	logger.debug(bindingResult.toString());
             fillModel(work, model);
             return "workAdd";
         } else {
-        	work.getCategories().toArray(new Category[0])[0].getWorks().add(work);
-        	work.getEmployees().toArray(new Employee[0])[0].getWorks().add(work);
+//        	work.getCategories().toArray(new Category[0])[0].getWorks().add(work);
+//        	work.getEmployees().toArray(new Employee[0])[0].getWorks().add(work);
+//        	work.addToTypes();
+//        	work.addToEmployees();
+        	work.setDate(date);
             workService.addWork(work);
             logger.trace("addWork", work);
             if (!StringUtils.isEmpty(file.getOriginalFilename())) {
-            	storageService.store(file);
-            	work.setDoc(work.getId() + "_." + file.getOriginalFilename());
+            	String prefix = work.getId() + PREFIX_DELIMITER;
+            	storageService.store(file, prefix);
+            	work.setDoc(prefix + file.getOriginalFilename());
             	workService.updateWork(work);
             }
             redirectAttributes.addFlashAttribute("message", messageSource.getMessage("work.added", null, LocaleContextHolder.getLocale()));
@@ -169,33 +162,30 @@ public class WorkController {
     			Integer id, 
     			Model model) {
     	Work work = workService.getById(id);
+    	logger.debug("work:update:GET" + work);
         fillModel(work, model);
     	return "workEdit";
     }
     
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String workUpdate(
-    		@RequestParam Integer id, 
-			@RequestParam WorkType type, 
-			@RequestParam String title, 
-			@RequestParam String author, 
-			@RequestParam Employee employees, 
-			@RequestParam Category categories, 
 			@RequestParam Date date, 
-			@RequestParam MultipartFile doc, 
+			@RequestParam MultipartFile file, 
+			@ModelAttribute Work work,
+			BindingResult bindingResult,
 			RedirectAttributes redirectAttributes, 
 			Model model
 			) {
-    	logger.debug("update:POST:workUpdate");
-    	Work work = new Work(id, title, author, date, type, Collections.singleton(categories), 
-    			Collections.singleton(employees), doc.getOriginalFilename());
-    	BindingResult bindingResult = new MapBindingResult(new LinkedHashMap<>(), "work");
-    	validator.validate(work, bindingResult);
+    	logger.debug("work:update:POST" + work);
     	if (bindingResult.hasErrors()) {
     		logger.debug(bindingResult.toString());
             fillModel(work, model);
     		return "workEdit";
     	} else {
+//    		work.addToTypes();
+//    		work.addToEmployees();
+    		// TODO Remove uploaded doc if new available
+    		work.setDate(date);
     		workService.updateWork(work);
     		logger.trace("updateWork", work);
     		redirectAttributes.addFlashAttribute("message", messageSource.getMessage("work.updated", null, LocaleContextHolder.getLocale()));

@@ -18,7 +18,7 @@
                 <div class="col-sm-6">
                     <!-- Add work form -->
 				    <div th:replace="fragments/user-form :: formMessage"></div>
-					<form th:replace="fragments/work-form :: workForm (@{/work/update(id=${work.id})}, #{save}, false, false, false, false, false)"></form>
+					<form th:replace="fragments/work-form :: workForm (@{/work/update}, 'Сохранить', false, false, false, false, false, false, false)"></form>
 					</div>
             </div><!-- /.col-lg-12 -->
         </div><!-- /.row -->

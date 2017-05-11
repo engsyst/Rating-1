@@ -1,8 +1,8 @@
 package ua.nure.indplan.entity;
 
+
 import java.io.Serializable;
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,15 +13,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 
 
 /**
@@ -37,26 +35,13 @@ public class Work implements Serializable {
 	private String author;
 	private Date date;
 	private String doc;
+	private String output;
 	private String title;
-	private Set<Category> categories;
 	private Set<Employee> employees;
-	private WorkType type;
+	private Category category;
+	private Set<WorkType> types;
 
 	public Work() {
-	}
-
-
-	public Work(int id, String title, String author, Date date, WorkType type, Set<Category> categories,
-			Set<Employee> employees, String doc) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.author = author;
-		this.date = date;
-		this.type = type;
-		this.categories = categories;
-		this.employees = employees;
-		this.doc = doc;
 	}
 
 
@@ -72,7 +57,7 @@ public class Work implements Serializable {
 	}
 
 
-	@Column(length=255)
+	@Column(nullable=false, length=255)
 	public String getAuthor() {
 		return this.author;
 	}
@@ -82,10 +67,8 @@ public class Work implements Serializable {
 	}
 
 
-	@Autowired
-	MessageSource messages;
-	
 	@Temporal(TemporalType.DATE)
+	@Column(nullable=false)
 	public Date getDate() {
 		return this.date;
 	}
@@ -95,7 +78,7 @@ public class Work implements Serializable {
 	}
 
 
-	@Column(length=1000, nullable=true)
+	@Column(length=1000)
 	public String getDoc() {
 		return this.doc;
 	}
@@ -105,7 +88,17 @@ public class Work implements Serializable {
 	}
 
 
-	@Column(nullable=false, length=255)
+	@Column(nullable=false, length=1000)
+	public String getOutput() {
+		return this.output;
+	}
+
+	public void setOutput(String output) {
+		this.output = output;
+	}
+
+
+	@Column(nullable=false, length=255, unique=true)
 	public String getTitle() {
 		return this.title;
 	}
@@ -115,21 +108,19 @@ public class Work implements Serializable {
 	}
 
 
-	//bi-directional many-to-many association to Category
-	@ManyToMany(mappedBy="works", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	public Set<Category> getCategories() {
-		return categories == null ? new LinkedHashSet<>() : this.categories;
-	}
-
-	public void setCategories(Set<Category> categories) {
-		this.categories = categories;
-	}
-
-
 	//bi-directional many-to-many association to Employee
-	@ManyToMany(mappedBy="works", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+			name="employee_has_work"
+			, joinColumns={
+				@JoinColumn(name="work_id", nullable=false)
+				}
+			, inverseJoinColumns={
+				@JoinColumn(name="employee_id", nullable=false)
+				}
+			)
 	public Set<Employee> getEmployees() {
-		return employees == null ? new LinkedHashSet<>() : employees;
+		return this.employees;
 	}
 
 	public void setEmployees(Set<Employee> employees) {
@@ -137,15 +128,119 @@ public class Work implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Worktype
+	//bi-directional many-to-one association to Category
 	@ManyToOne
-	@JoinColumn(name="type_id", nullable=false)
-	public WorkType getType() {
-		return this.type;
+	@JoinColumn(name="category_id", nullable=false)
+	public Category getCategory() {
+		return this.category;
 	}
 
-	public void setType(WorkType worktype) {
-		this.type = worktype;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
+
+	//bi-directional many-to-many association to WorkType
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+			name="work_has_type"
+			, joinColumns={
+				@JoinColumn(name="work_id", nullable=false)
+				}
+			, inverseJoinColumns={
+				@JoinColumn(name="type_id", nullable=false)
+				}
+			)
+	public Set<WorkType> getTypes() {
+		return this.types;
+	}
+
+	public void setTypes(Set<WorkType> types) {
+		this.types = types;
+	}
+
+
+	public void addToEmployees() {
+		for (Employee e : getEmployees()) {
+			e.getWorks().add(this);
+		}
+	}
+
+
+	public void addToTypes() {
+		for (WorkType t : getTypes()) {
+			t.getWorks().add(this);
+		}
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((author == null) ? 0 : author.hashCode());
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((doc == null) ? 0 : doc.hashCode());
+		result = prime * result + ((output == null) ? 0 : output.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Work))
+			return false;
+		Work other = (Work) obj;
+		if (author == null) {
+			if (other.author != null)
+				return false;
+		} else if (!author.equals(other.author))
+			return false;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (doc == null) {
+			if (other.doc != null)
+				return false;
+		} else if (!doc.equals(other.doc))
+			return false;
+		if (output == null) {
+			if (other.output != null)
+				return false;
+		} else if (!output.equals(other.output))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
+	}
+
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Work [title=");
+		builder.append(title);
+		builder.append(", author=");
+		builder.append(author);
+		builder.append(", date=");
+		builder.append(", output=");
+		builder.append(output);
+		builder.append(date);
+		builder.append(", doc=");
+		builder.append(doc);
+		builder.append("] =");
+		builder.append(super.toString());
+		return builder.toString();
+	}
+	
 }

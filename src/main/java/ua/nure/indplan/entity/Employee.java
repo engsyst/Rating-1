@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 import com.mysql.jdbc.StringUtils;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 
@@ -104,16 +105,7 @@ public class Employee implements Serializable {
 
 
 	//bi-directional many-to-many association to Work
-	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinTable(
-		name="employee_has_work"
-		, joinColumns={
-			@JoinColumn(name="employee_id", nullable=false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="work_id", nullable=false)
-			}
-		)
+	@ManyToMany(mappedBy="employees", fetch=FetchType.EAGER)
 	public Set<Work> getWorks() {
 		return this.works;
 	}

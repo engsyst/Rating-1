@@ -26,7 +26,9 @@ public class WorkDaoImpl implements WorkDao {
 
     @Override
     public void addWork(Work work) {
-        getSession().save(work);
+    	Session session = getSession();
+        session.save(work);
+        System.err.println(session);
     }
 
     @Override
@@ -41,6 +43,10 @@ public class WorkDaoImpl implements WorkDao {
 
     @Override
     public void updateWork(Work work) {
-        getSession().update(work);
+    	Session session = getSession();
+    	System.err.println(session);
+    	session.clear();
+    	System.err.println(session);
+    	session.saveOrUpdate(work); //update(work);
     }
 }

@@ -2,6 +2,8 @@ package ua.nure.indplan.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 
@@ -34,7 +36,7 @@ public class WorkType implements Serializable {
 	}
 
 
-	@Column(unique=true, nullable=false, length=255)
+	@Column(nullable=false, length=255, unique=true)
 	public String getTitle() {
 		return this.title;
 	}
@@ -44,8 +46,8 @@ public class WorkType implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Work
-	@OneToMany(mappedBy="type", fetch=FetchType.EAGER)
+	//bi-directional many-to-many association to Work
+	@ManyToMany(mappedBy="types", fetch=FetchType.EAGER)
 	public Set<Work> getWorks() {
 		return this.works;
 	}
@@ -53,21 +55,6 @@ public class WorkType implements Serializable {
 	public void setWorks(Set<Work> works) {
 		this.works = works;
 	}
-
-	public Work addWork(Work work) {
-		getWorks().add(work);
-		work.setType(this);
-
-		return work;
-	}
-
-	public Work removeWork(Work work) {
-		getWorks().remove(work);
-		work.setType(null);
-
-		return work;
-	}
-
 
 	@Override
 	public int hashCode() {
@@ -77,14 +64,13 @@ public class WorkType implements Serializable {
 		return result;
 	}
 
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof WorkType))
 			return false;
 		WorkType other = (WorkType) obj;
 		if (title == null) {
@@ -94,7 +80,6 @@ public class WorkType implements Serializable {
 			return false;
 		return true;
 	}
-
 
 	@Override
 	public String toString() {

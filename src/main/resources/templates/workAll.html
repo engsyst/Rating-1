@@ -39,7 +39,7 @@
                                     <td th:text="${work.title}"></td>
                                     <td th:text="${work.author}"></td>
                                     <td th:text="${work.date}"></td>
-                                    <td th:text="${work.type}"></td>
+                                    <td th:text="${#strings.listJoin(work.types,', ')}"></td>
 									<td>
 										<div class="btn-group">
 											<button class="btn btn-warning btn-xs dropdown-toggle"
@@ -88,8 +88,7 @@
     $(document).ready(function() {
         $('#dataTables-works').DataTable({
         	"columns": [
-        	            null,
-        	            null,
+        	            null, null, null, null,
         	            { "orderable": false }
         	          ]
         /* responsive: true */

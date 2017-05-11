@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Редактировать сотруника</title>
+    <title>Редактировать сотрудника</title>
 
     <!-- Core CSS - Include with every page -->
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"
@@ -71,23 +71,17 @@
                             <tr>
                                 <td><input hidden="hidden" type="text" th:field="*{id}"/>
                                     <!-- Name field -->
-                                <input class="form-control" type="text" th:field="*{name}" name="name" required=""
-                                           pattern="[А-ЯЁ][а-яё]{1,32}" title="Имя должно содержать только русские символы"/></td>
+                                <input class="form-control" type="text" th:field="*{name}" name="name" required="required"/></td>
                                 <!-- Surname field -->
-                                <td><input class="form-control" type="text" th:field="*{surname}" name="surname" required="Обязательное поле"
-                                           pattern="[А-ЯЁ][а-яё]{1,32}" title="Фамилия должна содержать только русские символы"/></td>
+                                <td><input class="form-control" type="text" th:field="*{surname}" name="surname" required="required"/></td>
                                 <!-- Patronymic field -->
-                                <td><input class="form-control" type="text" th:field="*{patronymic}" name="patronymic" required="Обязательное поле"
-                                           pattern="[А-ЯЁ][а-яё]{1,32}" title="Отчество должно содержать только русские символы" /></td>
+                                <td><input class="form-control" type="text" th:field="*{patronymic}" name="patronymic" required="required"/></td>
                                 <!-- Job title field -->
-                                <td><input class="form-control" type="text" th:field="*{jobTitle}" name="jobTitle"
-                                           pattern="[А-Яа-яЁё]{1,45}" title="Должность должна содержать только русские символы"/></td>
+                                <td><input class="form-control" type="text" th:field="*{jobTitle}" name="jobTitle"/></td>
                                 <!-- Degree field -->
-                                <td><input class="form-control" type="text" th:field="*{degree}" name="degree"
-                                           pattern="[А-Яа-яЁё]{1,45}" title="Ученая степень должна содержать только русские символы"/></td>
+                                <td><input class="form-control" type="text" th:field="*{degree}" name="degree"/></td>
                                 <!-- Academic title field -->
-                                <td><input class="form-control" type="text" th:field="*{academicTitle}" name="academicTitle"
-                                           pattern="[А-Яа-яЁё]{1,45}" title="Ученое звание должно содержать только русские символы"/></td>
+                                <td><input class="form-control" type="text" th:field="*{academicTitle}" name="academicTitle"/></td>
                                 <td>
                                     <button type="submit" class="btn btn-primary">Сохранить</button>
                                 </td>

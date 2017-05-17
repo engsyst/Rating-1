@@ -1,10 +1,7 @@
 package ua.nure.indplan.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -18,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.MapBindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -90,7 +86,7 @@ public class WorkController {
     	
     	
     	List<WorkType> types = new ArrayList<>();
-    	types.add(new WorkType());
+//    	types.add(new WorkType());
     	types.addAll(workTypeService.getAll());
     	model.addAttribute("types",types);
     	logger.trace("setModelAttr:types" + types);
@@ -126,7 +122,7 @@ public class WorkController {
 	public String workAdd(
 			@RequestParam Date date, 
 			@RequestParam MultipartFile file, 
-			@ModelAttribute Work work,
+			@Valid @ModelAttribute Work work,
 			BindingResult bindingResult,
 			RedirectAttributes redirectAttributes, 
 			Model model
@@ -138,10 +134,6 @@ public class WorkController {
             fillModel(work, model);
             return "workAdd";
         } else {
-//        	work.getCategories().toArray(new Category[0])[0].getWorks().add(work);
-//        	work.getEmployees().toArray(new Employee[0])[0].getWorks().add(work);
-//        	work.addToTypes();
-//        	work.addToEmployees();
         	work.setDate(date);
             workService.addWork(work);
             logger.trace("addWork", work);
@@ -171,7 +163,7 @@ public class WorkController {
     public String workUpdate(
 			@RequestParam Date date, 
 			@RequestParam MultipartFile file, 
-			@ModelAttribute Work work,
+			@Valid @ModelAttribute Work work,
 			BindingResult bindingResult,
 			RedirectAttributes redirectAttributes, 
 			Model model

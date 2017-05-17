@@ -2,6 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
       
 <head th:include="fragments/sb-admin :: head"></head>
+<head>
+	<link rel="stylesheet" th:href="@{/css/bootstrap-multiselect.css}" type="text/css"/>
+</head>
 
 <body>
 
@@ -53,10 +56,20 @@
                           		th:disabled="${doutput}"/>
 							<span class="help-block" th:if="${#fields.hasErrors('output')}" th:errors="*{output}">Incorrect</span>
 						</div>
-                        <!-- TODO As checkBoxes -->
-                        <div class="form-group required" th:attrappend="class=${#fields.hasErrors('types')}? ' has-error'">
+                       <!-- TODO As checkBoxes -->
+						<!-- <div class="form-group required" th:attrappend="class=${#fields.hasErrors('types')}? ' has-error'">
+							<label class="control-label" for="types" th:text="#{work.type}">Вид работы</label>
+							<div class=" ">
+								<div class="checkbox" th:each="t : ${types}" >
+									<label class="checkbox"> 
+										<input th:field="*{types}" type="checkbox" th:value="${t.id}"/><span th:text="${t.title}">#</span>
+									</label>
+								</div>
+							</div>
+						</div> -->
+						<div class="form-group required" th:attrappend="class=${#fields.hasErrors('types')}? ' has-error'">
                             <label class="control-label" for="types" th:text="#{work.type}">Вид работы</label>
-                            <select class="form-control" id="types" 
+                            <select class="form-control" id="types" multiple="multiple"
                             		th:field="*{types}" 
                             		required="required"
                             		th:disabled="${dtype}">
@@ -119,7 +132,5 @@
 </div><!-- /#wrapper -->
 
 <div th:replace="fragments/sb-admin :: scripts"></div>
-
-
 </body>
 </html>

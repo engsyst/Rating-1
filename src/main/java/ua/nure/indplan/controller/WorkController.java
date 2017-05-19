@@ -1,5 +1,6 @@
 package ua.nure.indplan.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -36,6 +37,7 @@ import ua.nure.indplan.service.CategoryService;
 import ua.nure.indplan.service.EmployeeService;
 import ua.nure.indplan.service.StorageService;
 import ua.nure.indplan.service.WorkService;
+import ua.nure.indplan.service.WorkServiceExcel;
 import ua.nure.indplan.service.WorkTypeService;
 import ua.nure.indplan.validation.WorkValidator;
 
@@ -56,6 +58,9 @@ public class WorkController {
 
     @Autowired
     WorkTypeService workTypeService;
+    
+    @Autowired
+    WorkServiceExcel workServiceExcel;
     
     @Autowired
 	private WorkValidator validator;
@@ -154,6 +159,30 @@ public class WorkController {
             redirectAttributes.addFlashAttribute("message", messageSource.getMessage("work.added", null, LocaleContextHolder.getLocale()));
             return "redirect:/work/save";
         }
+    }
+    
+    
+    @RequestMapping(value = "/saveExcel", method = RequestMethod.GET)
+    public String workAddExelPage(Model model) {
+    logger.trace("workAddExcelPage");
+    	logger.debug("work:saveExcel:GET");
+        return "workAddExcel";
+    }
+     
+    @RequestMapping(value = "/saveExcel", method = RequestMethod.POST)
+	public String workAddExel(
+			@RequestParam MultipartFile file, 
+			RedirectAttributes redirectAttributes, 
+			Model model
+			) {	
+            try {
+            	workServiceExcel.addWorksExel(file.getInputStream());
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+        	redirectAttributes.addFlashAttribute("message", messageSource.getMessage("work.added", null, LocaleContextHolder.getLocale()));
+     		return "redirect:/work/getAll";
     }
     
     @RequestMapping(value = "/update", method = RequestMethod.GET)

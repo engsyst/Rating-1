@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import ua.nure.indplan.configuration.StorageProperties;
 import ua.nure.indplan.service.StorageService;
@@ -13,6 +14,7 @@ import ua.nure.indplan.service.StorageService;
 @SpringBootApplication
 // @EnableAutoConfiguration(exclude=SecurityAutoConfiguration.class)
 @EnableConfigurationProperties(StorageProperties.class)
+@EnableAspectJAutoProxy
 @ComponentScan("ua.nure.indplan")
 public class RatingApplication {
 

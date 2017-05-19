@@ -171,6 +171,18 @@ public class Category implements Serializable {
 		return builder.toString();
 		
 	}
+	
+	@Transient
+	public String getShortTitle(int width) {
+		if (width >= title.length()) {
+			return title;
+		} else {
+			String b = title.substring(0, width / 2 - 3);
+			String e = title.substring(title.length() - width / 2, title.length());
+			return b + "..." + e;
+		}
+//		return width <= title.length() ? title : title.substring(0, width / 2 - 3) + "..." + title.substring(width / 2, title.length());
+	}
 
 
 	@Override

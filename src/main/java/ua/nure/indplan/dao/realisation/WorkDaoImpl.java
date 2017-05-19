@@ -28,7 +28,6 @@ public class WorkDaoImpl implements WorkDao {
     public void addWork(Work work) {
     	Session session = getSession();
         session.save(work);
-        System.err.println(session);
     }
 
     @Override
@@ -44,9 +43,11 @@ public class WorkDaoImpl implements WorkDao {
     @Override
     public void updateWork(Work work) {
     	Session session = getSession();
-    	System.err.println(session);
-    	session.clear();
-    	System.err.println(session);
-    	session.saveOrUpdate(work); //update(work);
+//    	if (work.getDoc() == null || work.getDoc().isEmpty()) {
+//    		Work old = getById(work.getId());
+//    		work.setDoc(old.getDoc());
+//    		session.
+//    	}
+    	session.merge(work);
     }
 }

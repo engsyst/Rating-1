@@ -57,6 +57,7 @@ public class CategoryType implements Serializable {
 
 	//bi-directional many-to-one association to Category
 	@OneToMany(mappedBy="type", fetch=FetchType.EAGER)
+	@OrderBy
 	public Set<Category> getCategories() {
 		return this.categories;
 	}

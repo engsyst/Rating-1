@@ -24,11 +24,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ua.nure.indplan.entity.Category;
+import ua.nure.indplan.entity.CategoryType;
 import ua.nure.indplan.entity.Employee;
 import ua.nure.indplan.entity.Work;
 import ua.nure.indplan.entity.WorkType;
-import ua.nure.indplan.service.CategoryService;
+import ua.nure.indplan.service.CategoryTypeService;
 import ua.nure.indplan.service.EmployeeService;
 import ua.nure.indplan.service.StorageService;
 import ua.nure.indplan.service.WorkService;
@@ -45,7 +45,7 @@ public class WorkController {
     EmployeeService employeeService;
     
     @Autowired
-    CategoryService categoryService;
+    CategoryTypeService categoryTypeService;
     
     @Autowired
     WorkService workService;
@@ -92,14 +92,14 @@ public class WorkController {
     	logger.trace("setModelAttr:types" + types);
     	
     	List<Employee> employees = new ArrayList<>();
-    	employees.add(new Employee());
+//    	employees.add(new Employee());
     	employees.addAll(employeeService.getAll());
     	model.addAttribute("employees",employees);
     	logger.trace("setModelAttr:employees" + employees);
     	
-    	List<Category> categories = new ArrayList<>();
-    	categories.add(new Category());
-    	categories.addAll(categoryService.getAll());
+    	List<CategoryType> categories = new ArrayList<>();
+//    	categories.add(new Category());
+    	categories.addAll(categoryTypeService.getAll());
     	model.addAttribute("categories",categories);
     	logger.trace("setModelAttr:categories" + categories);
     	
@@ -129,6 +129,9 @@ public class WorkController {
 			) {
     	logger.debug("save:POST:workSave");
     	logger.debug("work:save:POST" + work);
+    	if (date == null) {
+    		bindingResult.rejectValue("date", "work.date.hint", "date can't be null");
+    	}
         if (bindingResult.hasErrors()) {
         	logger.debug(bindingResult.toString());
             fillModel(work, model);
@@ -169,6 +172,9 @@ public class WorkController {
 			Model model
 			) {
     	logger.debug("work:update:POST" + work);
+    	if (date == null) {
+    		bindingResult.rejectValue("date", "work.date.hint", "date can't be null");
+    	}
     	if (bindingResult.hasErrors()) {
     		logger.debug(bindingResult.toString());
             fillModel(work, model);

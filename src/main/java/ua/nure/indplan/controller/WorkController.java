@@ -189,7 +189,9 @@ public class WorkController {
     		return "workEdit";
     	} else {
     		work.setDate(date);
-    		// TODO Remove uploaded doc if new available
+    		if (StringUtils.isEmpty(work.getDoc())) {
+    			work.setDoc(null);
+    		}
             if (!StringUtils.isEmpty(file.getOriginalFilename())) {
             	String prefix = work.getId() + PREFIX_DELIMITER;
             	String docName = work.getDoc();
@@ -221,7 +223,7 @@ public class WorkController {
 		return "redirect:/work/getAll";
 	}
     
-    @RequestMapping(value = "/download", method = RequestMethod.GET, produces = {"application/x-compressed", "application/pdf", "application/msword", "application/richtext", })
+    @RequestMapping(value = "/download", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Resource> workDownload(@RequestParam(value = "doc", required = true) String fileName) {
     	Resource file = storageService.loadAsResource(fileName);

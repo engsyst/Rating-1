@@ -43,7 +43,9 @@
                                     <td th:text="${work.author}"></td>
                                     <td th:text="${work.date}"></td>
                                     <td ><div th:each="t : ${work.types}" th:text="${t}"></div></td>
-                                    <td class="text-center"><a href="#" th:href="@{/work/download(doc=${work.doc})}" th:if="${work.doc}"><span class="glyphicon glyphicon-download"></span></a></td>
+                                    <td class="text-center">
+                                    	<a th:if="${work.doc}" href="#" th:href="@{/work/download(doc=${work.doc})}">
+                                    	<span class="glyphicon glyphicon-download" th:title="#{download} + ': ' + ${work.doc}"></span></a></td>
                                     <td class="text-center">
 										<div class="btn-group text-left">
 											<button class="btn btn-warning btn-xs dropdown-toggle"

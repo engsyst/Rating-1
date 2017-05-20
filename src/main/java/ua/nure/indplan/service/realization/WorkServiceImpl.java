@@ -14,8 +14,8 @@ public class WorkServiceImpl implements WorkService {
     WorkDao workDao;
 
     @Override
-    public List<Work> getAllCategories() {
-        return workDao.getAllCategories();
+    public List<Work> getAll() {
+        return workDao.getAll();
     }
 
     @Override

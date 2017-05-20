@@ -233,9 +233,9 @@ public class Work implements Serializable {
 		builder.append(", author=");
 		builder.append(author);
 		builder.append(", date=");
+		builder.append(date);
 		builder.append(", output=");
 		builder.append(output);
-		builder.append(date);
 		builder.append(", doc=");
 		builder.append(doc);
 		builder.append("] =");

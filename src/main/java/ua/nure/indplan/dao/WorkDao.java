@@ -11,7 +11,7 @@ import java.util.List;
 @Transactional
 public interface WorkDao {
 
-    List<Work> getAllCategories();
+    List<Work> getAll();
 
     void addWork(Work work);
 

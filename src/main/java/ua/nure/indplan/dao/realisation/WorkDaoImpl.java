@@ -20,7 +20,7 @@ public class WorkDaoImpl implements WorkDao {
 
     @SuppressWarnings("unchecked")
 	@Override
-    public List<Work> getAllCategories() {
+    public List<Work> getAll() {
         return getSession().createQuery("from Work").list();
     }
 
@@ -44,9 +44,6 @@ public class WorkDaoImpl implements WorkDao {
     @Override
     public void updateWork(Work work) {
     	Session session = getSession();
-    	System.err.println(session);
-    	session.clear();
-    	System.err.println(session);
-    	session.saveOrUpdate(work); //update(work);
+    	session.update(work);
     }
 }

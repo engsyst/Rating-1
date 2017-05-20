@@ -92,10 +92,13 @@ public class WorkServiceExcelImpl implements WorkServiceExcel{
 	            	}
 	            }
 	            work.setEmployees(employeeSet);
-	            
+	            // TODO Import only ALL or NOTHING, so collect into list
 	            workService.addWork(work);
 	        }
+	        // TODO Add to WorkDao method that add all works in single transaction
 	    } catch (Exception e) {
+	    	// This method never throws any exception
+	    	// TODO throw your own RuntimeException
 	        e.printStackTrace();
 	    }
 		

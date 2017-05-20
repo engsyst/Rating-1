@@ -2,13 +2,8 @@ package ua.nure.indplan.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
-
-import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.MapBindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -82,17 +76,16 @@ public class WorkController {
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public String getAll(Model model) {
-        List<Work> works = workService.getAllCategories();
-        List<Employee> employees = employeeService.getAll();
-        List<WorkType> types = workTypeService.getAll();
+        List<Work> works = workService.getAll();
+//        List<Employee> employees = employeeService.getAll();
+//        List<WorkType> types = workTypeService.getAll();
         model.addAttribute("works", works);
-        model.addAttribute("types", types);
-        model.addAttribute("employees", employees);
+//        model.addAttribute("types", types);
+//        model.addAttribute("employees", employees);
         return  "workAll";
     }
 
     void fillModel(Work work, Model model) {
-    	
     	
     	List<WorkType> types = new ArrayList<>();
     	types.add(new WorkType());
@@ -177,8 +170,14 @@ public class WorkController {
 			) {	
             try {
             	workServiceExcel.addWorksExel(file.getInputStream());
-			} catch (IOException e) {
-				
+			} catch (/* Your own RuntimeException */ IOException e) {
+			/*
+			 * TODO At this place you have error in import. 
+			 * Log exception. 
+			 * Set error message with row and column where error found onto model.
+			 * Forward at specially designed page or back to the form (workAddExcel).
+			 * Do not need stackTrace, exception logged.
+			 */
 				e.printStackTrace();
 			}
         	redirectAttributes.addFlashAttribute("message", messageSource.getMessage("work.added", null, LocaleContextHolder.getLocale()));

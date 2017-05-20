@@ -6,20 +6,18 @@
 
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h4 class="modal-title" th:text="work">Работы</h4>
+		<h4 class="modal-title" th:text="#{work}">пїЅпїЅпїЅпїЅпїЅпїЅ</h4>
 	</div>
 	<div class="modal-body">
 		<div class="row">
 			<ul th:object="${work}">
 				<li th:text="*{title}"></li>
-				<li th:text="*{type.title}"></li>
-				<li>
-					<span th:text="*{timerate}">0</span> <span th:text="*{timeunit}">0</span>
-					<span> на </span>
-					<span th:text="*{perrate}">0</span> <span th:text="*{perunit}">0</span>
-				</li>
-				<li th:text="*{report}"></li>
-				<li th:text="*{description}"></li>
+				<li th:text="*{author}"></li>
+				<li th:text="*{output}"></li>
+				<li th:text="*{date}"></li>
+				<li><div th:each="t : *{types}" th:text="${t.title}">#</div></li>
+				<li><div th:each="e : *{employees}" th:text="${e.getSNP()}">#</div></li>
+				<li th:text="*{category.title}"></li>
 			</ul>
 		</div>
 	</div>

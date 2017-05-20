@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
       
-<head th:replace="fragments/sb-admin :: head"></head>
+<head th:replace="fragments/work-form :: head"></head>
 
 <body>
 
@@ -13,12 +13,12 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header" th:text="#{work}">Категория</h1>
+                <h1 class="page-header" th:text="#{work}">#</h1>
                 <div class="col-sm-2"></div>
                 <div class="col-sm-6">
                     <!-- Add work form -->
 				    <div th:replace="fragments/user-form :: formMessage"></div>
-					<form th:replace="fragments/work-form :: workForm (@{/work/update}, 'Сохранить', false, false, false, false, false, false, false)"></form>
+					<form th:replace="fragments/work-form :: workForm (@{/work/update}, #{save}, false, false, false, false, false, false, false)"></form>
 					</div>
             </div><!-- /.col-lg-12 -->
         </div><!-- /.row -->
@@ -26,45 +26,7 @@
 </div><!-- /#wrapper -->
 
 <div th:replace="fragments/sb-admin :: scripts"></div>
-
-<!-- Datepicker -->
-<script type="text/javascript" src="/js/datepicker/js/bootstrap-datepicker.js"
-    th:src="@{/js/datepicker/js/bootstrap-datepicker.js}"></script>
-<script type="text/javascript" src="/js/datepicker/locales/bootstrap-datepicker.ru.min.js" charset="UTF-8"
-    th:src="@{/js/datepicker/locales/bootstrap-datepicker.ru.min.js}"></script>
-<script type="text/javascript" src="/js/datepicker/locales/bootstrap-datepicker.uk.min.js" charset="UTF-8"
-    th:src="@{/js/datepicker/locales/bootstrap-datepicker.uk.min.js}"></script>
-<script th:inline="javascript">
-	$.fn.datepicker.defaults.format = "dd.mm.yyyy";
-	$('#date').datepicker({
-	    clearBtn: true,
-	    language: /*[[${#strings.concat(#locale.language, '-', #locale.country)}]]*/,
-	    autoclose: true,
-		format: /*[[${#messages.msg('date.pattern.js')}]]*/
-	});
-</script>
-
-<!-- Fileuploader -->
-<script type="text/javascript" src="/js/bootstrap-filestyle.js"
-    th:src="@{/js/bootstrap-filestyle.js}"></script>
-<script th:inline="javascript">
-	$('#doc').filestyle({
-		buttonBefore : true,
-		buttonName : 'btn-success',
-		buttonText: /*[[${#strings.concat('&nbsp;', #messages.msg('upload'))}]]*/
-	});
-</script>
-
-<!-- Multiselct dropdown with chekboxes JS: -->
-<script type="text/javascript" th:src="@{/js/bootstrap-multiselect.js}"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#types').multiselect({
-            enableFiltering: true,
-            filterPlaceholder: 'Search for something...'
-        });
-    });
-</script>
+<div th:replace="fragments/work-form :: scripts"></div>
 
 </body>
 </html>

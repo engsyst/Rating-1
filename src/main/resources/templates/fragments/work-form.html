@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
       
+<head th:fragment="head">
 <head th:include="fragments/sb-admin :: head"></head>
-<head>
-	<link rel="stylesheet" th:href="@{/css/bootstrap-multiselect.css}" type="text/css"/>
+<link type="text/css" rel="stylesheet" href="/css/fileupload.css"
+		  th:href="@{/css/fileupload.css}"/>
+<link type="text/css" rel="stylesheet" href="/css/bootstrap-multiselect.css"
+		  th:href="@{/css/bootstrap-multiselect.css}"/>
+<style type="text/css">
+.multiselect-container>li>a {
+	white-space: pre-wrap;
+}
+</style>
 </head>
 
 <body>
@@ -16,16 +24,15 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header" th:text="work.new">Новая работа</h1>
-                <div class="col-sm-2"></div>
-                <div class="col-sm-6">
+                <!-- <div class="col-sm-2"></div> -->
+                <div class="col-md-8 col-sm-8 col-xs-12">
                     <!-- Add work form -->
                     <div class="alert alert-success alert-dismissable" th:if="${message != null}">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <h4 th:text="${message}"></h4>
                     </div>
 
-                    <!-- <form class="form" action="#" th:action="@{/work/save}" method="post"> -->
-                    <form class="form dropzone needsclick dz-clickable" th:fragment="workForm (actionUri, actionText, dtitle, dauthor, doutput, dtype, ddate, demployees, dcategories)" 
+                    <form class="form" th:fragment="workForm (actionUri, actionText, dtitle, dauthor, doutput, dtype, ddate, demployees, dcategories)" 
                     		id="workForm" name="workForm" method="post" action="#" enctype="multipart/form-data"
                     		th:action="@{${actionUri}}"
                     		th:object="${work}">
@@ -56,68 +63,60 @@
                           		th:disabled="${doutput}"/>
 							<span class="help-block" th:if="${#fields.hasErrors('output')}" th:errors="*{output}">Incorrect</span>
 						</div>
-                       <!-- TODO As checkBoxes -->
-						<!-- <div class="form-group required" th:attrappend="class=${#fields.hasErrors('types')}? ' has-error'">
-							<label class="control-label" for="types" th:text="#{work.type}">Вид работы</label>
-							<div class=" ">
-								<div class="checkbox" th:each="t : ${types}" >
-									<label class="checkbox"> 
-										<input th:field="*{types}" type="checkbox" th:value="${t.id}"/><span th:text="${t.title}">#</span>
-									</label>
-								</div>
-							</div>
-						</div> -->
+                       
+                        <!-- Types list with dropdown checkBoxes -->
 						<div class="form-group required" th:attrappend="class=${#fields.hasErrors('types')}? ' has-error'">
                             <label class="control-label" for="types" th:text="#{work.type}">Вид работы</label>
-                            <select class="form-control" id="types" multiple="multiple"
+                            <div></div>
+                            <select id="types" multiple="multiple"
                             		th:field="*{types}" 
-                            		required="required"
-                            		th:disabled="${dtype}">
-                           		<option value="0" disabled="disabled" selected="selected" hidden="hidden" th:text="#{work.types.placeholder}">Please Choose...</option>
+                            		required="required">
                                 <option th:each="t : ${types}" th:value="${t.id}" th:text="${t.title}">Dropdown</option>
                             </select>
                             <span class="help-block" th:if="${#fields.hasErrors('types')}" th:errors="*{types}">Incorrect</span>
                         </div>
                         <!-- TODO As checkBoxes -->
-                        <div class="form-group required col-cm-10" th:attrappend="class=${#fields.hasErrors('employees')}? ' has-error'">
+                        <div class="form-group required" th:attrappend="class=${#fields.hasErrors('employees')}? ' has-error'">
                             <label class="control-label" for="employees" th:text="#{employee}">Сотрудник</label>
-                            <select class="form-control" 
-                            		th:field="*{employees}" id="employee" required="required"
+                            <select class="form-control" multiple="multiple"
+                            		th:field="*{employees}" id="employees" required="required"
                             		th:disabled="${demployees}">
-                           		<option value="0" disabled="disabled" selected="selected" hidden="hidden" th:text="#{work.employees.placeholder}">Please Choose...</option>
                                 <option th:each="emp : ${employees}" th:value="${emp.id}" 
                                 	th:text="${emp.getSNP()}">Dropdown</option>
                             </select>
                             <span class="help-block" th:if="${#fields.hasErrors('employees')}" th:errors="*{employees}">Incorrect</span>
                         </div>
-                        <div class="form-group required col-cm-10">
+                        <div class="form-group required" th:attrappend="class=${#fields.hasErrors('category')}? ' has-error'">
                             <label class="control-label" for="category" th:text="#{work.category}">Вид нагрузки</label>
-                            <select class="form-control" id="category" 
+                            <select class="form-control" id="category" multiple="multiple"
                             		th:field="*{category}" 
                             		th:value="${category}" 
                             		th:disabled="${dcategory}">
-                           		<option value="0" disabled="disabled" selected="selected" hidden="hidden" th:text="#{work.category.placeholder}">Please Choose...</option>
-                                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.title}">Dropdown</option>
+                            	<optgroup th:each="catType : ${categories}" th:label="${catType.title}">
+                                <option th:each="cat : ${catType.categories}" th:value="${cat.id}" th:text="${cat.title}" th:title="${cat}">Dropdown</option>
+                            	</optgroup>
                             </select>
+                            <span class="help-block" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Incorrect</span>
                         </div>
 
-						<div class="form-group required"> <!-- #{work.date} -->
+						<div class="form-group required" th:attrappend="class=${#fields.hasErrors('date')}? ' has-error'">
                            <label class="control-label" for="date" th:text="*{date != null ? #dates.format(date, #messages.msg('date.pattern.java')) : ''}">Дата</label>
                            <input type='text' class="form-control" id="date" 
                            		th:name="date" th:value="*{date != null ? #dates.format(date, #messages.msg('date.pattern.java')) : #messages.msg('date.pattern.java')}"
                            		th:disabled="${ddate}"/>
                            <span class="help-block" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Incorrect</span>
                         </div>
-						<div class="form-group">
-							<label class="control-label" for="file">
-								<span th:text="#{work.doc}">Загрузить</span>
-								<button id="clear" class="btn btn-default btn-xs" type="button">Clear</button></label>
-							<div class="input-group">
-								<input type="file" id="file" name="file"
-									th:placeholder="#{work.doc.placeholder}" 
-                           			th:disabled="${ddoc}"/>
+                        <div class="form-group">
+							<div class="fileupload fileupload-new" data-provides="fileupload">
+							    <span class="btn btn-info btn-file">
+								    <span class="fileupload-new" th:text="#{work.doc.placeholder}">Select file</span>
+								    <span class="fileupload-exists" th:text="#{change}">Change</span>
+									<input type="file" id="file" name="file"
+	                           			th:disabled="${ddoc}"/></span>
+							    <span class="fileupload-preview"></span>
+							    <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
 							</div>
-						</div>
+                        </div>
                         <div class="form-group">
                             <label for="saveButton"></label>
                             <button type="submit" class="btn btn-primary" id="saveButton" 
@@ -132,5 +131,79 @@
 </div><!-- /#wrapper -->
 
 <div th:replace="fragments/sb-admin :: scripts"></div>
+
+<div th:fragment="scripts">
+<!-- Date picker JS: -->
+<script type="text/javascript" src="/js/datepicker/js/bootstrap-datepicker.js"
+    th:src="@{/js/datepicker/js/bootstrap-datepicker.js}"></script>
+<script type="text/javascript" src="/js/datepicker/locales/bootstrap-datepicker.ru.min.js" charset="UTF-8"
+    th:src="@{/js/datepicker/locales/bootstrap-datepicker.ru.min.js}"></script>
+<script type="text/javascript" src="/js/datepicker/locales/bootstrap-datepicker.uk.min.js" charset="UTF-8"
+    th:src="@{/js/datepicker/locales/bootstrap-datepicker.uk.min.js}"></script>
+<script th:inline="javascript">
+	$('#date').datepicker({
+	    clearBtn: true,
+	    language: /*[[${#strings.concat(#locale.language, '-', #locale.country)}]]*/,
+	    autoclose: true,
+		format: /*[[${#messages.msg('date.pattern.js')}]]*/
+	});
+</script>
+
+<!-- File upload button JS: -->
+<script type="text/javascript" th:src="@{/js/fileupload.js}"></script>
+
+<!-- Multiselect dropdown with chekboxes JS: -->
+<script type="text/javascript" th:src="@{/js/bootstrap-multiselect.js}"></script>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $('#types').multiselect({
+            nonSelectedText: /*[[${#messages.msg('work.type.placeholder')}]]*/,
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            filterPlaceholder: /*[[${#messages.msg('search')}]]*/,
+            buttonWidth: '100%',
+            maxHeight: 300
+        });
+    });
+</script>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $('#employees').multiselect({
+            nonSelectedText: /*[[${#messages.msg('work.employees.placeholder')}]]*/,
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            filterPlaceholder: /*[[${#messages.msg('search')}]]*/,
+            buttonWidth: '100%',
+            maxHeight: 300
+        });
+    });
+</script>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $('#category').multiselect({
+            onChange: function(option, checked) {
+                // Deselect another option (simulate radio)
+                var values = [];
+                $('#category option').each(function() {
+                     if ($(this).val() !== option.val()) {
+                         values.push($(this).val());
+                     }
+                });
+                $('#category').multiselect('deselect', values);
+                // END Deselect another option (simulate radio)
+            },
+//        	buttonContainer: '<div id="category-container" />',
+            nonSelectedText: /*[[${#messages.msg('work.category.placeholder')}]]*/,
+            enableCaseInsensitiveFiltering: true,
+            filterPlaceholder: /*[[${#messages.msg('search')}]]*/,
+            enableFiltering: true,
+        	enableCollapsibleOptGroups: true,
+            buttonWidth: '100%',
+            maxHeight: 300
+        });
+//        $('#category-container .caret-container').click();
+    });
+</script>
+</div>
 </body>
 </html>

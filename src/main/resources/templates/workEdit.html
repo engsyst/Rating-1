@@ -55,5 +55,16 @@
 	});
 </script>
 
+<!-- Multiselct dropdown with chekboxes JS: -->
+<script type="text/javascript" th:src="@{/js/bootstrap-multiselect.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#types').multiselect({
+            enableFiltering: true,
+            filterPlaceholder: 'Search for something...'
+        });
+    });
+</script>
+
 </body>
 </html>

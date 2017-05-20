@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -233,9 +232,9 @@ public class Work implements Serializable {
 		builder.append(", author=");
 		builder.append(author);
 		builder.append(", date=");
-		builder.append(date);
 		builder.append(", output=");
 		builder.append(output);
+		builder.append(date);
 		builder.append(", doc=");
 		builder.append(doc);
 		builder.append("] =");

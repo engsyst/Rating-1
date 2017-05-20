@@ -30,7 +30,7 @@
                                     <th class="col-sm-3" th:text="#{work.author}">Авторы</th>
                                     <th class="col-sm-2" th:text="#{date}">Дата</th>
                                     <th class="col-sm-3" th:text="#{type}">Тип</th>
-                                    <th class="col-sm-1"><a href="#" th:href="@{/work/save}"> 
+                                    <th ><a href="#" th:href="@{/work/save}"> 
 													<span class="glyphicon glyphicon-edit"></span></a></th>
                                 </tr>
                                 </thead>
@@ -38,8 +38,8 @@
                                 <tr th:each="work : ${works}">
                                     <td th:text="${work.title}"></td>
                                     <td th:text="${work.author}"></td>
-                                    <td th:text="${work.date}"></td>
-                                    <td th:text="${#strings.listJoin(work.types,', ')}"></td>
+                                    <td th:text="${work.date}"></td> <!-- th:text="${#strings.listJoin(work.types,'<br/>')}" -->
+                                    <td ><div th:each="t : ${work.types}" th:text="${t}"></div></td>
 									<td>
 										<div class="btn-group">
 											<button class="btn btn-warning btn-xs dropdown-toggle"

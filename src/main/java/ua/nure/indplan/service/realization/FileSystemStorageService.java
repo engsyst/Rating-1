@@ -3,6 +3,7 @@ package ua.nure.indplan.service.realization;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
@@ -84,9 +85,21 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
+    public void delete(String filename) {
+    	Resource file = loadAsResource(filename);
+    	try {
+			file.getFile().delete();
+		} catch (IOException e) {
+			throw new StorageFileNotFoundException("Could not read file: " + filename, e);
+		}
+    }
+    
+    @Override
     public void init() {
         try {
-            Files.createDirectory(rootLocation);
+        	if (Files.notExists(rootLocation)) {
+        		Files.createDirectory(rootLocation);
+        	}
         } catch (IOException e) {
             throw new StorageException("Could not initialize storage", e);
         }

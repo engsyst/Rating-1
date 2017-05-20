@@ -25,7 +25,7 @@
             <div class="col-lg-12">
                 <h1 class="page-header" th:text="work.new">Новая работа</h1>
                 <!-- <div class="col-sm-2"></div> -->
-                <div class="col-md-8 col-sm-8 col-xs-12">
+                <div class="col-md-10 col-sm-10 col-xs-12">
                     <!-- Add work form -->
                     <div class="alert alert-success alert-dismissable" th:if="${message != null}">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -75,7 +75,6 @@
                             </select>
                             <span class="help-block" th:if="${#fields.hasErrors('types')}" th:errors="*{types}">Incorrect</span>
                         </div>
-                        <!-- TODO As checkBoxes -->
                         <div class="form-group required" th:attrappend="class=${#fields.hasErrors('employees')}? ' has-error'">
                             <label class="control-label" for="employees" th:text="#{employee}">Сотрудник</label>
                             <select class="form-control" multiple="multiple"
@@ -100,7 +99,7 @@
                         </div>
 
 						<div class="form-group required" th:attrappend="class=${#fields.hasErrors('date')}? ' has-error'">
-                           <label class="control-label" for="date" th:text="*{date != null ? #dates.format(date, #messages.msg('date.pattern.java')) : ''}">Дата</label>
+                           <label class="control-label" for="date" th:text="*{date != null ? #dates.format(date, #messages.msg('work.date')) : ''}">Дата</label>
                            <input type='text' class="form-control" id="date" 
                            		th:name="date" th:value="*{date != null ? #dates.format(date, #messages.msg('date.pattern.java')) : #messages.msg('date.pattern.java')}"
                            		th:disabled="${ddate}"/>
@@ -112,11 +111,23 @@
 								    <span class="fileupload-new" th:text="#{work.doc.placeholder}">Select file</span>
 								    <span class="fileupload-exists" th:text="#{change}">Change</span>
 									<input type="file" id="file" name="file"
-	                           			th:disabled="${ddoc}"/></span>
+	                           			th:disabled="${ddoc}"/>
+									<input type="hidden" id="doc" th:field="*{doc}"/></span>
 							    <span class="fileupload-preview"></span>
 							    <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
 							</div>
                         </div>
+ 						<div class="form-group required" th:if="*{doc}">
+							<label class="control-label" th:text="#{work.doc.exist}">Автор(ы)</label>
+							<div class="input-group">
+	                          	<span class="input-group-addon">
+	                          	<a href="#" th:href="@{/work/download(doc=${work.doc})}" th:if="${work.doc}"
+	                          		th:title="#{download}">
+	                          	<span class="glyphicon glyphicon-download"></span></a></span>
+								<input class="form-control" type="text" th:value="*{doc}"
+	                          		th:disabled="disabled"/>
+							</div>
+						</div>
                         <div class="form-group">
                             <label for="saveButton"></label>
                             <button type="submit" class="btn btn-primary" id="saveButton" 

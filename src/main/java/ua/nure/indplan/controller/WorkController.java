@@ -11,6 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -103,6 +108,9 @@ public class WorkController {
     	model.addAttribute("categories",categories);
     	logger.trace("setModelAttr:categories" + categories);
     	
+    	model.addAttribute("doc", work.getDoc());
+    	logger.trace("setModelAttr:doc" + work.getDoc());
+    	
     	model.addAttribute("work", work);
     	logger.trace("setModelAttr:work" + work);
     	
@@ -180,10 +188,17 @@ public class WorkController {
             fillModel(work, model);
     		return "workEdit";
     	} else {
-//    		work.addToTypes();
-//    		work.addToEmployees();
-    		// TODO Remove uploaded doc if new available
     		work.setDate(date);
+    		// TODO Remove uploaded doc if new available
+            if (!StringUtils.isEmpty(file.getOriginalFilename())) {
+            	String prefix = work.getId() + PREFIX_DELIMITER;
+            	String docName = work.getDoc();
+            	if (docName != null && !docName.isEmpty()) {
+            		storageService.delete(docName);
+            	}
+            	storageService.store(file, prefix);
+            	work.setDoc(prefix + file.getOriginalFilename());
+            }
     		workService.updateWork(work);
     		logger.trace("updateWork", work);
     		redirectAttributes.addFlashAttribute("message", messageSource.getMessage("work.updated", null, LocaleContextHolder.getLocale()));
@@ -205,4 +220,14 @@ public class WorkController {
 		logger.trace("deleteWork", work);
 		return "redirect:/work/getAll";
 	}
+    
+    @RequestMapping(value = "/download", method = RequestMethod.GET, produces = {"application/x-compressed", "application/pdf", "application/msword", "application/richtext", })
+    @ResponseBody
+    public ResponseEntity<Resource> workDownload(@RequestParam(value = "doc", required = true) String fileName) {
+    	Resource file = storageService.loadAsResource(fileName);
+    	return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+file.getFilename()+"\"")
+                .body(file);
+    }
 }

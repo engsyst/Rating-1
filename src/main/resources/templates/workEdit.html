@@ -14,8 +14,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header" th:text="#{work}">#</h1>
-                <div class="col-sm-2"></div>
-                <div class="col-sm-6">
+                <div class="col-sm-1"></div>
+                <div class="col-md-10 col-sm-10 col-xs-12">
                     <!-- Add work form -->
 				    <div th:replace="fragments/user-form :: formMessage"></div>
 					<form th:replace="fragments/work-form :: workForm (@{/work/update}, #{save}, false, false, false, false, false, false, false)"></form>

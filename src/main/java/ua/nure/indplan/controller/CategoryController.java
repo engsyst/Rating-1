@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -30,8 +28,6 @@ import ua.nure.indplan.validation.CategoryValidator;
 @Controller
 @RequestMapping(value = "/category")
 public class CategoryController {
-
-    Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
     @Autowired
     CategoryService categoryService;
@@ -62,9 +58,7 @@ public class CategoryController {
     	types.add(new CategoryType());
     	types.addAll(categoryTypeService.getAll());
     	model.addAttribute("category", category);
-    	logger.trace("setModelAttr:category", category);
     	model.addAttribute("types",types);
-    	logger.trace("setModelAttr:types", types);
     	
     }
     
@@ -77,16 +71,11 @@ public class CategoryController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String categoryAdd(@Valid @ModelAttribute Category category, BindingResult bindingResult,
             RedirectAttributes redirectAttributes, Model model) {
-    	logger.debug("save:POST:categorySave");
         if (bindingResult.hasErrors()) {
-        	logger.debug(bindingResult.toString());
             fillModel(model, category);
             return "categoryAdd";
         } else {
             categoryService.addCategory(category);
-            logger.trace("addCategory", category);
-//            String message = "Категория успешно добавлена";
-//            redirectAttributes.addFlashAttribute("message", message);
             redirectAttributes.addFlashAttribute("message", messageSource.getMessage("category.added", null, LocaleContextHolder.getLocale()));
             return "redirect:/category/save";
         }
@@ -102,14 +91,11 @@ public class CategoryController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String categoryUpdate(@Valid @ModelAttribute Category category, BindingResult bindingResult,
     		RedirectAttributes redirectAttributes, Model model) {
-    	logger.debug("update:POST:categoryUpdate");
     	if (bindingResult.hasErrors()) {
-    		logger.debug(bindingResult.toString());
     		fillModel(model, category);
     		return "categoryEdit";
     	} else {
     		categoryService.updateCategory(category);
-    		logger.trace("updateCategory", category);
     		redirectAttributes.addFlashAttribute("message", messageSource.getMessage("category.updated", null, LocaleContextHolder.getLocale()));
     		return "redirect:/category/getAll";
     	}
@@ -126,7 +112,6 @@ public class CategoryController {
 	public String categoryDelete(@RequestParam(value = "id", required = true) Integer id) {
 		Category category = categoryService.getById(id);
 		categoryService.deleteCategory(category);
-		logger.trace("deleteCategory", category);
 		return "redirect:/category/getAll";
 	}
 }

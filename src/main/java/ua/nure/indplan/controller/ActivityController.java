@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,14 +21,13 @@ import ua.nure.indplan.service.ActivityService;
 @RequestMapping(value = "/activity")
 public class ActivityController {
 
-    Logger logger = LoggerFactory.getLogger(ActivityController.class);
 
     @Autowired
     ActivityService activityService;
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public String getAll(Model model) {
-        logger.info("getAll:GET-getAllActivities");
+
         List<Activity> activities = activityService.getAllActivities();
         model.addAttribute("activities", activities);
         return "activityAll";
@@ -38,7 +35,7 @@ public class ActivityController {
 
     @RequestMapping(value = "/save", method = RequestMethod.GET)
     public String activityAddPage(Model model) {
-        logger.info("save:GET:load save page");
+   
         model.addAttribute("activity", new Activity());
         return "activityAdd";
     }
@@ -47,12 +44,11 @@ public class ActivityController {
     public String activityAdd(@Valid @ModelAttribute Activity activity, BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            logger.error(bindingResult.toString());
             String message = "Ошибка при добавлении";
             redirectAttributes.addFlashAttribute("message", message);
             return "activityAdd";
         } else {
-            logger.info(activity.getStart().toString() + " end " + activity.getEnd().toString());
+
             activityService.addActivity(activity);
             String message = "Мероприятие успешно добавлено";
             redirectAttributes.addFlashAttribute("message", message);
@@ -64,7 +60,7 @@ public class ActivityController {
     public String deleteUser(
             @RequestParam(value = "id", required = true) Integer id,
             @RequestParam(value = "phase", required = true) String phase) {
-        logger.info("delete:GET:deleteActivity");
+
         Activity activity = activityService.getById(id);
         activityService.deleteActivity(activity);
         return "redirect:/activity/getAll";
@@ -73,7 +69,7 @@ public class ActivityController {
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String updateActivityPage(@RequestParam(value = "id", required = true) Integer id,
                                  Model model) {
-        logger.info("update:GET:updateActivityPage");
+
         Activity activity = activityService.getById(id);
         model.addAttribute("activity", activity);
         return "activityEdit";
@@ -81,7 +77,6 @@ public class ActivityController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String updateEmployee(@ModelAttribute Activity activity) {
-        System.out.println(activity.toString());
         activityService.updateActivity(activity);
         return "redirect:/activity/getAll";
     }

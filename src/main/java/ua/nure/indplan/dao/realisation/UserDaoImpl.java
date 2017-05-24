@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ua.nure.indplan.dao.UserDao;
 import ua.nure.indplan.entity.User;
 import ua.nure.indplan.exeptions.UserNotFoundException;
-import ua.nure.indplan.service.EmployeeService;
 
 public class UserDaoImpl implements UserDao {
 

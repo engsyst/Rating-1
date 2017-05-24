@@ -8,7 +8,6 @@ import org.springframework.format.Formatter;
 import org.springframework.stereotype.Service;
 
 import ua.nure.indplan.entity.Employee;
-import ua.nure.indplan.entity.Role;
 import ua.nure.indplan.service.EmployeeService;
 
 @Service

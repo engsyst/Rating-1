@@ -33,6 +33,7 @@ import ua.nure.indplan.entity.WorkType;
 import ua.nure.indplan.service.CategoryTypeService;
 import ua.nure.indplan.service.EmployeeService;
 import ua.nure.indplan.service.StorageService;
+import ua.nure.indplan.service.StudentService;
 import ua.nure.indplan.service.WorkService;
 import ua.nure.indplan.service.WorkTypeService;
 import ua.nure.indplan.validation.WorkValidator;
@@ -44,6 +45,9 @@ public class WorkController {
  
     @Autowired
     EmployeeService employeeService;
+    
+    @Autowired
+    StudentService studentService;
     
     @Autowired
     CategoryTypeService categoryTypeService;

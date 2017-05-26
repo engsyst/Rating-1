@@ -29,6 +29,7 @@ import ua.nure.indplan.entity.CategoryType;
 import ua.nure.indplan.entity.Employee;
 import ua.nure.indplan.entity.Work;
 import ua.nure.indplan.entity.WorkType;
+import ua.nure.indplan.exeptions.ExcelDocException;
 import ua.nure.indplan.service.CategoryTypeService;
 import ua.nure.indplan.service.EmployeeService;
 import ua.nure.indplan.service.StorageService;
@@ -171,7 +172,7 @@ public class WorkController {
 			) {	
             try {
             	workServiceExcel.addWorksExel(file.getInputStream());
-			} catch (/* Your own RuntimeException */ IOException e) {
+			} catch (ExcelDocException e) {
 			/*
 			 * TODO At this place you have error in import. 
 			 * Log exception. 
@@ -179,7 +180,12 @@ public class WorkController {
 			 * Forward at specially designed page or back to the form (workAddExcel).
 			 * Do not need stackTrace, exception logged.
 			 */
-				e.printStackTrace();
+				logger.error("ExcelDocException at workAddExel");
+				redirectAttributes.addFlashAttribute("message", messageSource.getMessage("Error in line " + e.getRow() + ", column " + e.getColumn(), null, LocaleContextHolder.getLocale()));
+				return "redirect:/work/saveExcel"; 
+			} catch (IOException e) {
+				logger.error("IOException at workAddExel");
+				return "redirect:/work/saveExcel";
 			}
         	redirectAttributes.addFlashAttribute("message", messageSource.getMessage("work.added", null, LocaleContextHolder.getLocale()));
      		return "redirect:/work/getAll";

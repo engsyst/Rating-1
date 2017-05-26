@@ -50,22 +50,22 @@ public class LoaggerAspect {
 			if (param instanceof BindingResult) {
 				logString.append("BindingResult Errors: " + "[");
 				List<ObjectError> err = ((BindingResult) param).getAllErrors();
-				err.forEach((v) -> logString.append(" value:" + v));
+				err.forEach((v) -> logString.append(" error:" + v));
 				logString.append("], ");
 				continue;
 			}
 
-			if (param instanceof Model) {
-				logString.append("Model: " + "[");
-				Map<String, Object> map = ((Model) param).asMap();
-				map.forEach((k, v) -> logString.append("key: " + k + " value:" + v));
+			if (param instanceof RedirectAttributes) {
+				logString.append("RedirectAttributes Params: " + "[");
+				Map<String, Object> map = ((RedirectAttributes) param).asMap();
+				map.forEach((p, v) -> logString.append("param: " + p + " value:" + v));
 				logString.append("], ");
 				continue;
 			}
-			if (param instanceof RedirectAttributes) {
-				logString.append("RedirectAttributes Errors: " + "[");
-				List<ObjectError> err = ((BindingResult) param).getAllErrors();
-				err.forEach((v) -> logString.append(" value:" + v));
+			if (param instanceof Model) {
+				logString.append("Model: " + "[");
+				Map<String, Object> map = ((Model) param).asMap();
+				map.forEach((p, v) -> logString.append("param: " + p + " value:" + v));
 				logString.append("], ");
 				continue;
 			}

@@ -24,9 +24,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Aspect
 @Component
-public class LoaggerAspect {
+public class LoggerAspect {
 
-	Logger logger = LoggerFactory.getLogger(LoaggerAspect.class);
+	Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
 
 	/**
 	 * Logging all actions of controllers

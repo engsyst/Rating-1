@@ -30,7 +30,7 @@ public class StudentDaoImpl implements StudentDao {
 	public List<Student> findByName(String pattern, int maxCount) {
 		Session session = getSession();
 		List<Student> studs = session.createCriteria(Student.class)
-			.add(Restrictions.like("name", pattern + "%"))
+			.add(Restrictions.like("name", pattern + "%").ignoreCase())
 			.setMaxResults(maxCount).list();
 		return studs;
 	}

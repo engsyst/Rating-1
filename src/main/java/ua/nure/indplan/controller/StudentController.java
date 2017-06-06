@@ -28,15 +28,16 @@ public class StudentController {
         return  "workAll";
     }
     
-    @RequestMapping(value = "/find", method = RequestMethod.GET)
-    public List<Student> find(@RequestParam String name, @RequestParam Integer max) {
-    	if (StringUtils.isEmpty(name)) {
+    @RequestMapping(value = "/find", method = RequestMethod.POST)
+    public List<Student> find(@RequestParam String value, @RequestParam Integer max) {
+    	if (StringUtils.isEmpty(value)) {
     		return null;
     	}
     	if (max == null) {
-    		return studentService.findByName(name);
+    		return studentService.findByName(value);
 		}
-    	return studentService.findByName(name, max);
+    	List<Student> studs = studentService.findByName(value, max);
+    	return studs;
     }
 
 }

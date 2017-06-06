@@ -3,6 +3,8 @@
       
 <head th:fragment="head">
 <head th:include="fragments/sb-admin :: head"></head>
+<link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
+<link type="text/css" rel="stylesheet" href="/css/jquery-ui.min.css" />
 <link type="text/css" rel="stylesheet" href="/css/fileupload.css"
 		  th:href="@{/css/fileupload.css}"/>
 <link type="text/css" rel="stylesheet" href="/css/bootstrap-multiselect.css"
@@ -34,6 +36,9 @@
 
                     <form class="form" th:fragment="workForm (actionUri, actionText, dtitle, dauthor, doutput, dtype, ddate, demployees, dcategories)" 
                     		id="workForm" name="workForm" method="post" action="#" enctype="multipart/form-data"
+                            data-autocomlete-url="/stud/find"
+                            data-autocomlete-input-id="student"
+                            data-autocomlete-minimal-length="2"
                     		th:action="@{${actionUri}}"
                     		th:object="${work}">
                         <input  type="hidden" th:field="*{id}"/>
@@ -85,6 +90,26 @@
                             </select>
                             <span class="help-block" th:if="${#fields.hasErrors('employees')}" th:errors="*{employees}">Incorrect</span>
                         </div>
+                        <!-- <Students> -->
+                        <div class="form-group ui-widget">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-5">
+                                    <label class="control-label" for="student">Студент</label>
+                                    <input class="form-control" id="student" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-5">
+                                    <label class="control-label" for="group">Группа</label>
+                                    <input class="form-control" id="group" />
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                    <label class="control-label" for="add-student">&nbsp;</label>
+                                    <input class="form-control" type="button" id="add-student" value="+" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="selected-students-visual" class="form-group"></div>
+                        <select name="students" multiple="multiple" id="selected-students"></select>
+                        <!-- </Students> -->
                         <div class="form-group required" th:attrappend="class=${#fields.hasErrors('category')}? ' has-error'">
                             <label class="control-label" for="category" th:text="#{work.category}">Вид нагрузки</label>
                             <select class="form-control" id="category" multiple="multiple"
@@ -144,6 +169,13 @@
 <div th:replace="fragments/sb-admin :: scripts"></div>
 
 <div th:fragment="scripts">
+
+<!-- Autocomplete -->
+<script type="text/javascript" src="/js/autocomplete.js"
+	th:src="@{/js/autocomplete.js}"></script>
+<script type="text/javascript" src="/js/jquery-ui.js"
+	th:src="@{/js/jquery-ui.js}"></script>
+
 <!-- Date picker JS: -->
 <script type="text/javascript" src="/js/datepicker/js/bootstrap-datepicker.js"
     th:src="@{/js/datepicker/js/bootstrap-datepicker.js}"></script>

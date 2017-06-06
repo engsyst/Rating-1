@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.nure.indplan.entity.CategoryType;
 import ua.nure.indplan.entity.Employee;
+import ua.nure.indplan.entity.Student;
 import ua.nure.indplan.entity.Work;
 import ua.nure.indplan.entity.WorkType;
 import ua.nure.indplan.service.CategoryTypeService;
@@ -161,6 +162,7 @@ public class WorkController {
     
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String workUpdate(
+    		@RequestParam List<String> students, 
 			@RequestParam Date date, 
 			@RequestParam MultipartFile file, 
 			@Valid @ModelAttribute Work work,

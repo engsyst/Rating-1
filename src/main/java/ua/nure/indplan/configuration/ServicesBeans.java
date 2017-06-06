@@ -22,6 +22,7 @@ import ua.nure.indplan.service.realization.EmployeeFormatter;
 import ua.nure.indplan.service.realization.EmployeeServiceImpl;
 import ua.nure.indplan.service.realization.RoleFormatter;
 import ua.nure.indplan.service.realization.RoleServiceImpl;
+import ua.nure.indplan.service.realization.StudentFormatter;
 import ua.nure.indplan.service.realization.StudentServiceImpl;
 import ua.nure.indplan.service.realization.UserServiceImpl;
 import ua.nure.indplan.service.realization.WorkServiceImpl;
@@ -104,5 +105,10 @@ public class ServicesBeans {
     @Bean
     public EmployeeFormatter employeeFormatter() {
     	return new EmployeeFormatter();
+    }
+    
+    @Bean
+    public StudentFormatter studentFormatter() {
+    	return new StudentFormatter();
     }
 }

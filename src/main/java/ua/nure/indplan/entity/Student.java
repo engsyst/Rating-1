@@ -17,7 +17,7 @@ public class Student implements Serializable {
 	private int id;
 	private String group;
 	private String name;
-	private Set<Work> works;
+//	private Set<Work> works;
 
 	public Student() {
 	}
@@ -56,13 +56,13 @@ public class Student implements Serializable {
 
 
 	//bi-directional many-to-many association to Work
-	@ManyToMany(mappedBy="students"/*, fetch=FetchType.LAZY*/)
-	public Set<Work> getWorks() {
-		return this.works;
-	}
-
-	public void setWorks(Set<Work> works) {
-		this.works = works;
-	}
+//	@ManyToMany(mappedBy="students"/*, fetch=FetchType.LAZY*/)
+//	public Set<Work> getWorks() {
+//		return this.works;
+//	}
+//
+//	public void setWorks(Set<Work> works) {
+//		this.works = works;
+//	}
 
 }

@@ -3,6 +3,7 @@ package ua.nure.indplan.service.realization;
 import java.text.ParseException;
 import java.util.Locale;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,14 @@ public class StudentFormatter implements Formatter<Student> {
 
 	@Override
 	public Student parse(String text, Locale locale) throws ParseException {
-		Integer id = Integer.valueOf(text);
-		Student ct = id == 0 ? new Student() : this.stService.getById(id); //return Student object form DB;
-        return ct;
+		JSONObject jo = new JSONObject(text);
+		int id = jo.getInt("id");
+		String name = jo.getString("name");
+		String group = jo.getString("group");
+		
+//		Integer id = Integer.valueOf(text);
+		Student st = id == 0 ? new Student(id, name, group) : this.stService.getById(id); //return Student object form DB;
+        return st;
 	}
 
 }

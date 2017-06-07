@@ -1,7 +1,9 @@
 package ua.nure.indplan.dao.realisation;
 
 import java.util.List;
+import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -32,19 +34,33 @@ public class StudentDaoImpl implements StudentDao {
 		List<Student> studs = session.createCriteria(Student.class)
 			.add(Restrictions.like("name", pattern + "%").ignoreCase())
 			.setMaxResults(maxCount).list();
+		for (Student student : studs) {
+			Hibernate.initialize(student);
+		}
 		return studs;
 	}
 
 	@Override
-	public void addStudent(Student student) {
-		// TODO Auto-generated method stub
-		
+	public void add(Student student) {
+		Session session = getSession();
+		session.save(student);
 	}
 
 	@Override
+	public void add(Set<Student> students) {
+		Session session = getSession();
+		for (Student stud : students) {
+			if (stud.getId() == 0) {
+				session.save(stud);
+			}
+		}
+	}
+	
+	@Override
 	public Student getById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = getSession();
+		Student st = (Student) session.get(Student.class, id);
+		return st;
 	}
 
 }

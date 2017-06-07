@@ -1,6 +1,7 @@
 package ua.nure.indplan.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -16,8 +17,10 @@ public interface StudentDao {
 
 	List<Student> findByName(String pattern, int maxCount);
 
-	void addStudent(Student student);
+	void add(Student student);
 
 	Student getById(int id);
+
+	void add(Set<Student> students);
 
 }

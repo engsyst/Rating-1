@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ua.nure.indplan.entity.Student;
+import ua.nure.indplan.entity.VMStudent;
 import ua.nure.indplan.service.StudentService;
+import ua.nure.indplan.service.realization.StudentAdapter;
 
 @RestController
 @RequestMapping(value = "/stud")
@@ -21,6 +23,9 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
+    @Autowired
+    StudentAdapter studentAdapter;
+    
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public String getAll(Model model) {
         List<Student> students = studentService.getAll();
@@ -29,15 +34,13 @@ public class StudentController {
     }
     
     @RequestMapping(value = "/find", method = RequestMethod.POST)
-    public List<Student> find(@RequestParam String value, @RequestParam Integer max) {
+    public List<VMStudent> find(@RequestParam String value, @RequestParam(required=false) Integer max) {
     	if (StringUtils.isEmpty(value)) {
     		return null;
     	}
     	if (max == null) {
-    		return studentService.findByName(value);
+    		return studentAdapter.get(studentService.findByName(value));
 		}
-    	List<Student> studs = studentService.findByName(value, max);
-    	return studs;
+    	return studentAdapter.get(studentService.findByName(value));
     }
-
 }

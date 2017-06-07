@@ -46,11 +46,11 @@ window.app.createStudent = function(id, name, group){
         var form = $("form[data-autocomlete-url]")[0];
         app.url = $(form).attr("data-autocomlete-url");
         app.minimalLength = $(form).attr("data-autocomlete-minimal-length");
+        app.maxValues = $(form).attr("data-autocomlete-max-values");
         app.container = $("#selected-students-visual");
         app.studentsList = $("#selected-students");
         app.studentName = $("#student");
         app.studentGroup = $("#group");
-        app.maxValues = 6;
         var inputId = $(form).attr("data-autocomlete-input-id");
         var input = $("#" + inputId);
         $(input).autocomplete(

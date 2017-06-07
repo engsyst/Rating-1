@@ -2,6 +2,7 @@ package ua.nure.indplan.service.realization;
 
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,9 +25,16 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void add(Student student) {
-        studentDao.addStudent(student);
+        studentDao.add(student);
     }
 
+    @Override
+    public void add(Set<Student> students) {
+    	if (students != null && students.size() != 0) {
+    		studentDao.add(students);
+    	}
+    }
+    
     @Override
     public Student getById(int id) {
         return studentDao.getById(id);

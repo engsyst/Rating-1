@@ -1,6 +1,7 @@
 package ua.nure.indplan.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -18,5 +19,7 @@ public interface StudentService {
     void add(Student stud);
 
     Student getById(int id);
+
+	void add(Set<Student> students);
     
 }

@@ -1,18 +1,21 @@
-﻿"use strict";
+"use strict";
 
 window.app = {};
 
 window.app.addedStudents = [];
 
-window.app.addStudent = function (student) {
-    var span = $('<span class="label label-default">' + student.name + ' (' + student.group + ')' + '<span class="remove glyphicon glyphicon-remove-sign glyphicon-white"></span></span>');
+window.app.addStudent = function (student,addOption) {
+    var span = $('<span class="label label-default">' + student.name + '&nbsp;(' + student.group + ')' + '<span class="remove glyphicon glyphicon-remove-sign glyphicon-white"></span></span>');
     span.click(function () {
         window.app.removeStudent(student);
         span.remove();
     });
     window.app.container.append(span);
     window.app.addedStudents.push(student);
-    var option = $('<option selected="selected"></option>');
+    if (addOption === false) {
+        return;
+    }
+    var option = $('<option selected></option>');
     option.val(JSON.stringify(student));
     option.attr("data-id", student.id);
     window.app.studentsList.append(option);
@@ -41,6 +44,17 @@ window.app.createStudent = function(id, name, group){
     return { id: id, name: name, group: group };
 };
 
+window.app.loadStudents = function (selectElement) {
+    var options = $(selectElement).children("option[selected]");
+    for (var i = 0; i < options.length; i++) {
+        var student = JSON.parse($(options[i]).val());
+        if (typeof student.id == 'undefined' || typeof student.name == 'undefined' || typeof student.group == 'undefined') {
+            continue;
+        }
+        window.app.addStudent(student, false);
+    }
+};
+
 (function(app){
     $(function ($) {
         var form = $("form[data-autocomlete-url]")[0];
@@ -51,8 +65,10 @@ window.app.createStudent = function(id, name, group){
         app.studentsList = $("#selected-students");
         app.studentName = $("#student");
         app.studentGroup = $("#group");
+        app.selectedStudents = $("#students");
         var inputId = $(form).attr("data-autocomlete-input-id");
         var input = $("#" + inputId);
+        app.loadStudents(app.studentsList);
         $(input).autocomplete(
         {
             minLength: app.minimalLength,
@@ -86,8 +102,9 @@ window.app.createStudent = function(id, name, group){
         });
         $("#add-student").click(function (e) {
             var currentStudent = app.selected;
-            if (typeof app.selected == 'undefined') {
-                currentStudent = app.createStudent(0, app.studentName.val(), app.studentGroup.val());
+            var realGroup = app.studentGroup.val();
+            if (typeof app.selected == 'undefined' || app.selected.group != realGroup) {
+                currentStudent = app.createStudent(0, app.studentName.val(), realGroup);
                 if (currentStudent.name == "" || currentStudent.group == "") {
                     return;
                 }

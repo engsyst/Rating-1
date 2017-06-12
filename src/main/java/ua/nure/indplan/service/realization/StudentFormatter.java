@@ -25,8 +25,8 @@ public class StudentFormatter implements Formatter<Student> {
 	public Student parse(String text, Locale locale) throws ParseException {
 		JSONObject jo = new JSONObject(text);
 		int id = jo.getInt("id");
-		String name = jo.getString("name");
-		String group = jo.getString("group");
+		String name = jo.getString("name").trim();
+		String group = jo.getString("group").trim();
 		
 //		Integer id = Integer.valueOf(text);
 		Student st = id == 0 ? new Student(id, name, group) : this.stService.getById(id); //return Student object form DB;

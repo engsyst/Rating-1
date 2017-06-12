@@ -1,11 +1,9 @@
 package ua.nure.indplan.controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.nure.indplan.entity.CategoryType;
 import ua.nure.indplan.entity.Employee;
-import ua.nure.indplan.entity.Student;
 import ua.nure.indplan.entity.Work;
 import ua.nure.indplan.entity.WorkType;
 import ua.nure.indplan.service.CategoryTypeService;

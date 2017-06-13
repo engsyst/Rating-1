@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -32,8 +30,6 @@ import ua.nure.indplan.validation.UserValidator;
 @RequestMapping(value = "/user")
 public class UserController {
 
-    Logger log = LoggerFactory.getLogger(UserController.class);
-
     @Autowired
     UserService userService;
 
@@ -53,7 +49,6 @@ public class UserController {
 	
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public String getAll(Model model) {
-        log.info("getAll:GET-getAllUsers");
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "userAll";
@@ -71,7 +66,6 @@ public class UserController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.GET)
     public String userSavePage(Model model) {
-        log.debug("save:GET:userSavePage");
         fillUserModel(model, new User(new Employee(), new Role()));
         return "userAdd";
     }
@@ -82,11 +76,8 @@ public class UserController {
     	List<Role> roles = roleService.getAllRoles();
     	roles.add(0, new Role());
     	model.addAttribute("user", user);
-    	log.debug("userPageModel: add attribute user", user);
     	model.addAttribute("allEmployees", employees);
-    	log.debug("userPageModel: add attribute allEmployees", employees);
     	model.addAttribute("allRoles", roles);
-        log.debug("userPageModel: add attribute allRoles", roles);
     }
     
     /**
@@ -100,9 +91,7 @@ public class UserController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String userSave(@Valid @ModelAttribute User user, BindingResult bindingResult,
                 RedirectAttributes redirectAttributes, Model model) {
-        log.info("save:POST:userSave");
         if (bindingResult.hasErrors()) {
-            log.error(bindingResult.toString());
             fillUserModel(model, user);
 //            model.addAttribute("errorMessage", errorsToString(bindingResult));
             return "userAdd";
@@ -151,17 +140,14 @@ public class UserController {
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String deleteUserPage(@RequestParam(value = "id", required = true) Integer id,
             Model model) {
-        log.debug("delete:GET:deleteUserPage");
         User user = userService.getById(id);
     	model.addAttribute("user", user);
-    	log.debug("userPageModel: add attribute user", user);
         return "userDetail";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteUser(
     		@RequestParam(value = "id", required = true) Integer id) {
-        log.debug("delete:POST:deleteUser");
         User user = userService.getById(id);
         userService.deleteUser(user);
         return "redirect:/user/getAll";
@@ -178,7 +164,6 @@ public class UserController {
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String updateUserPage(@RequestParam(value = "id", required = true) Integer id,
             Model model) {
-        log.debug("update:GET:updateUserPage", id);
         User user = userService.getById(id);
         fillUserModel(model, user);
         return "userEdit";
@@ -192,7 +177,6 @@ public class UserController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String updateEmployee(@ModelAttribute User user) {
-    	log.debug("update:POST:updateUser", user);
         userService.updateUser(user);
         return "redirect:/user/getAll";
     }

@@ -1,14 +1,16 @@
 package ua.nure.indplan.controller;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -16,21 +18,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.nure.indplan.entity.Employee;
 import ua.nure.indplan.service.EmployeeService;
 
-import javax.validation.Valid;
-import java.util.List;
-
 @Controller
 @RequestMapping(value = "/employee")
 public class EmployeeController {
 
-    Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
     @Autowired
     EmployeeService employeeService;
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public String getAll(Model model) {
-        logger.info("getAll:GET-getAllEmployees");
         List<Employee> employees = employeeService.getAll();
         model.addAttribute("employees", employees);
         return "employeeAll";
@@ -45,14 +42,12 @@ public class EmployeeController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.GET)
     public String employeeAddPage(Model model) {
-        logger.info("save:GET:load save page");
         model.addAttribute("employee", new Employee());
         return "employeeAdd";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String addEmployee(@Valid @ModelAttribute Employee employee, RedirectAttributes redirectAttributes, BindingResult bindingResult) {
-        logger.info("save:POST:add new empoyee");
         if (bindingResult.hasErrors()) {
             return "employeeAdd";
         } else {
@@ -68,12 +63,7 @@ public class EmployeeController {
             @RequestParam(value = "id", required = true) Integer id,
             @RequestParam(value = "phase", required = true) String phase,
             Model model) {
-        logger.info("delete:GET:delete employee");
-        if (id == null)
-            logger.error("delete:GET: id = null");
         Employee employee = employeeService.getById(id);
-        if (employee == null)
-            logger.error("delete:GET: employee = null");
         employeeService.deleteEmployee(employee);
         model.addAttribute("message", "Запись успешно удалена");
         return "redirect:/employee/getAll";
@@ -81,7 +71,6 @@ public class EmployeeController {
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String updateEmployeePage(@RequestParam(value = "id", required = true) Integer id, Model model) {
-        logger.info("update:GET:load update page");
         Employee employee = employeeService.getById(id);
         model.addAttribute("employee", employee);
         return "employeeEdit";
@@ -89,7 +78,6 @@ public class EmployeeController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String updateEmployee(@ModelAttribute Employee employee, Model model) {
-        logger.info("update:POST: update employee");
         employeeService.updateEmployee(employee);
         return "redirect:/employee/getAll";
     }

@@ -1,3 +1,4 @@
+
 package ua.nure.indplan.entity;
 
 
@@ -18,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+
+
 import javax.persistence.TemporalType;
 
 
@@ -39,6 +42,7 @@ public class Work implements Serializable {
 	private Set<Employee> employees;
 	private Category category;
 	private Set<WorkType> types;
+	private Set<Student> students;
 
 	public Work() {
 	}
@@ -172,6 +176,25 @@ public class Work implements Serializable {
 		}
 	}
 
+
+	//bi-directional many-to-many association to Student
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+		name="student_has_work"
+		, joinColumns={
+			@JoinColumn(name="work_id", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="student_id", nullable=false)
+			}
+		)
+	public Set<Student> getStudents() {
+		return this.students;
+	}
+
+	public void setStudents(Set<Student> students) {
+		this.students = students;
+	}
 
 	@Override
 	public int hashCode() {

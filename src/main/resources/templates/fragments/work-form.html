@@ -3,6 +3,8 @@
       
 <head th:fragment="head">
 <head th:include="fragments/sb-admin :: head"></head>
+<link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
+<link type="text/css" rel="stylesheet" href="/css/jquery-ui.min.css" />
 <link type="text/css" rel="stylesheet" href="/css/fileupload.css"
 		  th:href="@{/css/fileupload.css}"/>
 <link type="text/css" rel="stylesheet" href="/css/bootstrap-multiselect.css"
@@ -25,7 +27,7 @@
             <div class="col-lg-12">
                 <h1 class="page-header" th:text="work.new">Новая работа</h1>
                 <!-- <div class="col-sm-2"></div> -->
-                <div class="col-md-8 col-sm-8 col-xs-12">
+                <div class="col-md-10 col-sm-10 col-xs-12">
                     <!-- Add work form -->
                     <div class="alert alert-success alert-dismissable" th:if="${message != null}">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -34,6 +36,10 @@
 
                     <form class="form" th:fragment="workForm (actionUri, actionText, dtitle, dauthor, doutput, dtype, ddate, demployees, dcategories)" 
                     		id="workForm" name="workForm" method="post" action="#" enctype="multipart/form-data"
+                            data-autocomlete-url="/stud/find"
+                            data-autocomlete-input-id="student"
+                            data-autocomlete-minimal-length="2"
+                            data-autocomlete-max-values="6"
                     		th:action="@{${actionUri}}"
                     		th:object="${work}">
                         <input  type="hidden" th:field="*{id}"/>
@@ -75,7 +81,6 @@
                             </select>
                             <span class="help-block" th:if="${#fields.hasErrors('types')}" th:errors="*{types}">Incorrect</span>
                         </div>
-                        <!-- TODO As checkBoxes -->
                         <div class="form-group required" th:attrappend="class=${#fields.hasErrors('employees')}? ' has-error'">
                             <label class="control-label" for="employees" th:text="#{employee}">Сотрудник</label>
                             <select class="form-control" multiple="multiple"
@@ -86,6 +91,28 @@
                             </select>
                             <span class="help-block" th:if="${#fields.hasErrors('employees')}" th:errors="*{employees}">Incorrect</span>
                         </div>
+                        <!-- <Students> -->
+                        <div class="form-group ui-widget">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-5">
+                                    <label class="control-label" for="student">Студент</label>
+                                    <input class="form-control" id="student" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-5">
+                                    <label class="control-label" for="group">Группа</label>
+                                    <input class="form-control" id="group" />
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                    <label class="control-label" for="add-student">&nbsp;</label>
+                                    <input class="form-control" type="button" id="add-student" value="+" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="selected-students-visual" class="form-group"></div>
+                        <select th:field="*{students}" multiple="multiple" id="selected-students">
+                        	<option th:each="s : *{students}" th:value="${s.toJSON()}" th:attr="data-id=${s.id}" selected="selected">#</option>
+                        </select>
+                        <!-- </Students> -->
                         <div class="form-group required" th:attrappend="class=${#fields.hasErrors('category')}? ' has-error'">
                             <label class="control-label" for="category" th:text="#{work.category}">Вид нагрузки</label>
                             <select class="form-control" id="category" multiple="multiple"
@@ -100,7 +127,7 @@
                         </div>
 
 						<div class="form-group required" th:attrappend="class=${#fields.hasErrors('date')}? ' has-error'">
-                           <label class="control-label" for="date" th:text="*{date != null ? #dates.format(date, #messages.msg('date.pattern.java')) : ''}">Дата</label>
+                           <label class="control-label" for="date" th:text="*{date != null ? #dates.format(date, #messages.msg('work.date')) : ''}">Дата</label>
                            <input type='text' class="form-control" id="date" 
                            		th:name="date" th:value="*{date != null ? #dates.format(date, #messages.msg('date.pattern.java')) : #messages.msg('date.pattern.java')}"
                            		th:disabled="${ddate}"/>
@@ -112,11 +139,23 @@
 								    <span class="fileupload-new" th:text="#{work.doc.placeholder}">Select file</span>
 								    <span class="fileupload-exists" th:text="#{change}">Change</span>
 									<input type="file" id="file" name="file"
-	                           			th:disabled="${ddoc}"/></span>
+	                           			th:disabled="${ddoc}"/>
+									<input type="hidden" id="doc" th:field="*{doc}"/></span>
 							    <span class="fileupload-preview"></span>
 							    <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
 							</div>
                         </div>
+ 						<div class="form-group required" th:if="*{doc}">
+							<label class="control-label" th:text="#{work.doc.exist}">Автор(ы)</label>
+							<div class="input-group">
+	                          	<span class="input-group-addon">
+	                          	<a href="#" th:href="@{/work/download(doc=${work.doc})}" th:if="${work.doc}"
+	                          		th:title="#{download}">
+	                          	<span class="glyphicon glyphicon-download"></span></a></span>
+								<input class="form-control" type="text" th:value="*{doc}"
+	                          		th:disabled="disabled"/>
+							</div>
+						</div>
                         <div class="form-group">
                             <label for="saveButton"></label>
                             <button type="submit" class="btn btn-primary" id="saveButton" 
@@ -133,6 +172,13 @@
 <div th:replace="fragments/sb-admin :: scripts"></div>
 
 <div th:fragment="scripts">
+
+<!-- Autocomplete -->
+<script type="text/javascript" src="/js/autocomplete.js"
+	th:src="@{/js/autocomplete.js}"></script>
+<script type="text/javascript" src="/js/jquery-ui.js"
+	th:src="@{/js/jquery-ui.js}"></script>
+
 <!-- Date picker JS: -->
 <script type="text/javascript" src="/js/datepicker/js/bootstrap-datepicker.js"
     th:src="@{/js/datepicker/js/bootstrap-datepicker.js}"></script>

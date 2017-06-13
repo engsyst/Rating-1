@@ -1,4 +1,4 @@
-package ua.nure.indplan.configuration;
+	package ua.nure.indplan.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,7 @@ import ua.nure.indplan.service.CategoryService;
 import ua.nure.indplan.service.CategoryTypeService;
 import ua.nure.indplan.service.EmployeeService;
 import ua.nure.indplan.service.RoleService;
-import ua.nure.indplan.service.StorageService;
+import ua.nure.indplan.service.StudentService;
 import ua.nure.indplan.service.UserService;
 import ua.nure.indplan.service.WorkService;
 import ua.nure.indplan.service.WorkTypeService;
@@ -20,9 +20,11 @@ import ua.nure.indplan.service.realization.CategoryTypeServiceImpl;
 import ua.nure.indplan.service.realization.DateFormatter;
 import ua.nure.indplan.service.realization.EmployeeFormatter;
 import ua.nure.indplan.service.realization.EmployeeServiceImpl;
-import ua.nure.indplan.service.realization.FileSystemStorageService;
 import ua.nure.indplan.service.realization.RoleFormatter;
 import ua.nure.indplan.service.realization.RoleServiceImpl;
+import ua.nure.indplan.service.realization.StudentAdapter;
+import ua.nure.indplan.service.realization.StudentFormatter;
+import ua.nure.indplan.service.realization.StudentServiceImpl;
 import ua.nure.indplan.service.realization.UserServiceImpl;
 import ua.nure.indplan.service.realization.WorkServiceImpl;
 import ua.nure.indplan.service.realization.WorkTypeFormatter;
@@ -39,6 +41,11 @@ public class ServicesBeans {
     @Bean
     public UserService userService() {
         return new UserServiceImpl();
+    }
+    
+    @Bean
+    public StudentService ctudentService() {
+    	return new StudentServiceImpl();
     }
     
     @Bean
@@ -99,5 +106,15 @@ public class ServicesBeans {
     @Bean
     public EmployeeFormatter employeeFormatter() {
     	return new EmployeeFormatter();
+    }
+    
+    @Bean
+    public StudentFormatter studentFormatter() {
+    	return new StudentFormatter();
+    }
+    
+    @Bean
+    public StudentAdapter studentAdapter() {
+    	return new StudentAdapter();
     }
 }

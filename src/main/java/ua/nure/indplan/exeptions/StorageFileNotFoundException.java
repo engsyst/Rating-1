@@ -2,7 +2,9 @@ package ua.nure.indplan.exeptions;
 
 public class StorageFileNotFoundException extends StorageException {
 
-    public StorageFileNotFoundException(String message) {
+	private static final long serialVersionUID = -6199279894870556278L;
+
+	public StorageFileNotFoundException(String message) {
         super(message);
     }
 

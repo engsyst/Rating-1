@@ -123,6 +123,7 @@ public class WorkServiceExcelImpl implements WorkServiceExcel{
 	 		            	}
 	 		            }
 	 		            work.setTypes(workTypeSet);
+	 		            
 	 					break;
 	 				}
 	            }

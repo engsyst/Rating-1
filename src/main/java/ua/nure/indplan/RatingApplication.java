@@ -12,7 +12,7 @@ import ua.nure.indplan.configuration.StorageProperties;
 import ua.nure.indplan.service.StorageService;
 
 @SpringBootApplication
-// @EnableAutoConfiguration(exclude=SecurityAutoConfiguration.class)
+//@EnableAutoConfiguration(exclude=SecurityAutoConfiguration.class)
 @EnableConfigurationProperties(StorageProperties.class)
 @EnableAspectJAutoProxy
 @ComponentScan("ua.nure.indplan")
@@ -25,7 +25,7 @@ public class RatingApplication {
 	@Bean
 	CommandLineRunner init(StorageService storageService) {
 		return (args) -> {
-//            storageService.deleteAll();
+            //storageService.deleteAll();
             storageService.init();
 		};
 	}

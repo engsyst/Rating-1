@@ -14,27 +14,27 @@ public class WorkServiceImpl implements WorkService {
     WorkDao workDao;
 
     @Override
-    public List<Work> getAllCategories() {
-        return workDao.getAllCategories();
+    public List<Work> getAll() {
+        return workDao.findAll();
     }
 
     @Override
-    public void addWork(Work work) {
-        workDao.addWork(work);
+    public void add(Work work) {
+        workDao.save(work);
     }
 
     @Override
     public Work getById(int id) {
-        return workDao.getById(id);
+        return workDao.findOne(id);
     }
 
     @Override
-    public void deleteWork(Work work) {
-        workDao.deleteWork(work);
+    public void delete(Work work) {
+        workDao.delete(work);
     }
 
     @Override
-    public void updateWork(Work work) {
-        workDao.updateWork(work);
+    public void update(Work work) {
+        workDao.save(work);
     }
 }

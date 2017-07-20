@@ -82,7 +82,7 @@ public class WorkController {
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public String getAll(Model model) {
-        List<Work> works = workService.getAllCategories();
+        List<Work> works = workService.getAll();
         List<Employee> employees = employeeService.getAll();
         List<WorkType> types = workTypeService.getAll();
         model.addAttribute("works", works);
@@ -139,12 +139,12 @@ public class WorkController {
             return "workAdd";
         } else {
         	work.setDate(date);
-            workService.addWork(work);
+            workService.add(work);
             if (!StringUtils.isEmpty(file.getOriginalFilename())) {
             	String prefix = work.getId() + PREFIX_DELIMITER;
             	storageService.store(file, prefix);
             	work.setDoc(prefix + file.getOriginalFilename());
-            	workService.updateWork(work);
+            	workService.update(work);
             }
             redirectAttributes.addFlashAttribute("message", messageSource.getMessage("work.added", null, LocaleContextHolder.getLocale()));
             return "redirect:/work/save";
@@ -190,7 +190,7 @@ public class WorkController {
         	storageService.store(file, prefix);
         	work.setDoc(prefix + file.getOriginalFilename());
         }
-		workService.updateWork(work);
+		workService.update(work);
 		redirectAttributes.addFlashAttribute("message", messageSource.getMessage("work.updated", null, LocaleContextHolder.getLocale()));
 		return "redirect:/work/getAll";
     }
@@ -205,7 +205,7 @@ public class WorkController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String workDelete(@RequestParam(value = "id", required = true) Integer id) {
 		Work work = workService.getById(id);
-		workService.deleteWork(work);
+		workService.delete(work);
 		return "redirect:/work/getAll";
 	}
     

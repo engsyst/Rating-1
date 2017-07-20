@@ -1,27 +1,20 @@
 package ua.nure.indplan.dao;
 
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ua.nure.indplan.entity.User;
-import ua.nure.indplan.exeptions.UserNotFoundException;
-
-import javax.transaction.Transactional;
-import java.util.List;
 
 @Repository
 @Transactional
-public interface UserDao {
+public interface UserDao extends CrudRepository<User, Integer> {
 
-	public List<User> getAllUsers();
+	public List<User> findAll();
 
-	public void addUser(User user);
-
-	public void deleteUser(User user);
-
-	public User getById(int id);
-
-	public void updateUser(User user);
-
-	public User getUser(String username) throws UserNotFoundException;
+	public User findByUsernameIgnoreCase(String username);
 
 }

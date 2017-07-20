@@ -28,7 +28,7 @@ public class StudentController {
     
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public String getAll(Model model) {
-        List<Student> students = studentService.getAll();
+        List<Student> students = studentService.findAll();
         model.addAttribute("students", students);
         return  "workAll";
     }

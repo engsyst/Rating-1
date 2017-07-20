@@ -11,11 +11,11 @@ public interface EmployeeService {
 
     public List<Employee> getAll();
 
-    public void addEmployee(Employee employee);
+    public void add(Employee employee);
 
-    public void deleteEmployee(Employee employee);
+    public void delete(Employee employee);
 
     public Employee getById(int id);
 
-    public void updateEmployee(Employee employee);
+    public void update(Employee employee);
 }

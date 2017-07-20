@@ -10,7 +10,7 @@ import ua.nure.indplan.entity.Student;
 @Service
 public interface StudentService {
 
-    List<Student> getAll();
+    List<Student> findAll();
     
     List<Student> findByName(String pattern);
 

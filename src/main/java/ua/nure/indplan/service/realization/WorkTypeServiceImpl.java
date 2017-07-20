@@ -15,17 +15,17 @@ public class WorkTypeServiceImpl implements WorkTypeService {
 
     @Override
     public List<WorkType> getAll() {
-        return typeDao.getAll();
+        return typeDao.findAll();
     }
 
     @Override
     public void add(WorkType type) {
-        typeDao.add(type);
+        typeDao.save(type);
     }
 
     @Override
     public WorkType getById(int id) {
-        return typeDao.getById(id);
+        return typeDao.findOne(id);
     }
 
 //    @Override
@@ -35,6 +35,6 @@ public class WorkTypeServiceImpl implements WorkTypeService {
 
     @Override
     public void update(WorkType type) {
-        typeDao.update(type);
+        typeDao.save(type);
     }
 }

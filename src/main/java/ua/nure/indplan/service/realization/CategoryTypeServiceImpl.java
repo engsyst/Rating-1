@@ -15,17 +15,17 @@ public class CategoryTypeServiceImpl implements CategoryTypeService {
 
     @Override
     public List<CategoryType> getAll() {
-        return typeDao.getAll();
+        return typeDao.findAll();
     }
 
     @Override
     public void add(CategoryType type) {
-        typeDao.add(type);
+        typeDao.save(type);
     }
 
     @Override
     public CategoryType getById(int id) {
-        return typeDao.getById(id);
+        return typeDao.findOne(id);
     }
 
     @Override
@@ -35,6 +35,6 @@ public class CategoryTypeServiceImpl implements CategoryTypeService {
 
     @Override
     public void update(CategoryType type) {
-        typeDao.update(type);
+        typeDao.save(type);
     }
 }

@@ -2,21 +2,13 @@ package ua.nure.indplan.dao;
 
 import java.util.List;
 
+import org.springframework.data.repository.CrudRepository;
+
 import ua.nure.indplan.entity.Permission;
-import ua.nure.indplan.exeptions.DuplicatePermissionException;
-import ua.nure.indplan.exeptions.PermissionNotFoundException;
 
-public interface PermissionDAO {
+public interface PermissionDAO extends CrudRepository<Permission, Integer> {
 
-	public void addPermission(Permission permission) throws DuplicatePermissionException;
-
-	public Permission getPermission(int id) throws PermissionNotFoundException;
-
-	public Permission getPermission(String permissionName) throws PermissionNotFoundException;
-
-	public void updatePermission(Permission permission) throws PermissionNotFoundException;
-
-	public void deletePermission(int id) throws PermissionNotFoundException;
-
-	public List<Permission> getPermissions();
+	List<Permission> findAll();
+	
+	Permission findByPermissionnameIgnoreCase(String permissionname);
 }

@@ -49,7 +49,7 @@ public class UserController {
 	
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public String getAll(Model model) {
-        List<User> users = userService.getAllUsers();
+        List<User> users = userService.getAll();
         model.addAttribute("users", users);
         return "userAll";
     }
@@ -73,7 +73,7 @@ public class UserController {
     void fillUserModel(Model model, User user) {
     	List<Employee> employees = employeeService.getAll();
     	employees.add(0, new Employee());
-    	List<Role> roles = roleService.getAllRoles();
+    	List<Role> roles = roleService.getAll();
     	roles.add(0, new Role());
     	model.addAttribute("user", user);
     	model.addAttribute("allEmployees", employees);
@@ -96,7 +96,7 @@ public class UserController {
 //            model.addAttribute("errorMessage", errorsToString(bindingResult));
             return "userAdd";
         } else {
-            userService.addUser(user);
+            userService.add(user);
 //            String message = "Пользователь успешно добавлен";
             redirectAttributes.addFlashAttribute("message", messageSource.getMessage("user.added", null, LocaleContextHolder.getLocale()));
             return "redirect:/user/save";
@@ -149,7 +149,7 @@ public class UserController {
     public String deleteUser(
     		@RequestParam(value = "id", required = true) Integer id) {
         User user = userService.getById(id);
-        userService.deleteUser(user);
+        userService.delete(user);
         return "redirect:/user/getAll";
     }
 
@@ -177,7 +177,7 @@ public class UserController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String updateEmployee(@ModelAttribute User user) {
-        userService.updateUser(user);
+        userService.update(user);
         return "redirect:/user/getAll";
     }
 }

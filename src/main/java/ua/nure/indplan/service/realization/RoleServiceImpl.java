@@ -15,17 +15,17 @@ public class RoleServiceImpl implements RoleService {
 	RoleDao roleDao;
 
 	@Override
-	public List<Role> getAllRoles() {
-		return roleDao.getAllRoles();
+	public List<Role> getAll() {
+		return roleDao.findAll();
 	}
 
 	@Override
 	public Role getById(int id) {
-		return roleDao.getById(id);
+		return roleDao.findOne(id);
 	}
 
 	@Override
 	public Role getRole(String rolename) throws RoleNotFoundException {
-		return roleDao.getRole(rolename);
+		return roleDao.findByRolename(rolename);
 	}
 }

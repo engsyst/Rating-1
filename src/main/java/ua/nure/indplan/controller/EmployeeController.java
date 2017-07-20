@@ -51,7 +51,7 @@ public class EmployeeController {
         if (bindingResult.hasErrors()) {
             return "employeeAdd";
         } else {
-            employeeService.addEmployee(employee);
+            employeeService.add(employee);
             String message = "Сотрудник успешно добавлен";
             redirectAttributes.addFlashAttribute("message", message);
             return "redirect:/employee/save";
@@ -64,7 +64,7 @@ public class EmployeeController {
             @RequestParam(value = "phase", required = true) String phase,
             Model model) {
         Employee employee = employeeService.getById(id);
-        employeeService.deleteEmployee(employee);
+        employeeService.delete(employee);
         model.addAttribute("message", "Запись успешно удалена");
         return "redirect:/employee/getAll";
     }
@@ -78,7 +78,7 @@ public class EmployeeController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String updateEmployee(@ModelAttribute Employee employee, Model model) {
-        employeeService.updateEmployee(employee);
+        employeeService.update(employee);
         return "redirect:/employee/getAll";
     }
 }

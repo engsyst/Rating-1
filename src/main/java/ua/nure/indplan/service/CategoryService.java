@@ -11,11 +11,11 @@ public interface CategoryService {
 
     List<Category> getAll();
 
-    void addCategory(Category category);
+    void add(Category category);
 
     Category getById(int id);
 
-    void deleteCategory(Category category);
+    void delete(Category category);
 
-    void updateCategory(Category category);
+    void update(Category category);
 }

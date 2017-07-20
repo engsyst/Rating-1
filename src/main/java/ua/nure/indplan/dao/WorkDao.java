@@ -1,5 +1,6 @@
 package ua.nure.indplan.dao;
 
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ua.nure.indplan.entity.Work;
@@ -9,15 +10,8 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface WorkDao {
+public interface WorkDao extends CrudRepository<Work, Integer> {
 
-    List<Work> getAllCategories();
+	List<Work> findAll();
 
-    void addWork(Work work);
-
-    Work getById(int id);
-
-    void deleteWork(Work work);
-
-    void updateWork(Work work);
 }

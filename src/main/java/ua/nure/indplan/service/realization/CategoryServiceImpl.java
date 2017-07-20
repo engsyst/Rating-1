@@ -15,26 +15,26 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAll() {
-        return categoryDao.getAll();
+        return categoryDao.findAll();
     }
 
     @Override
-    public void addCategory(Category category) {
-        categoryDao.addCategory(category);
+    public void add(Category category) {
+        categoryDao.save(category);
     }
 
     @Override
     public Category getById(int id) {
-        return categoryDao.getById(id);
+        return categoryDao.findOne(id);
     }
 
     @Override
-    public void deleteCategory(Category category) {
-        categoryDao.deleteCategory(category);
+    public void delete(Category category) {
+        categoryDao.delete(category);
     }
 
     @Override
-    public void updateCategory(Category category) {
-        categoryDao.updateCategory(category);
+    public void update(Category category) {
+        categoryDao.save(category);
     }
 }

@@ -8,16 +8,15 @@ import ua.nure.indplan.exeptions.PermissionNotFoundException;
 
 public interface PermissionService {
 
-	public void addPermission(Permission permission) throws DuplicatePermissionException;
+	Permission getById(int id) throws PermissionNotFoundException;
 
-	public Permission getPermission(int id) throws PermissionNotFoundException;
+	Permission getByPermissionname(String permissionname) throws PermissionNotFoundException;
 
-	public Permission getPermission(String permissionname) throws PermissionNotFoundException;
+	void add(Permission permission) throws DuplicatePermissionException;
 
-	public void updatePermission(Permission permission) throws PermissionNotFoundException;
+	void update(Permission permission) throws PermissionNotFoundException;
 
-	public void deletePermission(int id) throws PermissionNotFoundException;
+	void delete(int id) throws PermissionNotFoundException;
 
-	public List<Permission> getPermissions();
-
+	List<Permission> getAll();
 }

@@ -9,13 +9,13 @@ import java.util.List;
 @Service
 public interface WorkService {
 
-    List<Work> getAllCategories();
+    List<Work> getAll();
 
-    void addWork(Work category);
+    void add(Work category);
 
     Work getById(int id);
 
-    void deleteWork(Work category);
+    void delete(Work category);
 
-    void updateWork(Work category);
+    void update(Work category);
 }

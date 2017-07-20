@@ -75,7 +75,7 @@ public class CategoryController {
             fillModel(model, category);
             return "categoryAdd";
         } else {
-            categoryService.addCategory(category);
+            categoryService.add(category);
             redirectAttributes.addFlashAttribute("message", messageSource.getMessage("category.added", null, LocaleContextHolder.getLocale()));
             return "redirect:/category/save";
         }
@@ -95,7 +95,7 @@ public class CategoryController {
     		fillModel(model, category);
     		return "categoryEdit";
     	} else {
-    		categoryService.updateCategory(category);
+    		categoryService.update(category);
     		redirectAttributes.addFlashAttribute("message", messageSource.getMessage("category.updated", null, LocaleContextHolder.getLocale()));
     		return "redirect:/category/getAll";
     	}
@@ -111,7 +111,7 @@ public class CategoryController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String categoryDelete(@RequestParam(value = "id", required = true) Integer id) {
 		Category category = categoryService.getById(id);
-		categoryService.deleteCategory(category);
+		categoryService.delete(category);
 		return "redirect:/category/getAll";
 	}
 }

@@ -23,32 +23,32 @@ public class PermissionServiceImpl implements PermissionService {
 	private PermissionDAO permissionDAO;
 
 	@Override
-	public void addPermission(Permission permission) throws DuplicatePermissionException {
-		permissionDAO.addPermission(permission);
+	public void add(Permission permission) throws DuplicatePermissionException {
+		permissionDAO.save(permission);
 	}
 
 	@Override
-	public Permission getPermission(int id) throws PermissionNotFoundException {
-		return permissionDAO.getPermission(id);
+	public Permission getById(int id) throws PermissionNotFoundException {
+		return permissionDAO.findOne(id);
 	}
 
 	@Override
-	public Permission getPermission(String permissionname) throws PermissionNotFoundException {
-		return permissionDAO.getPermission(permissionname);
+	public Permission getByPermissionname(String permissionname) throws PermissionNotFoundException {
+		return permissionDAO.findByPermissionnameIgnoreCase(permissionname);
 	}
 
 	@Override
-	public void updatePermission(Permission permission) throws PermissionNotFoundException {
-		permissionDAO.updatePermission(permission);
+	public void update(Permission permission) throws PermissionNotFoundException {
+		permissionDAO.save(permission);
 	}
 
 	@Override
-	public void deletePermission(int id) throws PermissionNotFoundException {
-		permissionDAO.deletePermission(id);
+	public void delete(int id) throws PermissionNotFoundException {
+		permissionDAO.delete(id);
 	}
 
 	@Override
-	public List<Permission> getPermissions() {
-		return permissionDAO.getPermissions();
+	public List<Permission> getAll() {
+		return permissionDAO.findAll();
 	}
 }

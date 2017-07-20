@@ -2,6 +2,7 @@ package ua.nure.indplan.service.realization;
 
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,27 +19,34 @@ public class StudentServiceImpl implements StudentService {
     StudentDao studentDao;
 
     @Override
-    public List<Student> getAll() {
-        return studentDao.getAll();
+    public List<Student> findAll() {
+        return studentDao.findAll();
     }
 
     @Override
     public void add(Student student) {
-        studentDao.addStudent(student);
+        studentDao.save(student);
     }
 
     @Override
+    public void add(Set<Student> students) {
+    	if (students != null && students.size() != 0) {
+    		studentDao.save(students);
+    	}
+    }
+    
+    @Override
     public Student getById(int id) {
-        return studentDao.getById(id);
+        return studentDao.findOne(id);
     }
     
     @Override
     public List<Student> findByName(String pattern) {
-    	return studentDao.findByName(pattern, DEFAULT_MAX_COUNT);
+    	return studentDao.findByNameIgnoreCase(pattern, DEFAULT_MAX_COUNT);
     }
 
 	@Override
 	public List<Student> findByName(String pattern, int maxCount) {
-		return studentDao.findByName(pattern, maxCount);
+		return studentDao.findByNameIgnoreCase(pattern, maxCount);
 	}
 }

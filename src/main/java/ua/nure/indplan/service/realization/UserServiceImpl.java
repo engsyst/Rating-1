@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import ua.nure.indplan.dao.UserDao;
 import ua.nure.indplan.entity.User;
-import ua.nure.indplan.exeptions.UserNotFoundException;
 import ua.nure.indplan.service.UserService;
 import ua.nure.indplan.validation.UserValidator;
 
@@ -22,42 +21,38 @@ public class UserServiceImpl implements UserService{
     UserValidator validator;
 
     @Override
-    public List<User> getAllUsers() {
-        return userDao.getAllUsers();
+    public List<User> getAll() {
+        return userDao.findAll();
     }
 
     @Override
-    public void addUser(User user) {
-        userDao.addUser(user);
+    public void add(User user) {
+        userDao.save(user);
     }
 
     @Override
-    public void deleteUser(User user) {
-        userDao.deleteUser(user);
+    public void delete(User user) {
+        userDao.delete(user);
     }
 
     @Override
     public User getById(int id) {
-        return userDao.getById(id);
+        return userDao.findOne(id);
     }
 
     @Override
-    public void updateUser(User user) {
-        userDao.updateUser(user);
+    public void update(User user) {
+        userDao.save(user);
     }
     
-    @Override
-    public User getUser(String username) throws UserNotFoundException {
-        return userDao.getUser(username);
-    }
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		 try {
-	            return getUser(username);
-	        } catch (UserNotFoundException e) {
-	            throw new UsernameNotFoundException(e.getMessage());
-	        }
+		User user = userDao.findByUsernameIgnoreCase(username);
+		if (user == null) {
+			throw new UsernameNotFoundException("User not found");
+		}
+		return user;
 	}
 
 }

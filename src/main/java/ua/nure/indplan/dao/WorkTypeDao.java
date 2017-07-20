@@ -4,22 +4,14 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ua.nure.indplan.entity.WorkType;
 
 @Repository
 @Transactional
-public interface WorkTypeDao {
+public interface WorkTypeDao extends CrudRepository<WorkType, Integer> {
 
-    List<WorkType> getAll();
-
-    void add(WorkType category);
-
-    WorkType getById(int id);
-
-//    void delete(WorkType category);
-
-    void update(WorkType category);
-
+    List<WorkType> findAll();
 }

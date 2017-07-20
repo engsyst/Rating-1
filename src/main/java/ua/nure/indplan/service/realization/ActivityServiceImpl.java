@@ -14,27 +14,27 @@ public class ActivityServiceImpl implements ActivityService{
     ActivityDao activityDao;
 
     @Override
-    public List<Activity> getAllActivities() {
-        return activityDao.getAllActivities();
+    public List<Activity> getAll() {
+        return activityDao.findAll();
     }
 
     @Override
-    public void addActivity(Activity activity) {
-        activityDao.addActivity(activity);
+    public void add(Activity activity) {
+        activityDao.save(activity);
     }
 
     @Override
     public Activity getById(int id) {
-        return activityDao.getById(id);
+        return activityDao.findOne(id);
     }
 
     @Override
-    public void deleteActivity(Activity activity) {
-        activityDao.deleteActivity(activity);
+    public void delete(Activity activity) {
+        activityDao.delete(activity);
     }
 
     @Override
-    public void updateActivity(Activity activity) {
-        activityDao.updateActivity(activity);
+    public void update(Activity activity) {
+        activityDao.save(activity);
     }
 }

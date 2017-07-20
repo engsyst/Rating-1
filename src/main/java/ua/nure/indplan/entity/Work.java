@@ -175,7 +175,7 @@ public class Work implements Serializable {
 
 
 	//bi-directional many-to-many association to Student
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="student_has_work"
 		, joinColumns={

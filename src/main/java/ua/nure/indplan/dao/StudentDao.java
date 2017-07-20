@@ -4,20 +4,17 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ua.nure.indplan.entity.Student;
 
 @Repository
 @Transactional
-public interface StudentDao {
+public interface StudentDao extends CrudRepository<Student, Integer> {
 
-	List<Student> getAll();
+	List<Student> findAll();
 
-	List<Student> findByName(String pattern, int maxCount);
-
-	void addStudent(Student student);
-
-	Student getById(int id);
+	List<Student> findByNameIgnoreCase(String pattern, int maxCount);
 
 }

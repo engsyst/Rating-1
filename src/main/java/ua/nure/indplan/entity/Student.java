@@ -22,7 +22,20 @@ public class Student implements Serializable {
 	public Student() {
 	}
 
+	public Student(int id, String name, String group) {
+		this.id = id;
+		this.name = name;
+		this.group = group;
+	}
 
+	public Student(int id, String name, String group, Set<Work> works) {
+		this.id = id;
+		this.name = name;
+		this.group = group;
+		this.works = works;
+	}
+
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
@@ -35,7 +48,7 @@ public class Student implements Serializable {
 	}
 
 
-	@Column(nullable=false, length=16)
+	@Column(name="\"group\"", nullable=false, length=16)
 	public String getGroup() {
 		return this.group;
 	}
@@ -65,4 +78,65 @@ public class Student implements Serializable {
 		this.works = works;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((group == null) ? 0 : group.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		if (group == null) {
+			if (other.group != null)
+				return false;
+		} else if (!group.equals(other.group))
+			return false;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Student [id=");
+		builder.append(id);
+		builder.append(", ");
+		if (group != null) {
+			builder.append("group=");
+			builder.append(group);
+			builder.append(", ");
+		}
+		if (name != null) {
+			builder.append("name=");
+			builder.append(name);
+		}
+		builder.append("]");
+		return builder.toString();
+	}
+
+	public String toJSON() {
+		return new StringBuffer("{\"id\":").append(id)
+				.append(",\"name\":\"").append(name)
+				.append("\",\"group\":\"")
+				.append(group).append("\"}")
+				.toString();
+	}
+	
 }

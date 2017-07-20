@@ -28,7 +28,7 @@ public class ActivityController {
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public String getAll(Model model) {
 
-        List<Activity> activities = activityService.getAllActivities();
+        List<Activity> activities = activityService.getAll();
         model.addAttribute("activities", activities);
         return "activityAll";
     }
@@ -49,7 +49,7 @@ public class ActivityController {
             return "activityAdd";
         } else {
 
-            activityService.addActivity(activity);
+            activityService.add(activity);
             String message = "Мероприятие успешно добавлено";
             redirectAttributes.addFlashAttribute("message", message);
             return "redirect:/activity/save";
@@ -62,7 +62,7 @@ public class ActivityController {
             @RequestParam(value = "phase", required = true) String phase) {
 
         Activity activity = activityService.getById(id);
-        activityService.deleteActivity(activity);
+        activityService.delete(activity);
         return "redirect:/activity/getAll";
     }
 
@@ -77,7 +77,7 @@ public class ActivityController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String updateEmployee(@ModelAttribute Activity activity) {
-        activityService.updateActivity(activity);
+        activityService.update(activity);
         return "redirect:/activity/getAll";
     }
 }

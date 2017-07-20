@@ -1,6 +1,7 @@
 package ua.nure.indplan.dao;
 
 
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ua.nure.indplan.entity.Employee;
@@ -10,15 +11,8 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface EmployeeDAO {
+public interface EmployeeDAO extends CrudRepository<Employee, Integer> {
 
-    public List<Employee> getAll();
+    public List<Employee> findAll();
 
-    public void addEmployee(Employee employee);
-
-    public void deleteEmployee(Employee employee);
-
-    public Employee getById(int id);
-
-    public void updateEmployee(Employee employee);
 }

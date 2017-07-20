@@ -99,7 +99,8 @@
                         </div>
 
 						<div class="form-group required" th:attrappend="class=${#fields.hasErrors('date')}? ' has-error'">
-                           <label class="control-label" for="date" th:text="*{date != null ? #dates.format(date, #messages.msg('work.date')) : ''}">Дата</label>
+                           <!-- <label class="control-label" for="date" th:text="*{date != null ? #dates.format(date, #messages.msg('work.date')) : ''}">Дата</label> -->
+                           <label class="control-label" for="date" th:text="#{work.date}">Дата</label>
                            <input type='text' class="form-control" id="date" 
                            		th:name="date" th:value="*{date != null ? #dates.format(date, #messages.msg('date.pattern.java')) : #messages.msg('date.pattern.java')}"
                            		th:disabled="${ddate}"/>

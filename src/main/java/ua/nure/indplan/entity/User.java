@@ -24,7 +24,6 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.GrantedAuthority;
@@ -80,7 +79,7 @@ public class User implements Serializable, UserDetails {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false, columnDefinition = "TIMESTAMP")
+	@Column(nullable=false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	public Date getCreateTime() {
 		return this.createTime;
 	}
@@ -89,7 +88,6 @@ public class User implements Serializable, UserDetails {
 		this.createTime = createTime;
 	}
 
-	@Email
 	@Column(length=255)
 	public String getEmail() {
 		return this.email;

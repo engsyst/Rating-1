@@ -15,7 +15,7 @@ import java.util.Set;
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private byte deleted;
+	private boolean deleted;
 	private String description;
 	private Integer perrate;
 	private String perunit;
@@ -42,12 +42,12 @@ public class Category implements Serializable {
 	}
 
 
-	@Column(nullable=false)
-	public byte getDeleted() {
+	@Column(nullable=false, columnDefinition="tinyint(1) default 0")
+	public boolean getDeleted() {
 		return this.deleted;
 	}
 
-	public void setDeleted(byte deleted) {
+	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
 
@@ -184,19 +184,107 @@ public class Category implements Serializable {
 //		return width <= title.length() ? title : title.substring(0, width / 2 - 3) + "..." + title.substring(width / 2, title.length());
 	}
 
+//
+//	@Override
+//	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + deleted;
+//		result = prime * result + ((description == null) ? 0 : description.hashCode());
+//		result = prime * result + ((perrate == null) ? 0 : perrate.hashCode());
+//		result = prime * result + ((perunit == null) ? 0 : perunit.hashCode());
+//		result = prime * result + ((report == null) ? 0 : report.hashCode());
+//		result = prime * result + ((timerate == null) ? 0 : timerate.hashCode());
+//		result = prime * result + ((timeunit == null) ? 0 : timeunit.hashCode());
+//		result = prime * result + ((title == null) ? 0 : title.hashCode());
+//		return result;
+//	}
+//
+//
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (!(obj instanceof Category))
+//			return false;
+//		Category other = (Category) obj;
+//		if (deleted != other.deleted)
+//			return false;
+//		if (description == null) {
+//			if (other.description != null)
+//				return false;
+//		} else if (!description.equals(other.description))
+//			return false;
+//		if (perrate == null) {
+//			if (other.perrate != null)
+//				return false;
+//		} else if (!perrate.equals(other.perrate))
+//			return false;
+//		if (perunit == null) {
+//			if (other.perunit != null)
+//				return false;
+//		} else if (!perunit.equals(other.perunit))
+//			return false;
+//		if (report == null) {
+//			if (other.report != null)
+//				return false;
+//		} else if (!report.equals(other.report))
+//			return false;
+//		if (timerate == null) {
+//			if (other.timerate != null)
+//				return false;
+//		} else if (!timerate.equals(other.timerate))
+//			return false;
+//		if (timeunit == null) {
+//			if (other.timeunit != null)
+//				return false;
+//		} else if (!timeunit.equals(other.timeunit))
+//			return false;
+//		if (title == null) {
+//			if (other.title != null)
+//				return false;
+//		} else if (!title.equals(other.title))
+//			return false;
+//		return true;
+//	}
+
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(title);
+		builder.append(", ");
+		builder.append(timerate);
+		builder.append(" ");
+		builder.append(timeunit);
+		builder.append(" на ");
+		builder.append(perrate);
+		builder.append(" ");
+		builder.append(perunit);
+		builder.append(", report=");
+		builder.append(report);
+		builder.append(", description=");
+		builder.append(description);
+		return builder.toString();
+	}
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + deleted;
+		result = prime * result + (deleted ? 1231 : 1237);
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + id;
 		result = prime * result + ((perrate == null) ? 0 : perrate.hashCode());
 		result = prime * result + ((perunit == null) ? 0 : perunit.hashCode());
 		result = prime * result + ((report == null) ? 0 : report.hashCode());
 		result = prime * result + ((timerate == null) ? 0 : timerate.hashCode());
 		result = prime * result + ((timeunit == null) ? 0 : timeunit.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -207,7 +295,7 @@ public class Category implements Serializable {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Category))
+		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
 		if (deleted != other.deleted)
@@ -216,6 +304,8 @@ public class Category implements Serializable {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
+			return false;
+		if (id != other.id)
 			return false;
 		if (perrate == null) {
 			if (other.perrate != null)
@@ -247,29 +337,12 @@ public class Category implements Serializable {
 				return false;
 		} else if (!title.equals(other.title))
 			return false;
+		if (type == null) {
+			if (other.type != null)
+				return false;
+		} else if (!type.equals(other.type))
+			return false;
 		return true;
 	}
-
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(title);
-		builder.append(", ");
-		builder.append(timerate);
-		builder.append(" ");
-		builder.append(timeunit);
-		builder.append(" на ");
-		builder.append(perrate);
-		builder.append(" ");
-		builder.append(perunit);
-		builder.append(", report=");
-		builder.append(report);
-		builder.append(", description=");
-		builder.append(description);
-		return builder.toString();
-	}
-
-
 
 }

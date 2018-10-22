@@ -35,7 +35,7 @@ public class CategoryType implements Serializable {
 	}
 
 
-	@Column(nullable=false)
+	@Column(nullable=false, columnDefinition="tinyint(1) default 0")
 	public boolean getDeleted() {
 		return this.deleted;
 	}
@@ -53,7 +53,6 @@ public class CategoryType implements Serializable {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 
 	//bi-directional many-to-one association to Category
 	@OneToMany(mappedBy="type", fetch=FetchType.EAGER)

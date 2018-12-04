@@ -163,3 +163,26 @@ INSERT INTO `indplan`.`worktype` VALUES
 	(default, "Тези доповіді в збірнику 5"),
 	(default, "Тези доповіді в збірнику 6")
     ;
+
+INSERT INTO `indplan`.`discipline_attribute` (`id`,`name`)
+    VALUES
+    (default, "Перелік груп"),
+    (default, "Кількість студ."),
+    (default, "Вид контролю"),
+    (default, "Лекційних"),
+    (default, "Практичних"),
+    (default, "Лабораторних"),
+    (default, "Консультації"),
+    (default, "КП/КР"),
+    (default, "Контр. робіт і РГЗ"),
+    (default, "Семестровий контроль"),
+    (default, "Дипломування"),
+    (default, "ЕК"),
+    (default, "Аспірантура"),
+    (default, "Магістратура"),
+    (default, "Практика"),
+    (default, "Усього");
+
+
+
+

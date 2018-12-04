@@ -17,15 +17,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExcelParser {
+public class ExcelParser {/*
 
-    private static final String COMMA = ",";
     private static final String SPRING_PART = "Весняний семестр";
     private static final String AUTUMN_PART = "Осінній семестр";
-    private static final String TOTAL_OF_YEAR_VALUE = "Усього за рік";
-    private static final String AUTUMN_SEMESTER = "Осінь";
-    private static final String SPRING_SEMESTER = "Весна";
-    private static final int DEFAULT_START_POSITION_FOR_TOTAL_COUNTING = 4;
+    private static final String TOTAL_OF_YEAR_VALUE = "Усього за рік";]
+    private static final String DISCIPLINE = "Дисципліна";
+    private static final String TOTAL = "Дисципліна";
+
 
     private static final DataFormatter dataFormatter = new DataFormatter();
 
@@ -134,5 +133,5 @@ public class ExcelParser {
             groups.add(group.trim());
         }
         return groups;
-    }
+    }*/
 }

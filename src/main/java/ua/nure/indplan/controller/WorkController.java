@@ -131,7 +131,8 @@ public class WorkController {
 			RedirectAttributes redirectAttributes, 
 			Model model
 			) {
-    	if (date == null) {
+    	System.out.println(date + " " + new Date(0));
+    	if (date == null || date.equals(new Date(0))) {
     		bindingResult.rejectValue("date", "work.date.hint", "date can't be null");
     	}
         if (bindingResult.hasErrors()) {
@@ -163,14 +164,14 @@ public class WorkController {
     
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String workUpdate(
-			@RequestParam Date date, 
+    		@Valid @RequestParam Date date, 
 			@RequestParam MultipartFile file, 
 			@Valid @ModelAttribute Work work,
 			BindingResult bindingResult,
 			RedirectAttributes redirectAttributes, 
 			Model model
 			) {
-    	if (date == null) {
+    	if (date == null || date.equals(new Date(0))) {
     		bindingResult.rejectValue("date", "work.date.hint", "date can't be null");
     	}
     	if (bindingResult.hasErrors()) {

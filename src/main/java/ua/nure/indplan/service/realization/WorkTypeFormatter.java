@@ -23,8 +23,9 @@ public class WorkTypeFormatter implements Formatter<WorkType> {
 	@Override
 	public WorkType parse(String text, Locale locale) throws ParseException {
 		Integer id = Integer.valueOf(text);
-		WorkType ct = id == 0 ? new WorkType() : this.wtService.getById(id); //return WorkType object form DB;
-        return ct;
+
+		// The object should be returned from DB;
+		return id == 0 ? new WorkType() : this.wtService.getById(id); 
 	}
 
 }

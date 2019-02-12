@@ -62,12 +62,12 @@ public class WorkController {
     @Autowired
     WorkTypeService workTypeService;
     
-    @Autowired
-	private WorkValidator validator;
+//    @Autowired
+//	private WorkValidator validator;
 
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
-		binder.setValidator(validator);
+		binder.setValidator(new WorkValidator());
 	}
     
     @Autowired

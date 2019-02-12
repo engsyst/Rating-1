@@ -12,7 +12,8 @@ import javax.persistence.Table;
 @NamedQuery(name = "DisciplineHasAttribute.findAll", query = "SELECT ad FROM DisciplineHasAttribute ad")
 public class DisciplineHasAttribute implements Serializable {
 
-    private AttributeDisciplineId pk;
+	private static final long serialVersionUID = 1L;
+	private AttributeDisciplineId pk;
     private String value;
 
     public DisciplineHasAttribute() {

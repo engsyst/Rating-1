@@ -10,7 +10,8 @@ import javax.persistence.ManyToOne;
 @Embeddable
 public class DisciplineCategoryId implements Serializable {
 
-    private Discipline discipline;
+	private static final long serialVersionUID = 1L;
+	private Discipline discipline;
     private Category category;
 
     public DisciplineCategoryId() {

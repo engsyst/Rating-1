@@ -20,7 +20,8 @@ import javax.persistence.Table;
 @NamedQuery(name = "Discipline.findAll", query = "SELECT d FROM Discipline d")
 public class Discipline implements Serializable {
 
-    private int id;
+	private static final long serialVersionUID = 1L;
+	private int id;
     private String name;
     private Plan plan;
     private Set<DisciplineHasAttribute> disciplineHasAttributes;
@@ -69,6 +70,7 @@ public class Discipline implements Serializable {
         this.id = id;
     }
 
+    @Column(nullable = false)
     public String getName() {
         return name;
     }

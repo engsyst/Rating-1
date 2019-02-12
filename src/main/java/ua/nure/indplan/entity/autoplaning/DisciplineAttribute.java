@@ -1,5 +1,7 @@
 package ua.nure.indplan.entity.autoplaning;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "discipline_attribute")
 @NamedQuery(name = "DisciplineAttribute.findAll", query = "SELECT da FROM DisciplineAttribute da")
-public class DisciplineAttribute {
+public class DisciplineAttribute implements Serializable {
 
     private int id;
     private String name;

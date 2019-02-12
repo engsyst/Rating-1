@@ -2,6 +2,8 @@ package ua.nure.indplan.entity.autoplaning;
 
 import ua.nure.indplan.entity.Employee;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "plan")
 @NamedQuery(name = "Plan.findAll", query = "SELECT p FROM Plan p")
-public class Plan {
+public class Plan implements Serializable {
 
     private int id;
     private Employee employee;

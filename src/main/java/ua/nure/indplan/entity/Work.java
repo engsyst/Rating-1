@@ -42,6 +42,7 @@ public class Work implements Serializable {
 	private Set<Student> students;
 
 	public Work() {
+		
 	}
 
 

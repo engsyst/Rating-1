@@ -7,14 +7,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import ua.nure.indplan.service.autoplaning.DisciplineAttributeService;
+import ua.nure.indplan.service.autoplaning.ExcelParserService;
+
+import java.io.IOException;
 
 @Controller
 @RequestMapping(value = "/autoplaning")
 public class PlanController {
 
     @Autowired
-    private DisciplineAttributeService disciplineAttributeService;
+    private ExcelParserService excelParserService;
 
     @RequestMapping
     public String getIndex() {
@@ -22,8 +24,10 @@ public class PlanController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String loadExcelAndPassToEditing(@RequestParam("file") MultipartFile file) {
+    public String loadExcelAndPassToEditing(@RequestParam("planFile") MultipartFile file) throws IOException {
+        excelParserService.createAndSavePlanFromMultipartFile(file);
         return "redirect:autoplaning/index";
+
     }
 
 }

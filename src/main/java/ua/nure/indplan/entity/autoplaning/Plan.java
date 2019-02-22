@@ -3,7 +3,9 @@ package ua.nure.indplan.entity.autoplaning;
 import ua.nure.indplan.entity.Employee;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,15 +26,26 @@ public class Plan implements Serializable {
     private Employee employee;
     private double rate;
     private int startYear;
+    private Set<Discipline> disciplines;
 
     public Plan() {
     }
 
-    public Plan(int id, Employee employee, double rate, int startYear) {
+    public Plan(int id, Employee employee, double rate, int startYear, Set<Discipline> disciplines) {
         this.id = id;
         this.employee = employee;
         this.rate = rate;
         this.startYear = startYear;
+        this.disciplines = disciplines;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL)
+    public Set<Discipline> getDisciplines() {
+        return disciplines;
+    }
+
+    public void setDisciplines(Set<Discipline> disciplines) {
+        this.disciplines = disciplines;
     }
 
     @Id

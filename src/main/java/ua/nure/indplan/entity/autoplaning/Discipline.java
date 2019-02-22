@@ -3,6 +3,7 @@ package ua.nure.indplan.entity.autoplaning;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,8 +21,8 @@ import javax.persistence.Table;
 @NamedQuery(name = "Discipline.findAll", query = "SELECT d FROM Discipline d")
 public class Discipline implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private int id;
+    private static final long serialVersionUID = 1L;
+    private int id;
     private String name;
     private Plan plan;
     private Set<DisciplineHasAttribute> disciplineHasAttributes;
@@ -41,7 +42,7 @@ public class Discipline implements Serializable {
 
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.category")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.category", cascade = CascadeType.ALL)
     public Set<DisciplineHasCategory> getDisciplineHasCategories() {
         return disciplineHasCategories;
     }
@@ -50,7 +51,7 @@ public class Discipline implements Serializable {
         this.disciplineHasCategories = disciplineHasCategories;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.disciplineAttribute")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.disciplineAttribute", cascade = CascadeType.ALL)
     public Set<DisciplineHasAttribute> getDisciplineHasAttributes() {
         return disciplineHasAttributes;
     }

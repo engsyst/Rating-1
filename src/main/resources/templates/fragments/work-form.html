@@ -70,20 +70,6 @@
 							<span class="help-block" th:if="${#fields.hasErrors('output')}" th:errors="*{output}">Incorrect</span>
 						</div>
                        
-                        <div class="form-group required" th:attrappend="class=${#fields.hasErrors('category')}? ' has-error'">
-                            <label class="control-label" for="category" th:text="#{work.category}">Вид нагрузки</label>
-                            <select class="form-control" id="category" multiple="multiple"
-                            		th:field="*{category}" 
-                            		th:value="${category}" 
-                            		th:disabled="${dcategory}"
-                            		required="required">
-                            	<optgroup th:each="catType : ${categories}" th:label="${catType.title}">
-                                <option th:each="cat : ${catType.categories}" th:value="${cat.id}" th:text="${cat.title}" th:title="${cat}">Dropdown</option>
-                            	</optgroup>
-                            </select>
-                            <span class="help-block" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Incorrect</span>
-                        </div>
-
                         <!-- Types list with dropdown checkBoxes -->
 						<div class="form-group required" th:attrappend="class=${#fields.hasErrors('types')}? ' has-error'">
                             <label class="control-label" for="types" th:text="#{work.type}">Вид работы</label>
@@ -95,7 +81,6 @@
                             </select>
                             <span class="help-block" th:if="${#fields.hasErrors('types')}" th:errors="*{types}">Incorrect</span>
                         </div>
-
                         <div class="form-group required" th:attrappend="class=${#fields.hasErrors('employees')}? ' has-error'">
                             <label class="control-label" for="employees" th:text="#{employee}">Сотрудник</label>
                             <select class="form-control" multiple="multiple"
@@ -106,7 +91,6 @@
                             </select>
                             <span class="help-block" th:if="${#fields.hasErrors('employees')}" th:errors="*{employees}">Incorrect</span>
                         </div>
-
                         <!-- <Students> -->
                         <div class="form-group ui-widget">
                             <div class="row">
@@ -124,12 +108,23 @@
                                 </div>
                             </div>
                         </div>
-
                         <div id="selected-students-visual" class="form-group"></div>
                         <select th:field="*{students}" multiple="multiple" id="selected-students">
                         	<option th:each="s : *{students}" th:value="${s.toJSON()}" th:attr="data-id=${s.id}" selected="selected">#</option>
                         </select>
                         <!-- </Students> -->
+                        <div class="form-group required" th:attrappend="class=${#fields.hasErrors('category')}? ' has-error'">
+                            <label class="control-label" for="category" th:text="#{work.category}">Вид нагрузки</label>
+                            <select class="form-control" id="category" multiple="multiple"
+                            		th:field="*{category}" 
+                            		th:value="${category}" 
+                            		th:disabled="${dcategory}">
+                            	<optgroup th:each="catType : ${categories}" th:label="${catType.title}">
+                                <option th:each="cat : ${catType.categories}" th:value="${cat.id}" th:text="${cat.title}" th:title="${cat}">Dropdown</option>
+                            	</optgroup>
+                            </select>
+                            <span class="help-block" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Incorrect</span>
+                        </div>
 
 						<div class="form-group required" th:attrappend="class=${#fields.hasErrors('date')}? ' has-error'">
                            <!-- <label class="control-label" for="date" th:text="*{date != null ? #dates.format(date, #messages.msg('work.date')) : ''}">Дата</label> -->
@@ -139,7 +134,6 @@
                            		th:disabled="${ddate}"/>
                            <span class="help-block" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Incorrect</span>
                         </div>
-
                         <div class="form-group">
 							<div class="fileupload fileupload-new" data-provides="fileupload">
 							    <span class="btn btn-info btn-file">
@@ -152,9 +146,8 @@
 							    <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
 							</div>
                         </div>
-
  						<div class="form-group required" th:if="*{doc}">
-							<label class="control-label" th:text="#{work.doc.exist}"></label>
+							<label class="control-label" th:text="#{work.doc.exist}">Автор(ы)</label>
 							<div class="input-group">
 	                          	<span class="input-group-addon">
 	                          	<a href="#" th:href="@{/work/download(doc=${work.doc})}" th:if="${work.doc}"
@@ -164,7 +157,6 @@
 	                          		th:disabled="disabled"/>
 							</div>
 						</div>
- 
                         <div class="form-group">
                             <label for="saveButton"></label>
                             <button type="submit" class="btn btn-primary" id="saveButton" 
@@ -256,7 +248,7 @@
             buttonWidth: '100%',
             maxHeight: 300
         });
-//        $('#category-container.caret-container').click();
+//        $('#category-container .caret-container').click();
     });
 </script>
 </div>

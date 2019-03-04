@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Core CSS - Include with every page -->
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}" />
+
+    <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.css"
+        th:href="@{/font-awesome/css/font-awesome.css}" />
+
+    <!-- SB Admin CSS - Include with every page -->
+    <link type="text/css" rel="stylesheet" href="/css/sb-admin.css" th:href="@{/css/sb-admin.css}" />
+
+    <link type="text/css" rel="stylesheet" href="/css/datepicker.css" th:href="@{/css/datepicker.css}" />
+
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="plan container">
+        <div class="start-year" th:text="${plan.startYear}"></div>
+        <div class="id" th:text="${plan.id}"></div>
+        <div class="rate" th:text="${plan.rate}"></div>
+        <div class="employee" th:text="${plan.employee.id}"></div>
+        <div class="disciplines">
+            <div class="discipline panel panel-primary" th:each="discipline : ${plan.disciplines}">
+                <div class="panel-heading">
+                    <h6 class="id panel-title" th:text="${discipline.id}"></h6>
+                </div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Атрибут</th>
+                            <th>Значение</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="attribute : ${discipline.disciplineHasAttributes}">
+                            <td th:text="${attribute.pk.disciplineAttribute.name}"></td>
+                            <td th:text="${attribute.value}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

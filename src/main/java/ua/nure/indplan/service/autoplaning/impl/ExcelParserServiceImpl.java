@@ -37,6 +37,7 @@ public class ExcelParserServiceImpl implements ExcelParserService {
     private static final String SPRING_PART = "Весняний семестр";
     private static final String AUTUMN_PART = "Осінній семестр";
     private static final String TOTAL_OF_YEAR_VALUE = "Усього за рік";
+    private static final String DISCIPLINE_NAME = "Дисципліна";
     private static final DataFormatter dataFormatter = new DataFormatter();
     @Autowired
     private DisciplineAttributeDao attributeDao;
@@ -86,8 +87,8 @@ public class ExcelParserServiceImpl implements ExcelParserService {
             Row row = sheet.getRow(rowNumber);
             discipline.setDisciplineHasAttributes(retrieveExistingAttributesFromRow(row, cellIndexesForAttributes, discipline));
             planDisciplines.add(discipline);
-            discipline.setName("aaa");
             discipline.setPlan(plan);
+            discipline.setSemester("Осінь");
         }
 
         for (int rowNumber = springRowNumber + 1; rowNumber < totalOfYearRowNumber - 1; rowNumber++) {
@@ -95,8 +96,8 @@ public class ExcelParserServiceImpl implements ExcelParserService {
             Row row = sheet.getRow(rowNumber);
             discipline.setDisciplineHasAttributes(retrieveExistingAttributesFromRow(row, cellIndexesForAttributes, discipline));
             planDisciplines.add(discipline);
-            discipline.setName("aaa");
             discipline.setPlan(plan);
+            discipline.setSemester("Весна");
         }
         plan.setRate(0);
         plan.setStartYear(1998);
@@ -112,6 +113,10 @@ public class ExcelParserServiceImpl implements ExcelParserService {
                                                                           Discipline discipline) {
         Set<DisciplineHasAttribute> disciplineAttributes = new HashSet<>();
         for (Map.Entry<DisciplineAttribute, Integer> entry : existingAttributes.entrySet()) {
+            if (entry.getKey().getName().equals(DISCIPLINE_NAME)) {
+                discipline.setName(row.getCell(entry.getValue()).toString());
+                continue;
+            }
             DisciplineHasAttribute disciplineAttribute = new DisciplineHasAttribute(
                     new AttributeDisciplineId(discipline, entry.getKey()),
                     row.getCell(entry.getValue()).toString());

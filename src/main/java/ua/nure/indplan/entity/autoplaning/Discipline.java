@@ -27,19 +27,31 @@ public class Discipline implements Serializable {
     private Plan plan;
     private Set<DisciplineHasAttribute> disciplineHasAttributes;
     private Set<DisciplineHasCategory> disciplineHasCategories;
+    private String semester;
 
     public Discipline(int id, String name, Plan plan, Set<DisciplineHasAttribute> disciplineHasAttributes,
-                      Set<DisciplineHasCategory> disciplineHasCategories) {
+                      Set<DisciplineHasCategory> disciplineHasCategories, String semester) {
 
         this.id = id;
         this.name = name;
         this.plan = plan;
         this.disciplineHasAttributes = disciplineHasAttributes;
         this.disciplineHasCategories = disciplineHasCategories;
+        this.semester = semester;
+
     }
 
     public Discipline() {
 
+    }
+
+    @Column(nullable = false)
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.category", cascade = CascadeType.ALL)

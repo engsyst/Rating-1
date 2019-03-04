@@ -25,9 +25,14 @@ public class DateFormatter implements Formatter<Date> {
 
 	@Override
 	public Date parse(String text, Locale locale) throws ParseException {
-		Date d = StringUtils.isEmpty(text) ? new Date()
-				: new SimpleDateFormat(source.getMessage("date.pattern.java", null, LocaleContextHolder.getLocale()))
-						.parse(text); // return Date object form DB;
+		// return Date object form DB;
+		Date d = null;
+		try {
+			d = new SimpleDateFormat(source.getMessage("date.pattern.java", null, LocaleContextHolder.getLocale()))
+					.parse(text);
+		} catch (Exception e) {
+			d = new Date(0);
+		}
 		return d;
 	}
 }

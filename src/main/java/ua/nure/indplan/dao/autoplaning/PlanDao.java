@@ -8,4 +8,7 @@ public interface PlanDao extends CrudRepository<Plan, Integer> {
 
     @Override
     <S extends Plan> S save(S s);
+
+    @Override
+    Plan findOne(Integer integer);
 }

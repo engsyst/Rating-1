@@ -51,7 +51,7 @@ public class Discipline implements Serializable {
         this.disciplineHasCategories = disciplineHasCategories;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.disciplineAttribute", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.discipline", cascade = CascadeType.ALL)
     public Set<DisciplineHasAttribute> getDisciplineHasAttributes() {
         return disciplineHasAttributes;
     }

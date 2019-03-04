@@ -12,8 +12,14 @@ public class PlanServiceImpl implements PlanService {
 
     @Autowired
     private PlanDao planDao;
+
     @Override
     public Plan savePlan(Plan plan) {
-       return planDao.save(plan);
+        return planDao.save(plan);
+    }
+
+    @Override
+    public Plan getPlanById(int id) {
+        return planDao.findOne(id);
     }
 }

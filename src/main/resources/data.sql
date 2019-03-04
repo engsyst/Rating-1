@@ -181,7 +181,8 @@ INSERT INTO `indplan`.`discipline_attribute` (`id`,`name`)
     (default, "Аспірантура"),
     (default, "Магістратура"),
     (default, "Практика"),
-    (default, "Усього");
+    (default, "Усього"),
+    (default, "Дисципліна")
 
 
 

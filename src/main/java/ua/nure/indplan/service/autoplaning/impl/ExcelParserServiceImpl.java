@@ -89,6 +89,15 @@ public class ExcelParserServiceImpl implements ExcelParserService {
             discipline.setName("aaa");
             discipline.setPlan(plan);
         }
+
+        for (int rowNumber = springRowNumber + 1; rowNumber < totalOfYearRowNumber - 1; rowNumber++) {
+            Discipline discipline = new Discipline();
+            Row row = sheet.getRow(rowNumber);
+            discipline.setDisciplineHasAttributes(retrieveExistingAttributesFromRow(row, cellIndexesForAttributes, discipline));
+            planDisciplines.add(discipline);
+            discipline.setName("aaa");
+            discipline.setPlan(plan);
+        }
         plan.setRate(0);
         plan.setStartYear(1998);
 

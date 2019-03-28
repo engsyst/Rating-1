@@ -26,7 +26,7 @@ public class PlanController {
     @RequestMapping(method = RequestMethod.POST)
     public String loadExcelAndPassToEditing(@RequestParam("planFile") MultipartFile file) throws IOException {
         excelParserService.createAndSavePlanFromMultipartFile(file);
-        return "redirect:autoplaning/index";
+        return "redirect:autoplaning";
 
     }
 
